@@ -37,13 +37,13 @@
             this.btnClear = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
             this.gbServers = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btUp = new System.Windows.Forms.Button();
             this.btReload = new System.Windows.Forms.Button();
             this.btClearAll = new System.Windows.Forms.Button();
             this.btSelAll = new System.Windows.Forms.Button();
             this.gbResults = new System.Windows.Forms.GroupBox();
             this.dgvResults = new System.Windows.Forms.DataGridView();
-            this.btUp = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.SelectServer = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.StatusImg = new System.Windows.Forms.DataGridViewImageColumn();
@@ -77,7 +77,6 @@
             this.Password});
             this.dgvServers.Location = new System.Drawing.Point(46, 19);
             this.dgvServers.Name = "dgvServers";
-            this.dgvServers.ReadOnly = true;
             this.dgvServers.Size = new System.Drawing.Size(698, 150);
             this.dgvServers.TabIndex = 0;
             // 
@@ -169,6 +168,24 @@
             this.gbServers.TabStop = false;
             this.gbServers.Text = "Серверы";
             // 
+            // button1
+            // 
+            this.button1.Image = global::CommApp.Properties.Resources.arroyDown_16x16;
+            this.button1.Location = new System.Drawing.Point(7, 82);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(33, 23);
+            this.button1.TabIndex = 9;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // btUp
+            // 
+            this.btUp.Image = global::CommApp.Properties.Resources.arroyUp_16x16;
+            this.btUp.Location = new System.Drawing.Point(7, 53);
+            this.btUp.Name = "btUp";
+            this.btUp.Size = new System.Drawing.Size(33, 23);
+            this.btUp.TabIndex = 8;
+            this.btUp.UseVisualStyleBackColor = true;
+            // 
             // btReload
             // 
             this.btReload.Cursor = System.Windows.Forms.Cursors.Default;
@@ -188,6 +205,7 @@
             this.btClearAll.TabIndex = 6;
             this.btClearAll.Text = "Снять все";
             this.btClearAll.UseVisualStyleBackColor = true;
+            this.btClearAll.Click += new System.EventHandler(this.btClearAll_Click);
             // 
             // btSelAll
             // 
@@ -198,6 +216,7 @@
             this.btSelAll.TabIndex = 5;
             this.btSelAll.Text = "Выбрать все";
             this.btSelAll.UseVisualStyleBackColor = true;
+            this.btSelAll.Click += new System.EventHandler(this.btSelAll_Click);
             // 
             // gbResults
             // 
@@ -217,24 +236,6 @@
             this.dgvResults.Size = new System.Drawing.Size(714, 523);
             this.dgvResults.TabIndex = 0;
             // 
-            // btUp
-            // 
-            this.btUp.Image = global::CommApp.Properties.Resources.arroyUp_16x16;
-            this.btUp.Location = new System.Drawing.Point(7, 53);
-            this.btUp.Name = "btUp";
-            this.btUp.Size = new System.Drawing.Size(33, 23);
-            this.btUp.TabIndex = 8;
-            this.btUp.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Image = global::CommApp.Properties.Resources.arroyDown_16x16;
-            this.button1.Location = new System.Drawing.Point(7, 82);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(33, 23);
-            this.button1.TabIndex = 9;
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // dataGridViewImageColumn1
             // 
             this.dataGridViewImageColumn1.HeaderText = "Состояние";
@@ -244,10 +245,9 @@
             // 
             // SelectServer
             // 
-            this.SelectServer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SelectServer.HeaderText = "Выбрать";
             this.SelectServer.Name = "SelectServer";
-            this.SelectServer.ReadOnly = true;
+            this.SelectServer.TrueValue = "";
             this.SelectServer.Width = 55;
             // 
             // StatusImg
@@ -255,46 +255,39 @@
             this.StatusImg.HeaderText = "Состояние";
             this.StatusImg.Image = global::CommApp.Properties.Resources.error_16х16;
             this.StatusImg.Name = "StatusImg";
-            this.StatusImg.ReadOnly = true;
             this.StatusImg.Width = 65;
             // 
             // Title
             // 
             this.Title.HeaderText = "Название";
             this.Title.Name = "Title";
-            this.Title.ReadOnly = true;
             // 
             // Adress
             // 
             this.Adress.HeaderText = "IP Адрес";
             this.Adress.Name = "Adress";
-            this.Adress.ReadOnly = true;
             // 
             // port
             // 
             this.port.HeaderText = "Порт";
             this.port.Name = "port";
-            this.port.ReadOnly = true;
             this.port.Width = 60;
             // 
             // NameDB
             // 
             this.NameDB.HeaderText = "База Данных";
             this.NameDB.Name = "NameDB";
-            this.NameDB.ReadOnly = true;
             // 
             // User
             // 
             this.User.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.User.HeaderText = "Пользователь";
             this.User.Name = "User";
-            this.User.ReadOnly = true;
             // 
             // Password
             // 
             this.Password.HeaderText = "Пароль";
             this.Password.Name = "Password";
-            this.Password.ReadOnly = true;
             this.Password.ToolTipText = "Пароль";
             this.Password.Visible = false;
             this.Password.Width = 87;
@@ -311,6 +304,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Коммуникационники";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).EndInit();
             this.gbQuery.ResumeLayout(false);
@@ -319,6 +313,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
             this.ResumeLayout(false);
 
+        }
+
+        private void SelectServer_Disposed(object sender, System.EventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion

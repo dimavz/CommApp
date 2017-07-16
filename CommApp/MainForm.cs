@@ -54,7 +54,7 @@ namespace CommApp
 
                 // Присваиваем ячейкам значения
                 // Выбрать
-                //cell0.Selected = false;
+                cell0.Value = true;
                 // Состояние
                 //cell1.
 
@@ -97,7 +97,7 @@ namespace CommApp
                     //Формируем строку для записи в файл
                     string spl = ";";
                     //row.Cells[0].State.
-                    string str = row.Index.ToString() + spl + sf.NameServer + spl + sf.AdressIP + spl + sf.Port + spl + sf.DB_Name + spl + sf.User + spl + sf.Pass;
+                    string str = row.Index.ToString() + spl + cell0.Value + spl + sf.NameServer + spl + sf.AdressIP + spl + sf.Port + spl + sf.DB_Name + spl + sf.User + spl + sf.Pass;
 
 
                     //Создаём объект директории в файловой системе где хранится файл параметров серверов
@@ -157,6 +157,7 @@ namespace CommApp
             rtbQuery.Text = "";
         }
 
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             /* Заполняем таблицу Серверы */
@@ -209,11 +210,11 @@ namespace CommApp
 
                         // Присваиваем ячейкам значения
                         // Выбрать
-                        cell0.Selected = false;
+                        //cell0.Selected = true;
                         // Состояние
                         //cell1.
                         // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
-                        string conn_params = "Server=" + columns[2] + ";" + "Port=" + columns[3] + ";" + "Database = " + columns[4] + ";" + "User Id=" + columns[5] + ";" + "Password=" + columns[6] + ";";
+                        string conn_params = "Server=" + columns[3] + ";" + "Port=" + columns[4] + ";" + "Database = " + columns[5] + ";" + "User Id=" + columns[6] + ";" + "Password=" + columns[7] + ";";
                         NpgsqlConnection conn = new NpgsqlConnection(conn_params);
 
                         if (conn.State == ConnectionState.Open)
@@ -226,23 +227,24 @@ namespace CommApp
                             StatusImg.Image = Properties.Resources.error_16х16;
                         }
 
-
+                        //Выбор
+                        cell0.Value = columns[1];
                         // Название
-                        cell2.Value = columns[1];
+                        cell2.Value = columns[2];
                         // Адрес IP
-                        cell3.Value = columns[2];
+                        cell3.Value = columns[3];
                         // Порт
-                        cell4.Value = columns[3];
+                        cell4.Value = columns[4];
                         //База Данных
-                        cell5.Value = columns[4];
+                        cell5.Value = columns[5];
                         //Пользователь
-                        cell6.Value = columns[5];
+                        cell6.Value = columns[6];
                         //  Пароль
                         //cell7.Style.Font = new System.Drawing.Font("Microsoft Sans Serif", 18); // Устанавливаем Шрифт и размер шрифта для ячейки
                         //int count_chars = columns[6].Count(); //счётчик символов введённых в пароле
                         //string pass = new String('*', count_chars); // Заменяем реальные символы символом "*"
                         //cell7.Value = pass;
-                        cell7.Value = columns[6];
+                        cell7.Value = columns[7];
 
                         // Добавляем строку в DataGridView
                         dgvServers.Rows.Add(row);
@@ -292,7 +294,7 @@ namespace CommApp
                 string spl = ";";
                 foreach (DataGridViewRow row in dgvServers.Rows)
                 {
-                    string str = row.Index.ToString() + spl + row.Cells[2].Value + spl + row.Cells[3].Value + spl + row.Cells[4].Value + spl + row.Cells[5].Value + spl + row.Cells[6].Value + spl + row.Cells[7].Value;
+                    string str = row.Index.ToString() + spl + row.Cells[0].Value + spl + row.Cells[2].Value + spl + row.Cells[3].Value + spl + row.Cells[4].Value + spl + row.Cells[5].Value + spl + row.Cells[6].Value + spl + row.Cells[7].Value;
                     //rtbQuery.Text = str;
                     sw.WriteLine(str);
                 }
@@ -328,7 +330,7 @@ namespace CommApp
                 string spl = ";";
                 foreach (DataGridViewRow row in dgvServers.Rows)
                 {
-                    string str = row.Index.ToString() + spl + row.Cells[2].Value + spl + row.Cells[3].Value + spl + row.Cells[4].Value + spl + row.Cells[5].Value + spl + row.Cells[6].Value + spl + row.Cells[7].Value;
+                    string str = row.Index.ToString() + spl + row.Cells[0].Value + spl + row.Cells[2].Value + spl + row.Cells[3].Value + spl + row.Cells[4].Value + spl + row.Cells[5].Value + spl + row.Cells[6].Value + spl + row.Cells[7].Value;
                     //rtbQuery.Text = str;
                     sw.WriteLine(str);
                 }
@@ -337,6 +339,52 @@ namespace CommApp
             }
            
 
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //Обновляем файл серверов
+
+            //Создаём объект директории в файловой системе где хранится файл параметров серверов
+            DirectoryInfo di = new DirectoryInfo("files");
+
+            //Если директории нет, то создаём её
+            if (di.Exists == false)
+            {
+                di.Create();
+            }
+
+            //Создаём файл в директории
+            string path = di.FullName + "/servers.txt";
+            FileInfo fi = new FileInfo(path);
+
+            //Записываем в файл
+            StreamWriter sw = fi.CreateText(); //Createtext создаёт новый файл и записывает в него техт
+            string spl = ";";
+            foreach (DataGridViewRow row in dgvServers.Rows)
+            {
+                string str = row.Index.ToString() + spl + row.Cells[0].Value + spl + row.Cells[2].Value + spl + row.Cells[3].Value + spl + row.Cells[4].Value + spl + row.Cells[5].Value + spl + row.Cells[6].Value + spl + row.Cells[7].Value;
+                //rtbQuery.Text = str;
+                sw.WriteLine(str);
+            }
+            sw.Close();
+
+        }
+
+        private void btSelAll_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvServers.Rows)
+            {
+                row.Cells[0].Value = true;
+            }
+        }
+
+        private void btClearAll_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvServers.Rows)
+            {
+                row.Cells[0].Value = false;
+            }
         }
     }
 }
