@@ -386,5 +386,54 @@ namespace CommApp
                 row.Cells[0].Value = false;
             }
         }
+
+        private void btReload_Click(object sender, EventArgs e)
+        {
+            // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
+
+            foreach (DataGridViewRow row in dgvServers.Rows)
+            {
+                string conn_params = "Server=" + row.Cells[3].Value + ";" + "Port=" + row.Cells[4].Value + ";" + "Database = " + row.Cells[5].Value + ";" + "User Id=" + row.Cells[6].Value + ";" + "Password=" + row.Cells[7].Value + ";";
+                NpgsqlConnection conn = new NpgsqlConnection(conn_params);
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    StatusImg.Image = Properties.Resources.success_16х16;
+                    conn.Close();
+                }
+                else
+                {
+                    StatusImg.Image = Properties.Resources.error_16х16;
+                }
+            }
+            
+        }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvServers.Rows)
+            {
+                //rtbQuery.Text += row.Cells[0].Value.ToString();
+                if (row.Cells[0].Value.ToString() == "True")
+                {
+                    string conn_params = "Server=" + row.Cells[3].Value + ";" + "Port=" + row.Cells[4].Value + ";" + "Database = " + row.Cells[5].Value + ";" + "User Id=" + row.Cells[6].Value + ";" + "Password=" + row.Cells[7].Value + ";";
+                    NpgsqlConnection conn = new NpgsqlConnection(conn_params);
+
+                    if (conn.State == ConnectionState.Open)
+                    {
+                        string sql = rtbQuery.Text;
+                        NpgsqlCommand comm = new NpgsqlCommand(sql, conn);
+                        conn.Open(); //Открываем соединение.
+                        string result = comm.ExecuteScalar().ToString(); //Выполняем нашу команду.
+                        conn.Close(); //Закрываем соединение.
+                        StatusImg.Image = Properties.Resources.success_16х16;
+                    }
+                    else
+                    {
+                        StatusImg.Image = Properties.Resources.error_16х16;
+                    }
+                }
+            }
+        }
     }
 }

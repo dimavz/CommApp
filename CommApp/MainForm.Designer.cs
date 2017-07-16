@@ -149,6 +149,7 @@
             this.btnRun.TabIndex = 1;
             this.btnRun.Text = "Выполнить";
             this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // gbServers
             // 
@@ -195,6 +196,7 @@
             this.btReload.TabIndex = 7;
             this.btReload.Text = "Обновить состояние";
             this.btReload.UseVisualStyleBackColor = true;
+            this.btReload.Click += new System.EventHandler(this.btReload_Click);
             // 
             // btClearAll
             // 
