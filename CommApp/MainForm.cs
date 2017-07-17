@@ -355,7 +355,9 @@ namespace CommApp
             sf.Port = dgvServers.CurrentRow.Cells[4].Value.ToString();
             sf.DB_Name = dgvServers.CurrentRow.Cells[5].Value.ToString();
             sf.User = dgvServers.CurrentRow.Cells[6].Value.ToString();
-            sf.Pass = dgvServers.CurrentRow.Cells[7].Value.ToString();
+            sf.Timeout = dgvServers.CurrentRow.Cells[7].Value.ToString();
+            sf.Pass = dgvServers.CurrentRow.Cells[8].Value.ToString();
+
             if (sf.ShowDialog() == DialogResult.OK)
             {
                 dgvServers.CurrentRow.Cells[2].Value = sf.NameServer;
@@ -363,7 +365,8 @@ namespace CommApp
                 dgvServers.CurrentRow.Cells[4].Value = sf.Port;
                 dgvServers.CurrentRow.Cells[5].Value = sf.DB_Name;
                 dgvServers.CurrentRow.Cells[6].Value = sf.User;
-                dgvServers.CurrentRow.Cells[7].Value = sf.Pass;
+                dgvServers.CurrentRow.Cells[7].Value = sf.Timeout;
+                dgvServers.CurrentRow.Cells[8].Value = sf.Pass;
 
 
                 //Создаём объект директории в файловой системе где хранится файл параметров серверов
@@ -381,14 +384,29 @@ namespace CommApp
 
                 //Записываем в файл
                 StreamWriter sw = fi.CreateText(); //Createtext создаёт новый файл и записывает в него техт
+
                 string spl = ";";
                 foreach (DataGridViewRow row in dgvServers.Rows)
                 {
-                    string str = row.Index.ToString() + spl + row.Cells[0].Value + spl + row.Cells[2].Value + spl + row.Cells[3].Value + spl + row.Cells[4].Value + spl + row.Cells[5].Value + spl + row.Cells[6].Value + spl + row.Cells[7].Value;
+                    //Формируем строку для записи в файл
+                    string index = row.Index.ToString();
+                    string selServer = row.Cells[0].Value.ToString();
+                    string serverName = row.Cells[2].Value.ToString();
+                    string adresIP = row.Cells[3].Value.ToString();
+                    string port = row.Cells[4].Value.ToString();
+                    string database = row.Cells[5].Value.ToString();
+                    string user = row.Cells[6].Value.ToString();
+                    string timeout = row.Cells[7].Value.ToString();
+                    string passw = row.Cells[8].Value.ToString();
+
+                    StringForWrite sfw = new StringForWrite(index,selServer,serverName,adresIP,port,user,passw,database,timeout);
+                    string str = sfw.SelServer;
                     sw.WriteLine(str);
 
                     // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
-                    string connectionString = "Server=" + row.Cells[3].Value + ";" + "Port=" + row.Cells[4].Value + ";" + "Database = " + row.Cells[5].Value + ";" + "User Id=" + row.Cells[6].Value + ";" + "Password=" + row.Cells[7].Value + ";";
+                    ConnectionData cd = new ConnectionData(serverName, adresIP, port, database, user, passw, timeout);
+                    string connectionString = cd.ConnectionString;
+
                     NpgsqlConnection connection = new NpgsqlConnection(connectionString);
                     try
                     {
@@ -522,7 +540,17 @@ namespace CommApp
             {
                 try
                 {
-                    string connectionString = string.Format("Server={0};Port={1};User Id={2};Password={3};Database={4};Timeout={5};", row.Cells[3].Value, row.Cells[4].Value, row.Cells[6].Value, row.Cells[7].Value, row.Cells[5].Value, "5");
+                    string servName = row.Cells[2].Value.ToString(); //Название сервера
+                    string adressIP = row.Cells[3].Value.ToString(); //Адрес IP
+                    string port = row.Cells[4].Value.ToString(); //Порт
+                    string database = row.Cells[5].Value.ToString(); //База данных
+                    string user = row.Cells[6].Value.ToString(); //Пользователь
+                    string timeout = row.Cells[7].Value.ToString(); //Таймаут
+                    string passw = row.Cells[8].Value.ToString(); //Пароль
+
+                    ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
+
+                    string connectionString = cd.ConnectionString;
 
                     NpgsqlConnection connection = null;
                     connection = new NpgsqlConnection(connectionString);
