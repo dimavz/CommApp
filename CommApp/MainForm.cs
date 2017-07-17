@@ -536,10 +536,16 @@ namespace CommApp
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            List<BindingSource> listBS = new List<BindingSource>();
+
             foreach (DataGridViewRow row in dgvServers.Rows)
             {
+                BindingSource bs = new BindingSource();
+
+                //Получаем запрос из формы
                 string sqlQuery = rtbQuery.Text;
-                //rtbQuery.Text += row.Cells[0].Value.ToString();
+
+                //Если сервер отмечен галочкой
                 if (row.Cells[0].Value.ToString() == "True")
                 {
                     string servName = row.Cells[2].Value.ToString(); //Название сервера
@@ -554,16 +560,19 @@ namespace CommApp
 
                     string connectionString = cd.ConnectionString;
 
-                    rtbResult.Text = ExecuteReaderQuery(connectionString, sqlQuery);
+                    //Выводим результат выполнения запроса в форму
+                    bs.DataSource = ExecuteReaderQuery(connectionString, sqlQuery);
 
-
+                    listBS.Add(bs);
                 }
             }
+            dgvResults.DataSource = listBS;
         }
 
-        public string ExecuteReaderQuery(string connectionString, string sqlQuery)
+        public BindingSource ExecuteReaderQuery(string connectionString, string sqlQuery)
         {
-            string result = "";
+            BindingSource bs = new BindingSource();
+
             NpgsqlConnection connection = null;
             try
             {
@@ -572,39 +581,26 @@ namespace CommApp
                 NpgsqlDataReader reader;
                 connection.Open();
                 reader = command.ExecuteReader();
-                int resultCount = 0;
+                connection.Close();
 
-                for (int i = 0; i < reader.FieldCount; i++)
-                {
-                    result += "   |   " + reader.GetName(i);
-                }
-                result += "\r\n";
+                DataTable tab = new DataTable();
+                tab.Load(reader);
 
-                while (reader.Read())
-                {
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        result += "   |   " + reader[i].ToString();
-                    }
-                    result += "\r\n";
-                    resultCount++;
-                }
-
-                result += "Строк в результате: " + resultCount + "\r\n";
+                bs.DataSource = tab.DefaultView;
             }
             catch (Exception ex)
             {
-                result += "Ошибка: " + ex.Message + "\r\n";
+                MessageBox.Show(ex.Message);
             }
             finally
             {
                 if (connection != null)
                 {
-                    //PrintMessage("---выполнено отключение\r\n");
+                    //выполнено отключение
                     connection.Close();
                 }
             }
-            return result;
+            return bs;
         }
     }
 }
