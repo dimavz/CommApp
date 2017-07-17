@@ -52,6 +52,7 @@
             this.port = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NameDB = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.User = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timeoutServer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
@@ -74,6 +75,7 @@
             this.port,
             this.NameDB,
             this.User,
+            this.timeoutServer,
             this.Password});
             this.dgvServers.Location = new System.Drawing.Point(46, 19);
             this.dgvServers.Name = "dgvServers";
@@ -286,6 +288,11 @@
             this.User.HeaderText = "Пользователь";
             this.User.Name = "User";
             // 
+            // timeoutServer
+            // 
+            this.timeoutServer.HeaderText = "Таймаут";
+            this.timeoutServer.Name = "timeoutServer";
+            // 
             // Password
             // 
             this.Password.HeaderText = "Пароль";
@@ -348,6 +355,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn port;
         private System.Windows.Forms.DataGridViewTextBoxColumn NameDB;
         private System.Windows.Forms.DataGridViewTextBoxColumn User;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timeoutServer;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
     }
 }

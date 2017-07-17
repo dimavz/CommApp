@@ -43,6 +43,8 @@
             this.tbDB = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cbViewPass = new System.Windows.Forms.CheckBox();
+            this.tbTimeout = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -83,6 +85,7 @@
             this.tbPort.Name = "tbPort";
             this.tbPort.Size = new System.Drawing.Size(199, 20);
             this.tbPort.TabIndex = 5;
+            this.tbPort.Text = "5432";
             // 
             // label3
             // 
@@ -99,6 +102,7 @@
             this.tbUser.Name = "tbUser";
             this.tbUser.Size = new System.Drawing.Size(199, 20);
             this.tbUser.TabIndex = 7;
+            this.tbUser.Text = "postgres";
             // 
             // label4
             // 
@@ -129,7 +133,7 @@
             // btOk
             // 
             this.btOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btOk.Location = new System.Drawing.Point(34, 281);
+            this.btOk.Location = new System.Drawing.Point(34, 328);
             this.btOk.Name = "btOk";
             this.btOk.Size = new System.Drawing.Size(75, 23);
             this.btOk.TabIndex = 10;
@@ -139,7 +143,7 @@
             // btCancel
             // 
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(115, 281);
+            this.btCancel.Location = new System.Drawing.Point(115, 328);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 11;
@@ -152,6 +156,7 @@
             this.tbDB.Name = "tbDB";
             this.tbDB.Size = new System.Drawing.Size(199, 20);
             this.tbDB.TabIndex = 13;
+            this.tbDB.Text = "postgres";
             // 
             // label6
             // 
@@ -173,11 +178,29 @@
             this.cbViewPass.UseVisualStyleBackColor = true;
             this.cbViewPass.CheckedChanged += new System.EventHandler(this.cbViewPass_CheckedChanged);
             // 
+            // tbTimeout
+            // 
+            this.tbTimeout.Location = new System.Drawing.Point(16, 287);
+            this.tbTimeout.Name = "tbTimeout";
+            this.tbTimeout.Size = new System.Drawing.Size(199, 20);
+            this.tbTimeout.TabIndex = 16;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(13, 271);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(97, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Таймаут (Timeout)";
+            // 
             // ServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(232, 332);
+            this.ClientSize = new System.Drawing.Size(232, 385);
+            this.Controls.Add(this.tbTimeout);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.cbViewPass);
             this.Controls.Add(this.tbDB);
             this.Controls.Add(this.label6);
@@ -218,5 +241,7 @@
         private System.Windows.Forms.TextBox tbDB;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox cbViewPass;
+        private System.Windows.Forms.TextBox tbTimeout;
+        private System.Windows.Forms.Label label7;
     }
 }

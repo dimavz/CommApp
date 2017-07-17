@@ -35,6 +35,9 @@ namespace CommApp
         //Показать пароль
         private bool ViewPass { get { return cbViewPass.Checked; } set { cbViewPass.Checked = value; } }
 
+        // Таймаут
+        public string Timeout { get { return tbTimeout.Text; } set { tbTimeout.Text = value; } }
+
 
         public ServerForm()
         {
