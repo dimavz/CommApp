@@ -54,6 +54,7 @@
             this.User = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timeoutServer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rtbResult = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
             this.gbServers.SuspendLayout();
@@ -224,6 +225,7 @@
             // 
             // gbResults
             // 
+            this.gbResults.Controls.Add(this.rtbResult);
             this.gbResults.Controls.Add(this.dgvResults);
             this.gbResults.Location = new System.Drawing.Point(798, 12);
             this.gbResults.Name = "gbResults";
@@ -237,7 +239,7 @@
             this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvResults.Location = new System.Drawing.Point(22, 19);
             this.dgvResults.Name = "dgvResults";
-            this.dgvResults.Size = new System.Drawing.Size(714, 523);
+            this.dgvResults.Size = new System.Drawing.Size(714, 215);
             this.dgvResults.TabIndex = 0;
             // 
             // dataGridViewImageColumn1
@@ -301,6 +303,14 @@
             this.Password.Visible = false;
             this.Password.Width = 87;
             // 
+            // rtbResult
+            // 
+            this.rtbResult.Location = new System.Drawing.Point(22, 268);
+            this.rtbResult.Name = "rtbResult";
+            this.rtbResult.Size = new System.Drawing.Size(692, 275);
+            this.rtbResult.TabIndex = 1;
+            this.rtbResult.Text = "";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -357,6 +367,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn User;
         private System.Windows.Forms.DataGridViewTextBoxColumn timeoutServer;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
+        private System.Windows.Forms.RichTextBox rtbResult;
     }
 }
 

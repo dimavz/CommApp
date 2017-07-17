@@ -21,52 +21,6 @@ namespace CommApp
             InitializeComponent();
         }
 
-        public string ExecuteReaderQuery(string connectionString, string sqlQuery)
-        {
-            string result = "";
-            NpgsqlConnection connection = null;
-            try
-            {
-                connection = new NpgsqlConnection(connectionString);
-                NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
-                NpgsqlDataReader reader;
-                connection.Open();
-                reader = command.ExecuteReader();
-                int resultCount = 0;
-
-                for (int i = 0; i < reader.FieldCount; i++)
-                {
-                    result += "   |   " + reader.GetName(i);
-                }
-                result += "\r\n";
-
-                while (reader.Read())
-                {
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        result += "   |   " + reader[i].ToString();
-                    }
-                    result += "\r\n";
-                    resultCount++;
-                }
-
-                result += "Строк в результате: " + resultCount + "\r\n";
-            }
-            catch (Exception ex)
-            {
-                result += "Ошибка: " + ex.Message + "\r\n";
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    //PrintMessage("---выполнено отключение\r\n");
-                    connection.Close();
-                }
-            }
-            return result;
-        }
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
 
@@ -216,6 +170,7 @@ namespace CommApp
         private void btnClear_Click(object sender, EventArgs e)
         {
             rtbQuery.Text = "";
+            rtbResult.Text = "";
         }
 
 
@@ -583,27 +538,73 @@ namespace CommApp
         {
             foreach (DataGridViewRow row in dgvServers.Rows)
             {
+                string sqlQuery = rtbQuery.Text;
                 //rtbQuery.Text += row.Cells[0].Value.ToString();
                 if (row.Cells[0].Value.ToString() == "True")
                 {
-                    string conn_params = "Server=" + row.Cells[3].Value + ";" + "Port=" + row.Cells[4].Value + ";" + "Database = " + row.Cells[5].Value + ";" + "User Id=" + row.Cells[6].Value + ";" + "Password=" + row.Cells[7].Value + ";";
-                    NpgsqlConnection conn = new NpgsqlConnection(conn_params);
+                    string servName = row.Cells[2].Value.ToString(); //Название сервера
+                    string adressIP = row.Cells[3].Value.ToString(); //Адрес IP
+                    string port = row.Cells[4].Value.ToString(); //Порт
+                    string database = row.Cells[5].Value.ToString(); //База данных
+                    string user = row.Cells[6].Value.ToString(); //Пользователь
+                    string timeout = row.Cells[7].Value.ToString(); //Таймаут
+                    string passw = row.Cells[8].Value.ToString(); //Пароль
 
-                    if (conn.State == ConnectionState.Open)
-                    {
-                        string sql = rtbQuery.Text;
-                        NpgsqlCommand comm = new NpgsqlCommand(sql, conn);
-                        conn.Open(); //Открываем соединение.
-                        string result = comm.ExecuteScalar().ToString(); //Выполняем нашу команду.
-                        conn.Close(); //Закрываем соединение.
-                        StatusImg.Image = Properties.Resources.success_16х16;
-                    }
-                    else
-                    {
-                        StatusImg.Image = Properties.Resources.error_16х16;
-                    }
+                    ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
+
+                    string connectionString = cd.ConnectionString;
+
+                    rtbResult.Text = ExecuteReaderQuery(connectionString, sqlQuery);
+
+
                 }
             }
+        }
+
+        public string ExecuteReaderQuery(string connectionString, string sqlQuery)
+        {
+            string result = "";
+            NpgsqlConnection connection = null;
+            try
+            {
+                connection = new NpgsqlConnection(connectionString);
+                NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
+                NpgsqlDataReader reader;
+                connection.Open();
+                reader = command.ExecuteReader();
+                int resultCount = 0;
+
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    result += "   |   " + reader.GetName(i);
+                }
+                result += "\r\n";
+
+                while (reader.Read())
+                {
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        result += "   |   " + reader[i].ToString();
+                    }
+                    result += "\r\n";
+                    resultCount++;
+                }
+
+                result += "Строк в результате: " + resultCount + "\r\n";
+            }
+            catch (Exception ex)
+            {
+                result += "Ошибка: " + ex.Message + "\r\n";
+            }
+            finally
+            {
+                if (connection != null)
+                {
+                    //PrintMessage("---выполнено отключение\r\n");
+                    connection.Close();
+                }
+            }
+            return result;
         }
     }
 }
