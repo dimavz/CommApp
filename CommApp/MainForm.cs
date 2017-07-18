@@ -434,42 +434,16 @@ namespace CommApp
 
             foreach (DataGridViewRow row in dgvServers.Rows)
             {
-                try
-                {
-                    string servName = row.Cells[2].Value.ToString(); //Название сервера
-                    string adressIP = row.Cells[3].Value.ToString(); //Адрес IP
-                    string port = row.Cells[4].Value.ToString(); //Порт
-                    string database = row.Cells[5].Value.ToString(); //База данных
-                    string user = row.Cells[6].Value.ToString(); //Пользователь
-                    string timeout = row.Cells[7].Value.ToString(); //Таймаут
-                    string passw = row.Cells[8].Value.ToString(); //Пароль
+                string servName = row.Cells[2].Value.ToString(); //Название сервера
+                string adressIP = row.Cells[3].Value.ToString(); //Адрес IP
+                string port = row.Cells[4].Value.ToString(); //Порт
+                string database = row.Cells[5].Value.ToString(); //База данных
+                string user = row.Cells[6].Value.ToString(); //Пользователь
+                string timeout = row.Cells[7].Value.ToString(); //Таймаут
+                string passw = row.Cells[8].Value.ToString(); //Пароль
 
-                    ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
-
-                    string connectionString = cd.ConnectionString;
-
-                    NpgsqlConnection connection = null;
-                    connection = new NpgsqlConnection(connectionString);
-                    connection.Open();
-
-                    if (connection.State == ConnectionState.Open)
-                    {
-                        //rtbQuery.Text = ("---выполнено подключение\r\n");
-                        //StatusImg.Image = Properties.Resources.success_16х16;
-                        row.Cells[1].Value = Properties.Resources.success_16х16;
-                        connection.Close();
-                    }
-                    else
-                    {
-                        //StatusImg.Image = Properties.Resources.error_16х16;
-                        row.Cells[1].Value = Properties.Resources.error_16х16;
-                    }
-                }
-                catch
-                {
-                    //StatusImg.Image = Properties.Resources.error_16х16;
-                    row.Cells[1].Value = Properties.Resources.error_16х16;
-                }
+                ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
+                VerifyConnection(cd, row);
                 
             }
             
@@ -628,11 +602,12 @@ namespace CommApp
 
         private void VerifyConnection(ConnectionData cd, DataGridViewRow row)
         {
-            string connectionString = cd.ConnectionString;
-
-            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
             try
             {
+                string connectionString = cd.ConnectionString;
+
+                NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+           
                 connection.Open();
                 if (connection.State == ConnectionState.Open)
                 {
