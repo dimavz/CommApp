@@ -15,10 +15,12 @@ namespace CommApp
     public partial class MainForm : Form
     {
         //Свойства
+        private bool FlagColumns { get; set; }
 
         public MainForm()
         {
             InitializeComponent();
+            this.FlagColumns = true;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -169,6 +171,11 @@ namespace CommApp
 
         private void btnClear_Click(object sender, EventArgs e)
         {
+            this.FlagColumns = true;
+            dgvResults.Rows.Clear();
+            BindingSource bs = new BindingSource();
+            bs = null;
+            dgvResults.DataSource = bs;
             rtbQuery.Text = "";
             rtbResult.Text = "";
         }
@@ -536,11 +543,14 @@ namespace CommApp
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            List<BindingSource> listBS = new List<BindingSource>();
+
+            dgvResults.Rows.Clear();
+            dgvResults.DataSource = null;
+            List<DataTable> listTables = new List<DataTable>();
 
             foreach (DataGridViewRow row in dgvServers.Rows)
             {
-                BindingSource bs = new BindingSource();
+                DataTable table = new DataTable();
 
                 //Получаем запрос из формы
                 string sqlQuery = rtbQuery.Text;
@@ -556,37 +566,49 @@ namespace CommApp
                     string timeout = row.Cells[7].Value.ToString(); //Таймаут
                     string passw = row.Cells[8].Value.ToString(); //Пароль
 
+                    //Создаём объект соединения
                     ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
 
-                    string connectionString = cd.ConnectionString;
-
                     //Выводим результат выполнения запроса в форму
-                    bs.DataSource = ExecuteReaderQuery(connectionString, sqlQuery);
-
-                    listBS.Add(bs);
+                    //table = ExecuteReaderQuery(cd, sqlQuery);
+                    ExecuteReaderToDataGridView(cd, sqlQuery);
+                    //dgvResults.DataSource = table.Rows;
+                    //dgvResults.DataSource = table.DefaultView.ToTable();
+                    //listTables.Add(table);
                 }
             }
-            dgvResults.DataSource = listBS;
+
+            /*BindingSource bs= new BindingSource();
+
+            foreach (DataTable table in listTables)
+            {
+                //bs.DataSource = table.DefaultView.ToTable();
+                bs.DataSource = table;
+            }
+            dgvResults.DataSource = bs;
+            //dgvResults.DataSource = listTables;*/
+
+
         }
 
-        public BindingSource ExecuteReaderQuery(string connectionString, string sqlQuery)
+        public DataTable ExecuteReaderQuery(ConnectionData connData, string sqlQuery)
         {
-            BindingSource bs = new BindingSource();
+            DataTable table = new DataTable();
+            table.TableName = connData.ServerName;
 
             NpgsqlConnection connection = null;
             try
             {
-                connection = new NpgsqlConnection(connectionString);
+                connection = new NpgsqlConnection(connData.ConnectionString);
                 NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
                 NpgsqlDataReader reader;
                 connection.Open();
                 reader = command.ExecuteReader();
+                if(reader.HasRows) // Если в результатах запроса есть строки
+                {
+                    table.Load(reader);
+                }
                 connection.Close();
-
-                DataTable tab = new DataTable();
-                tab.Load(reader);
-
-                bs.DataSource = tab.DefaultView;
             }
             catch (Exception ex)
             {
@@ -600,7 +622,86 @@ namespace CommApp
                     connection.Close();
                 }
             }
-            return bs;
+            return table;
+        }
+
+        public void ExecuteReaderToDataGridView(ConnectionData connData, string sqlQuery)
+        {
+            NpgsqlConnection connection = null;
+            try
+            {
+                connection = new NpgsqlConnection(connData.ConnectionString);
+                NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
+                NpgsqlDataReader reader;
+                connection.Open();
+                reader = command.ExecuteReader();
+                if (reader.HasRows) // Если в результатах запроса есть строки
+                {
+                    /*Создаём название колонок для таблицы*/
+                    if (this.FlagColumns) //Флаг для формирования названия колонок
+                    {
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
+                            //column.Name = reader.GetName(i);
+                            column.HeaderText = reader.GetName(i);
+                            dgvResults.Columns.Add(column);
+                        }
+                        this.FlagColumns = false;
+                    }
+                   
+
+                    //Создаём информационную строку
+                    DataGridViewRow rowInfo = new DataGridViewRow();
+                    //Создаём информационную ячейку о сервере 
+                    DataGridViewCell cell_Info = new DataGridViewTextBoxCell();
+                    cell_Info.Value = connData.ServerName;
+                    //Добавляем ячейку в строку
+                    rowInfo.Cells.Add(cell_Info);
+                    //Добавляем строку в таблицу
+                     dgvResults.Rows.Add(rowInfo);
+
+                    //Создаём счётчик строк
+                    int resultCount = 0;
+
+                    //Формируем строку
+                    while (reader.Read())
+                    {
+                        
+                        DataGridViewRow row = new DataGridViewRow();
+
+                        /*Создаём ячейки для строки*/
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            DataGridViewCell cell = new DataGridViewTextBoxCell();
+                            cell.Value = reader[i].ToString();
+
+                            // Добавляем в строку ячейку
+                            row.Cells.Add(cell);
+
+                            //Увеличиваем счётчик строк
+                        }
+
+                        //Добавляем строку в таблицу
+                        dgvResults.Rows.Add(row);
+                        //Увеличиваем счётчик строк
+                        resultCount++;
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection != null)
+                {
+                    //выполнено отключение
+                    connection.Close();
+                }
+            }
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dgvServers = new System.Windows.Forms.DataGridView();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
@@ -43,6 +44,7 @@
             this.btClearAll = new System.Windows.Forms.Button();
             this.btSelAll = new System.Windows.Forms.Button();
             this.gbResults = new System.Windows.Forms.GroupBox();
+            this.rtbResult = new System.Windows.Forms.RichTextBox();
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.SelectServer = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -54,7 +56,6 @@
             this.User = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timeoutServer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rtbResult = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
             this.gbServers.SuspendLayout();
@@ -132,7 +133,7 @@
             this.rtbQuery.Name = "rtbQuery";
             this.rtbQuery.Size = new System.Drawing.Size(719, 275);
             this.rtbQuery.TabIndex = 3;
-            this.rtbQuery.Text = "";
+            this.rtbQuery.Text = resources.GetString("rtbQuery.Text");
             // 
             // btnClear
             // 
@@ -234,6 +235,14 @@
             this.gbResults.TabStop = false;
             this.gbResults.Text = "Результаты выполнения запроса";
             // 
+            // rtbResult
+            // 
+            this.rtbResult.Location = new System.Drawing.Point(22, 268);
+            this.rtbResult.Name = "rtbResult";
+            this.rtbResult.Size = new System.Drawing.Size(692, 275);
+            this.rtbResult.TabIndex = 1;
+            this.rtbResult.Text = "";
+            // 
             // dgvResults
             // 
             this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -277,7 +286,7 @@
             // 
             this.port.HeaderText = "Порт";
             this.port.Name = "port";
-            this.port.Width = 60;
+            this.port.Width = 55;
             // 
             // NameDB
             // 
@@ -302,14 +311,6 @@
             this.Password.ToolTipText = "Пароль";
             this.Password.Visible = false;
             this.Password.Width = 87;
-            // 
-            // rtbResult
-            // 
-            this.rtbResult.Location = new System.Drawing.Point(22, 268);
-            this.rtbResult.Name = "rtbResult";
-            this.rtbResult.Size = new System.Drawing.Size(692, 275);
-            this.rtbResult.TabIndex = 1;
-            this.rtbResult.Text = "";
             // 
             // MainForm
             // 
@@ -358,6 +359,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btUp;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
+        private System.Windows.Forms.RichTextBox rtbResult;
         private System.Windows.Forms.DataGridViewCheckBoxColumn SelectServer;
         private System.Windows.Forms.DataGridViewImageColumn StatusImg;
         private System.Windows.Forms.DataGridViewTextBoxColumn Title;
@@ -367,7 +369,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn User;
         private System.Windows.Forms.DataGridViewTextBoxColumn timeoutServer;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
-        private System.Windows.Forms.RichTextBox rtbResult;
     }
 }
 

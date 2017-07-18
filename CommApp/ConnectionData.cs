@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CommApp
 {
-    class ConnectionData
+    public class ConnectionData
     {
         public string ServerName { get; set; }
         public string AdressIP { get; set; }
