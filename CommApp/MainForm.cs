@@ -67,28 +67,7 @@ namespace CommApp
                 // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
                 //Создаём объект подключения
                 ConnectionData cd = new ConnectionData(sf.NameServer, sf.AdressIP, sf.Port, sf.DB_Name, sf.User, sf.Pass,sf.Timeout);
-                string connectionString = cd.ConnectionString;
-                NpgsqlConnection connect = new NpgsqlConnection(connectionString);
-
-                try
-                {
-                    connect.Open();
-                    if (connect.State == ConnectionState.Open)
-                    {
-                        //StatusImg.Image = Properties.Resources.success_16х16;
-                        cell1.Value = Properties.Resources.success_16х16;
-                        connect.Close();
-                    }
-                    else
-                    {
-                        //StatusImg.Image = Properties.Resources.error_16х16;
-                        cell1.Value = Properties.Resources.error_16х16;
-                    }
-                }
-                catch
-                {
-                    cell1.Value = Properties.Resources.error_16х16;
-                }
+                VerifyConnection(cd, row);
                 
                 // Название
                 cell2.Value = sf.NameServer;
@@ -260,30 +239,7 @@ namespace CommApp
                         //Создаём объект для подключения
                         ConnectionData cd = new ConnectionData(serverName, adresIP, port, database, user, passw, timeout);
 
-                        // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
-                        string connectionString = cd.ConnectionString;
-                        NpgsqlConnection connection = new NpgsqlConnection(connectionString);
-
-                        try
-                        {
-                            connection.Open();
-                            if (connection.State == ConnectionState.Open)
-                            {
-                                //StatusImg.Image = Properties.Resources.success_16х16;
-                                cell1.Value = Properties.Resources.success_16х16;
-                                connection.Close();
-                            }
-                            else
-                            {
-                                //StatusImg.Image = Properties.Resources.error_16х16;
-                                cell1.Value = Properties.Resources.error_16х16;
-                            }
-                        }
-                        catch{
-                            //StatusImg.Image = Properties.Resources.error_16х16;
-                            cell1.Value = Properties.Resources.error_16х16;
-                            //MessageBox.Show("Нет соединения с БД!");
-                        }
+                        VerifyConnection(cd, row);
                        
                         // Название
                         cell2.Value = serverName;
@@ -367,38 +323,16 @@ namespace CommApp
 
                     // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
                     ConnectionData cd = new ConnectionData(serverName, adresIP, port, database, user, passw, timeout);
-                    string connectionString = cd.ConnectionString;
-
-                    NpgsqlConnection connection = new NpgsqlConnection(connectionString);
-                    try
-                    {
-                        connection.Open();
-                        if (connection.State == ConnectionState.Open)
-                        {
-                            //StatusImg.Image = Properties.Resources.success_16х16;
-                            row.Cells[1].Value = Properties.Resources.success_16х16;
-                            connection.Close();
-                        }
-                        else
-                        {
-                            row.Cells[1].Value = Properties.Resources.error_16х16;
-                            //StatusImg.Image = Properties.Resources.error_16х16;
-                        }
-                    }
-                    catch
-                    {
-                        row.Cells[1].Value = Properties.Resources.error_16х16;
-                        //StatusImg.Image = Properties.Resources.error_16х16;
-                    }
+                    VerifyConnection(cd,row);
                     
                 }
                 sw.Close();
             }
         }
 
+
         private void btnDelit_Click(object sender, EventArgs e)
         {
-            //Извлекаем идентификатор NDS из выделенной строки
             WarningForm wf = new WarningForm();
             if (wf.ShowDialog() == DialogResult.OK)
             {
@@ -611,7 +545,7 @@ namespace CommApp
                 {
                     NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
                     NpgsqlDataReader reader;
-                    connection.Open();
+                    //connection.Open();
                     reader = command.ExecuteReader();
                     if (reader.HasRows) // Если в результатах запроса есть строки
                     {
@@ -689,6 +623,38 @@ namespace CommApp
                     //выполнено отключение
                     connection.Close();
                 }
+            }
+        }
+
+        private void VerifyConnection(ConnectionData cd, DataGridViewRow row)
+        {
+            string connectionString = cd.ConnectionString;
+
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            try
+            {
+                connection.Open();
+                if (connection.State == ConnectionState.Open)
+                {
+                    row.Cells[0].Value = true;
+                    row.Cells[0].ReadOnly = false;
+                    row.Cells[1].Value = Properties.Resources.success_16х16;
+                    connection.Close();
+                }
+                else
+                {
+                    row.Cells[0].Value= false;
+                    row.Cells[0].ReadOnly = true;
+                    row.Cells[1].Value = Properties.Resources.error_16х16;
+                    //StatusImg.Image = Properties.Resources.error_16х16;
+                }
+            }
+            catch
+            {
+                row.Cells[0].Value = false;
+                row.Cells[0].ReadOnly = true;
+                row.Cells[1].Value = Properties.Resources.error_16х16;
+                //StatusImg.Image = Properties.Resources.error_16х16;
             }
         }
     }
