@@ -346,8 +346,6 @@ namespace CommApp
 
                 //Записываем в файл
                 StreamWriter sw = fi.CreateText(); //Createtext создаёт новый файл и записывает в него техт
-
-                string spl = ";";
                 foreach (DataGridViewRow row in dgvServers.Rows)
                 {
                     //Формируем строку для записи в файл
@@ -587,72 +585,76 @@ namespace CommApp
             try
             {
                 connection = new NpgsqlConnection(connData.ConnectionString);
-                NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
-                NpgsqlDataReader reader;
                 connection.Open();
-                reader = command.ExecuteReader();
-                if (reader.HasRows) // Если в результатах запроса есть строки
+                if (connection.State == ConnectionState.Open)
                 {
-
-                   /*Создаём название колонок для таблицы*/
-                   if (this.FlagColumns) //Флаг для формирования названия колонок
+                    NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
+                    NpgsqlDataReader reader;
+                    connection.Open();
+                    reader = command.ExecuteReader();
+                    if (reader.HasRows) // Если в результатах запроса есть строки
                     {
-                        for (int i = 0; i < reader.FieldCount; i++)
+
+                        /*Создаём название колонок для таблицы*/
+                        if (this.FlagColumns) //Флаг для формирования названия колонок
                         {
-                            DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
-                            //column.Name = reader.GetName(i);
-                            column.HeaderText = reader.GetName(i);
-                            dgvResults.Columns.Add(column);
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
+                                //column.Name = reader.GetName(i);
+                                column.HeaderText = reader.GetName(i);
+                                dgvResults.Columns.Add(column);
+                            }
+                            this.FlagColumns = false;
                         }
-                        this.FlagColumns = false;
-                    }
-                   
 
-                    //Формируем список строк
-                    List<DataGridViewRow> listRows = new List<DataGridViewRow>();
 
-                    //Формируем строку
-                    int countRows = 0;
-                    while (reader.Read())
-                    {
-                        
-                        DataGridViewRow row = new DataGridViewRow();
+                        //Формируем список строк
+                        List<DataGridViewRow> listRows = new List<DataGridViewRow>();
 
-                        /*Создаём ячейки для строки*/
-                        for (int i = 0; i < reader.FieldCount; i++)
+                        //Формируем строку
+                        int countRows = 0;
+                        while (reader.Read())
                         {
-                            DataGridViewCell cell = new DataGridViewTextBoxCell();
-                            cell.Value = reader[i].ToString();
 
-                            // Добавляем в строку ячейку
-                            row.Cells.Add(cell);
+                            DataGridViewRow row = new DataGridViewRow();
+
+                            /*Создаём ячейки для строки*/
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                DataGridViewCell cell = new DataGridViewTextBoxCell();
+                                cell.Value = reader[i].ToString();
+
+                                // Добавляем в строку ячейку
+                                row.Cells.Add(cell);
+                            }
+
+                            //Добавляем строку в таблицу
+                            listRows.Add(row);
+                            countRows++;
                         }
+                        //Закрываем соединение
+                        connection.Close();
+
+                        //Создаём информационную строку
+                        DataGridViewRow rowInfo = new DataGridViewRow();
+                        rowInfo.DefaultCellStyle.BackColor = Color.Pink;
+                        //Создаём информационную ячейку о сервере 
+                        DataGridViewCell cellInfo = new DataGridViewTextBoxCell();
+                        //cellInfo.
+                        cellInfo.Value = "Сервер: " + connData.ServerName + " ;" + "  Количество строк: " + countRows;
+                        //Добавляем ячейку в строку
+                        rowInfo.Cells.Add(cellInfo);
 
                         //Добавляем строку в таблицу
-                        listRows.Add(row);
-                        countRows++;
+                        dgvResults.Rows.Add(rowInfo);
+
+                        //Добавляем в таблицу остальные строки
+                        dgvResults.Rows.AddRange(listRows.ToArray());
+                        dgvResults.Columns[0].Width = 250;
+
+                        //dgvResults.Columns[1].AutoSizeMode = Fill;
                     }
-                    //Закрываем соединение
-                    connection.Close();
-
-                    //Создаём информационную строку
-                    DataGridViewRow rowInfo = new DataGridViewRow();
-                    rowInfo.DefaultCellStyle.BackColor = Color.Pink;
-                    //Создаём информационную ячейку о сервере 
-                    DataGridViewCell cellInfo = new DataGridViewTextBoxCell();
-                    //cellInfo.
-                    cellInfo.Value = "Сервер: " + connData.ServerName + " ;" + "  Количество строк: " + countRows;
-                    //Добавляем ячейку в строку
-                    rowInfo.Cells.Add(cellInfo);
-
-                    //Добавляем строку в таблицу
-                    dgvResults.Rows.Add(rowInfo);
-
-                    //Добавляем в таблицу остальные строки
-                    dgvResults.Rows.AddRange(listRows.ToArray());
-                    dgvResults.Columns[0].Width = 250;
-
-                    //dgvResults.Columns[1].AutoSizeMode = Fill;
                 }
             }
             catch (Exception ex)
