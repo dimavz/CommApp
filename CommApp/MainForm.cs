@@ -171,6 +171,8 @@ namespace CommApp
 
         private void btnClear_Click(object sender, EventArgs e)
         {
+            pbExequteQuery.Value = 0;
+            pbExequteQuery.Visible = false;
             dgvResults.Columns.Clear();
             dgvResults.Rows.Clear();
             BindingSource bs = new BindingSource();
@@ -547,7 +549,23 @@ namespace CommApp
             }
             else
             {
-                this.FlagColumns = true;
+                //Показываем и Устанавливаем статусбар в нулевое значение
+                pbExequteQuery.Visible = true;
+                pbExequteQuery.Value = 0;
+
+                //Считаем количество выделенных серверов
+                int countSelServers = 0;
+                foreach (DataGridViewRow row in dgvServers.Rows)
+                {
+                    //Если сервер отмечен галочкой
+                    if (row.Cells[0].Value.ToString() == "True")
+                    {
+                        countSelServers++;
+                    }
+                }
+
+
+                FlagColumns = true;
                 dgvResults.Columns.Clear();
                 dgvResults.Rows.Clear();
 
@@ -573,6 +591,9 @@ namespace CommApp
 
                         //Выводим результат выполнения запроса в форму
                         ExecuteReaderToDataGridView(cd, sqlQuery);
+
+                        //Устанавливаем прогресс статусбара
+                        pbExequteQuery.Value += 100/countSelServers;
                     }
                 }
             }

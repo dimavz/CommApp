@@ -56,6 +56,7 @@
             this.rtbResult = new System.Windows.Forms.RichTextBox();
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.pbExequteQuery = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
             this.gbServers.SuspendLayout();
@@ -171,13 +172,14 @@
             // 
             // gbQuery
             // 
+            this.gbQuery.Controls.Add(this.pbExequteQuery);
             this.gbQuery.Controls.Add(this.rtbQuery);
             this.gbQuery.Controls.Add(this.btnClear);
             this.gbQuery.Controls.Add(this.btnRun);
             this.gbQuery.Location = new System.Drawing.Point(12, 250);
             this.gbQuery.Name = "gbQuery";
             this.gbQuery.Size = new System.Drawing.Size(770, 371);
-            this.gbQuery.TabIndex = 5;
+            this.gbQuery.TabIndex = 0;
             this.gbQuery.TabStop = false;
             this.gbQuery.Text = "Запрос";
             // 
@@ -312,6 +314,14 @@
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.Width = 65;
             // 
+            // pbExequteQuery
+            // 
+            this.pbExequteQuery.Location = new System.Drawing.Point(253, 310);
+            this.pbExequteQuery.Name = "pbExequteQuery";
+            this.pbExequteQuery.Size = new System.Drawing.Size(292, 23);
+            this.pbExequteQuery.TabIndex = 4;
+            this.pbExequteQuery.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -369,6 +379,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn User;
         private System.Windows.Forms.DataGridViewTextBoxColumn timeoutServer;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
+        private System.Windows.Forms.ProgressBar pbExequteQuery;
     }
 }
 
