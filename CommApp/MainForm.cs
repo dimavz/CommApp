@@ -171,7 +171,7 @@ namespace CommApp
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            this.FlagColumns = true;
+            dgvResults.Columns.Clear();
             dgvResults.Rows.Clear();
             BindingSource bs = new BindingSource();
             bs = null;
@@ -543,14 +543,12 @@ namespace CommApp
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-
+            this.FlagColumns = true;
+            dgvResults.Columns.Clear();
             dgvResults.Rows.Clear();
-            dgvResults.DataSource = null;
-            List<DataTable> listTables = new List<DataTable>();
 
             foreach (DataGridViewRow row in dgvServers.Rows)
             {
-                DataTable table = new DataTable();
 
                 //Получаем запрос из формы
                 string sqlQuery = rtbQuery.Text;
@@ -570,59 +568,9 @@ namespace CommApp
                     ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
 
                     //Выводим результат выполнения запроса в форму
-                    //table = ExecuteReaderQuery(cd, sqlQuery);
                     ExecuteReaderToDataGridView(cd, sqlQuery);
-                    //dgvResults.DataSource = table.Rows;
-                    //dgvResults.DataSource = table.DefaultView.ToTable();
-                    //listTables.Add(table);
                 }
             }
-
-            /*BindingSource bs= new BindingSource();
-
-            foreach (DataTable table in listTables)
-            {
-                //bs.DataSource = table.DefaultView.ToTable();
-                bs.DataSource = table;
-            }
-            dgvResults.DataSource = bs;
-            //dgvResults.DataSource = listTables;*/
-
-
-        }
-
-        public DataTable ExecuteReaderQuery(ConnectionData connData, string sqlQuery)
-        {
-            DataTable table = new DataTable();
-            table.TableName = connData.ServerName;
-
-            NpgsqlConnection connection = null;
-            try
-            {
-                connection = new NpgsqlConnection(connData.ConnectionString);
-                NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
-                NpgsqlDataReader reader;
-                connection.Open();
-                reader = command.ExecuteReader();
-                if(reader.HasRows) // Если в результатах запроса есть строки
-                {
-                    table.Load(reader);
-                }
-                connection.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    //выполнено отключение
-                    connection.Close();
-                }
-            }
-            return table;
         }
 
         public void ExecuteReaderToDataGridView(ConnectionData connData, string sqlQuery)
@@ -637,8 +585,9 @@ namespace CommApp
                 reader = command.ExecuteReader();
                 if (reader.HasRows) // Если в результатах запроса есть строки
                 {
-                    /*Создаём название колонок для таблицы*/
-                    if (this.FlagColumns) //Флаг для формирования названия колонок
+
+                   /*Создаём название колонок для таблицы*/
+                   if (this.FlagColumns) //Флаг для формирования названия колонок
                     {
                         for (int i = 0; i < reader.FieldCount; i++)
                         {
@@ -651,20 +600,11 @@ namespace CommApp
                     }
                    
 
-                    //Создаём информационную строку
-                    DataGridViewRow rowInfo = new DataGridViewRow();
-                    //Создаём информационную ячейку о сервере 
-                    DataGridViewCell cell_Info = new DataGridViewTextBoxCell();
-                    cell_Info.Value = connData.ServerName;
-                    //Добавляем ячейку в строку
-                    rowInfo.Cells.Add(cell_Info);
-                    //Добавляем строку в таблицу
-                     dgvResults.Rows.Add(rowInfo);
-
-                    //Создаём счётчик строк
-                    int resultCount = 0;
+                    //Формируем список строк
+                    List<DataGridViewRow> listRows = new List<DataGridViewRow>();
 
                     //Формируем строку
+                    int countRows = 0;
                     while (reader.Read())
                     {
                         
@@ -678,16 +618,31 @@ namespace CommApp
 
                             // Добавляем в строку ячейку
                             row.Cells.Add(cell);
-
-                            //Увеличиваем счётчик строк
                         }
 
                         //Добавляем строку в таблицу
-                        dgvResults.Rows.Add(row);
-                        //Увеличиваем счётчик строк
-                        resultCount++;
+                        listRows.Add(row);
+                        countRows++;
                     }
+                    //Закрываем соединение
                     connection.Close();
+
+                    //Создаём информационную строку
+                    DataGridViewRow rowInfo = new DataGridViewRow();
+                    rowInfo.DefaultCellStyle.BackColor = Color.Pink;
+                    //Создаём информационную ячейку о сервере 
+                    DataGridViewCell cellInfo = new DataGridViewTextBoxCell();
+                    //cellInfo.
+                    cellInfo.Value = "Сервер: " + connData.ServerName + " ;" + "  Количество строк: " + countRows;
+
+                    //Добавляем ячейку в строку
+                    rowInfo.Cells.Add(cellInfo);
+
+                    //Добавляем строку в таблицу
+                    dgvResults.Rows.Add(rowInfo);
+
+                    //Добавляем в таблицу остальные строки
+                    dgvResults.Rows.AddRange(listRows.ToArray());
                 }
             }
             catch (Exception ex)

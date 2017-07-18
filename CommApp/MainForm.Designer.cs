@@ -30,6 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dgvServers = new System.Windows.Forms.DataGridView();
+            this.SelectServer = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.StatusImg = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.port = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NameDB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.User = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timeoutServer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelit = new System.Windows.Forms.Button();
@@ -47,15 +56,6 @@
             this.rtbResult = new System.Windows.Forms.RichTextBox();
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.SelectServer = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.StatusImg = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.port = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NameDB = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.User = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timeoutServer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
             this.gbServers.SuspendLayout();
@@ -83,6 +83,60 @@
             this.dgvServers.Name = "dgvServers";
             this.dgvServers.Size = new System.Drawing.Size(698, 150);
             this.dgvServers.TabIndex = 0;
+            // 
+            // SelectServer
+            // 
+            this.SelectServer.HeaderText = "Выбрать";
+            this.SelectServer.Name = "SelectServer";
+            this.SelectServer.TrueValue = "";
+            this.SelectServer.Width = 55;
+            // 
+            // StatusImg
+            // 
+            this.StatusImg.HeaderText = "Состояние";
+            this.StatusImg.Image = global::CommApp.Properties.Resources.error_16х16;
+            this.StatusImg.Name = "StatusImg";
+            this.StatusImg.Width = 65;
+            // 
+            // Title
+            // 
+            this.Title.HeaderText = "Название";
+            this.Title.Name = "Title";
+            // 
+            // Adress
+            // 
+            this.Adress.HeaderText = "IP Адрес";
+            this.Adress.Name = "Adress";
+            // 
+            // port
+            // 
+            this.port.HeaderText = "Порт";
+            this.port.Name = "port";
+            this.port.Width = 55;
+            // 
+            // NameDB
+            // 
+            this.NameDB.HeaderText = "База Данных";
+            this.NameDB.Name = "NameDB";
+            // 
+            // User
+            // 
+            this.User.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.User.HeaderText = "Пользователь";
+            this.User.Name = "User";
+            // 
+            // timeoutServer
+            // 
+            this.timeoutServer.HeaderText = "Таймаут";
+            this.timeoutServer.Name = "timeoutServer";
+            // 
+            // Password
+            // 
+            this.Password.HeaderText = "Пароль";
+            this.Password.Name = "Password";
+            this.Password.ToolTipText = "Пароль";
+            this.Password.Visible = false;
+            this.Password.Width = 87;
             // 
             // btnAdd
             // 
@@ -237,9 +291,9 @@
             // 
             // rtbResult
             // 
-            this.rtbResult.Location = new System.Drawing.Point(22, 268);
+            this.rtbResult.Location = new System.Drawing.Point(22, 513);
             this.rtbResult.Name = "rtbResult";
-            this.rtbResult.Size = new System.Drawing.Size(692, 275);
+            this.rtbResult.Size = new System.Drawing.Size(714, 30);
             this.rtbResult.TabIndex = 1;
             this.rtbResult.Text = "";
             // 
@@ -248,7 +302,7 @@
             this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvResults.Location = new System.Drawing.Point(22, 19);
             this.dgvResults.Name = "dgvResults";
-            this.dgvResults.Size = new System.Drawing.Size(714, 215);
+            this.dgvResults.Size = new System.Drawing.Size(714, 473);
             this.dgvResults.TabIndex = 0;
             // 
             // dataGridViewImageColumn1
@@ -257,60 +311,6 @@
             this.dataGridViewImageColumn1.Image = global::CommApp.Properties.Resources.error_16х16;
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.Width = 65;
-            // 
-            // SelectServer
-            // 
-            this.SelectServer.HeaderText = "Выбрать";
-            this.SelectServer.Name = "SelectServer";
-            this.SelectServer.TrueValue = "";
-            this.SelectServer.Width = 55;
-            // 
-            // StatusImg
-            // 
-            this.StatusImg.HeaderText = "Состояние";
-            this.StatusImg.Image = global::CommApp.Properties.Resources.error_16х16;
-            this.StatusImg.Name = "StatusImg";
-            this.StatusImg.Width = 65;
-            // 
-            // Title
-            // 
-            this.Title.HeaderText = "Название";
-            this.Title.Name = "Title";
-            // 
-            // Adress
-            // 
-            this.Adress.HeaderText = "IP Адрес";
-            this.Adress.Name = "Adress";
-            // 
-            // port
-            // 
-            this.port.HeaderText = "Порт";
-            this.port.Name = "port";
-            this.port.Width = 55;
-            // 
-            // NameDB
-            // 
-            this.NameDB.HeaderText = "База Данных";
-            this.NameDB.Name = "NameDB";
-            // 
-            // User
-            // 
-            this.User.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.User.HeaderText = "Пользователь";
-            this.User.Name = "User";
-            // 
-            // timeoutServer
-            // 
-            this.timeoutServer.HeaderText = "Таймаут";
-            this.timeoutServer.Name = "timeoutServer";
-            // 
-            // Password
-            // 
-            this.Password.HeaderText = "Пароль";
-            this.Password.Name = "Password";
-            this.Password.ToolTipText = "Пароль";
-            this.Password.Visible = false;
-            this.Password.Width = 87;
             // 
             // MainForm
             // 
