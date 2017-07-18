@@ -543,34 +543,42 @@ namespace CommApp
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            this.FlagColumns = true;
-            dgvResults.Columns.Clear();
-            dgvResults.Rows.Clear();
-
-            foreach (DataGridViewRow row in dgvServers.Rows)
+            if (rtbQuery.Text == "")
             {
+                MessageBox.Show("Вы не ввели запрос!");
+            }
+            else
+            {
+                this.FlagColumns = true;
+                dgvResults.Columns.Clear();
+                dgvResults.Rows.Clear();
 
-                //Получаем запрос из формы
-                string sqlQuery = rtbQuery.Text;
-
-                //Если сервер отмечен галочкой
-                if (row.Cells[0].Value.ToString() == "True")
+                foreach (DataGridViewRow row in dgvServers.Rows)
                 {
-                    string servName = row.Cells[2].Value.ToString(); //Название сервера
-                    string adressIP = row.Cells[3].Value.ToString(); //Адрес IP
-                    string port = row.Cells[4].Value.ToString(); //Порт
-                    string database = row.Cells[5].Value.ToString(); //База данных
-                    string user = row.Cells[6].Value.ToString(); //Пользователь
-                    string timeout = row.Cells[7].Value.ToString(); //Таймаут
-                    string passw = row.Cells[8].Value.ToString(); //Пароль
 
-                    //Создаём объект соединения
-                    ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
+                    //Получаем запрос из формы
+                    string sqlQuery = rtbQuery.Text;
 
-                    //Выводим результат выполнения запроса в форму
-                    ExecuteReaderToDataGridView(cd, sqlQuery);
+                    //Если сервер отмечен галочкой
+                    if (row.Cells[0].Value.ToString() == "True")
+                    {
+                        string servName = row.Cells[2].Value.ToString(); //Название сервера
+                        string adressIP = row.Cells[3].Value.ToString(); //Адрес IP
+                        string port = row.Cells[4].Value.ToString(); //Порт
+                        string database = row.Cells[5].Value.ToString(); //База данных
+                        string user = row.Cells[6].Value.ToString(); //Пользователь
+                        string timeout = row.Cells[7].Value.ToString(); //Таймаут
+                        string passw = row.Cells[8].Value.ToString(); //Пароль
+
+                        //Создаём объект соединения
+                        ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
+
+                        //Выводим результат выполнения запроса в форму
+                        ExecuteReaderToDataGridView(cd, sqlQuery);
+                    }
                 }
             }
+
         }
 
         public void ExecuteReaderToDataGridView(ConnectionData connData, string sqlQuery)
@@ -634,7 +642,6 @@ namespace CommApp
                     DataGridViewCell cellInfo = new DataGridViewTextBoxCell();
                     //cellInfo.
                     cellInfo.Value = "Сервер: " + connData.ServerName + " ;" + "  Количество строк: " + countRows;
-
                     //Добавляем ячейку в строку
                     rowInfo.Cells.Add(cellInfo);
 
@@ -643,6 +650,9 @@ namespace CommApp
 
                     //Добавляем в таблицу остальные строки
                     dgvResults.Rows.AddRange(listRows.ToArray());
+                    dgvResults.Columns[0].Width = 250;
+
+                    //dgvResults.Columns[1].AutoSizeMode = Fill;
                 }
             }
             catch (Exception ex)
