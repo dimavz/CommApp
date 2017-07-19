@@ -54,15 +54,16 @@
             this.btClearAll = new System.Windows.Forms.Button();
             this.btSelAll = new System.Windows.Forms.Button();
             this.gbResults = new System.Windows.Forms.GroupBox();
-            this.rtbResult = new System.Windows.Forms.RichTextBox();
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.lbMessage = new System.Windows.Forms.Label();
+            this.dgvQueryRows = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
             this.gbServers.SuspendLayout();
             this.gbResults.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvQueryRows)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvServers
@@ -292,7 +293,7 @@
             // 
             // gbResults
             // 
-            this.gbResults.Controls.Add(this.rtbResult);
+            this.gbResults.Controls.Add(this.dgvQueryRows);
             this.gbResults.Controls.Add(this.dgvResults);
             this.gbResults.Location = new System.Drawing.Point(798, 12);
             this.gbResults.Name = "gbResults";
@@ -301,14 +302,6 @@
             this.gbResults.TabStop = false;
             this.gbResults.Text = "Результаты выполнения запроса";
             // 
-            // rtbResult
-            // 
-            this.rtbResult.Location = new System.Drawing.Point(22, 299);
-            this.rtbResult.Name = "rtbResult";
-            this.rtbResult.Size = new System.Drawing.Size(714, 30);
-            this.rtbResult.TabIndex = 1;
-            this.rtbResult.Text = "";
-            // 
             // dgvResults
             // 
             this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -316,6 +309,7 @@
             this.dgvResults.Name = "dgvResults";
             this.dgvResults.Size = new System.Drawing.Size(714, 255);
             this.dgvResults.TabIndex = 0;
+            this.dgvResults.SelectionChanged += new System.EventHandler(this.dgvResults_SelectionChanged);
             // 
             // dataGridViewImageColumn1
             // 
@@ -333,6 +327,14 @@
             this.lbMessage.TabIndex = 5;
             this.lbMessage.Text = "Выполнен запрос на 3 серверах из 5";
             this.lbMessage.Visible = false;
+            // 
+            // dgvQueryRows
+            // 
+            this.dgvQueryRows.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvQueryRows.Location = new System.Drawing.Point(22, 306);
+            this.dgvQueryRows.Name = "dgvQueryRows";
+            this.dgvQueryRows.Size = new System.Drawing.Size(714, 303);
+            this.dgvQueryRows.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -354,6 +356,7 @@
             this.gbServers.ResumeLayout(false);
             this.gbResults.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvQueryRows)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -382,7 +385,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btUp;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
-        private System.Windows.Forms.RichTextBox rtbResult;
         private System.Windows.Forms.DataGridViewCheckBoxColumn SelectServer;
         private System.Windows.Forms.DataGridViewImageColumn StatusImg;
         private System.Windows.Forms.DataGridViewTextBoxColumn Title;
@@ -394,6 +396,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
         private System.Windows.Forms.ProgressBar pbExequteQuery;
         private System.Windows.Forms.Label lbMessage;
+        private System.Windows.Forms.DataGridView dgvQueryRows;
     }
 }
 
