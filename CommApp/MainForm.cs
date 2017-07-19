@@ -152,6 +152,7 @@ namespace CommApp
         {
             pbExequteQuery.Value = 0;
             pbExequteQuery.Visible = false;
+            lbMessage.Visible = false;
             dgvResults.Columns.Clear();
             dgvResults.Rows.Clear();
             BindingSource bs = new BindingSource();
@@ -460,9 +461,13 @@ namespace CommApp
                 //Показываем и Устанавливаем статусбар в нулевое значение
                 pbExequteQuery.Visible = true;
                 pbExequteQuery.Value = 0;
+                //Отображает сообщение
+                lbMessage.Visible = false;
+                lbMessage.Text = "";
 
                 //Считаем количество выделенных серверов
                 int countSelServers = 0;
+                int servers = 1;
                 foreach (DataGridViewRow row in dgvServers.Rows)
                 {
                     //Если сервер отмечен галочкой
@@ -476,13 +481,14 @@ namespace CommApp
                 FlagColumns = true;
                 dgvResults.Columns.Clear();
                 dgvResults.Rows.Clear();
-
+                
                 foreach (DataGridViewRow row in dgvServers.Rows)
                 {
 
                     //Получаем запрос из формы
                     string sqlQuery = rtbQuery.Text;
 
+                    
                     //Если сервер отмечен галочкой
                     if (row.Cells[0].Value.ToString() == "True")
                     {
@@ -502,6 +508,11 @@ namespace CommApp
 
                         //Устанавливаем прогресс статусбара
                         pbExequteQuery.Value += 100/countSelServers;
+                        lbMessage.Visible = true;
+                        lbMessage.Text = String.Format("Выполнен запрос на {0} сервере из {1}",servers, countSelServers);
+                        servers++;
+
+
                     }
                 }
             }

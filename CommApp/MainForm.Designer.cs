@@ -43,6 +43,7 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelit = new System.Windows.Forms.Button();
             this.gbQuery = new System.Windows.Forms.GroupBox();
+            this.pbExequteQuery = new System.Windows.Forms.ProgressBar();
             this.rtbQuery = new System.Windows.Forms.RichTextBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
@@ -56,7 +57,7 @@
             this.rtbResult = new System.Windows.Forms.RichTextBox();
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.pbExequteQuery = new System.Windows.Forms.ProgressBar();
+            this.lbMessage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
             this.gbServers.SuspendLayout();
@@ -172,6 +173,7 @@
             // 
             // gbQuery
             // 
+            this.gbQuery.Controls.Add(this.lbMessage);
             this.gbQuery.Controls.Add(this.pbExequteQuery);
             this.gbQuery.Controls.Add(this.rtbQuery);
             this.gbQuery.Controls.Add(this.btnClear);
@@ -182,6 +184,14 @@
             this.gbQuery.TabIndex = 0;
             this.gbQuery.TabStop = false;
             this.gbQuery.Text = "Запрос";
+            // 
+            // pbExequteQuery
+            // 
+            this.pbExequteQuery.Location = new System.Drawing.Point(253, 310);
+            this.pbExequteQuery.Name = "pbExequteQuery";
+            this.pbExequteQuery.Size = new System.Drawing.Size(292, 23);
+            this.pbExequteQuery.TabIndex = 4;
+            this.pbExequteQuery.Visible = false;
             // 
             // rtbQuery
             // 
@@ -286,14 +296,14 @@
             this.gbResults.Controls.Add(this.dgvResults);
             this.gbResults.Location = new System.Drawing.Point(798, 12);
             this.gbResults.Name = "gbResults";
-            this.gbResults.Size = new System.Drawing.Size(757, 609);
+            this.gbResults.Size = new System.Drawing.Size(757, 642);
             this.gbResults.TabIndex = 7;
             this.gbResults.TabStop = false;
             this.gbResults.Text = "Результаты выполнения запроса";
             // 
             // rtbResult
             // 
-            this.rtbResult.Location = new System.Drawing.Point(22, 513);
+            this.rtbResult.Location = new System.Drawing.Point(22, 299);
             this.rtbResult.Name = "rtbResult";
             this.rtbResult.Size = new System.Drawing.Size(714, 30);
             this.rtbResult.TabIndex = 1;
@@ -304,7 +314,7 @@
             this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvResults.Location = new System.Drawing.Point(22, 19);
             this.dgvResults.Name = "dgvResults";
-            this.dgvResults.Size = new System.Drawing.Size(714, 473);
+            this.dgvResults.Size = new System.Drawing.Size(714, 255);
             this.dgvResults.TabIndex = 0;
             // 
             // dataGridViewImageColumn1
@@ -314,13 +324,15 @@
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.Width = 65;
             // 
-            // pbExequteQuery
+            // lbMessage
             // 
-            this.pbExequteQuery.Location = new System.Drawing.Point(253, 310);
-            this.pbExequteQuery.Name = "pbExequteQuery";
-            this.pbExequteQuery.Size = new System.Drawing.Size(292, 23);
-            this.pbExequteQuery.TabIndex = 4;
-            this.pbExequteQuery.Visible = false;
+            this.lbMessage.AutoSize = true;
+            this.lbMessage.Location = new System.Drawing.Point(253, 340);
+            this.lbMessage.Name = "lbMessage";
+            this.lbMessage.Size = new System.Drawing.Size(195, 13);
+            this.lbMessage.TabIndex = 5;
+            this.lbMessage.Text = "Выполнен запрос на 3 серверах из 5";
+            this.lbMessage.Visible = false;
             // 
             // MainForm
             // 
@@ -338,6 +350,7 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).EndInit();
             this.gbQuery.ResumeLayout(false);
+            this.gbQuery.PerformLayout();
             this.gbServers.ResumeLayout(false);
             this.gbResults.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
@@ -380,6 +393,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn timeoutServer;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
         private System.Windows.Forms.ProgressBar pbExequteQuery;
+        private System.Windows.Forms.Label lbMessage;
     }
 }
 
