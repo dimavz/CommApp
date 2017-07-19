@@ -528,9 +528,7 @@ namespace CommApp
                 FlagColumns = false;
             }
             NpgsqlConnection connection = null;
-            NpgsqlDataReader reader;
-            reader = null;
-
+            NpgsqlDataReader reader = null;
             ReaderContext ridearContext = new ReaderContext(reader, connData);
             try
             {
