@@ -467,7 +467,8 @@ namespace CommApp
 
                 //Считаем количество выделенных серверов
                 int countSelServers = 0;
-                int servers = 1;
+                //Счётчик опрошенных серверов
+                int countServers= 1;
                 foreach (DataGridViewRow row in dgvServers.Rows)
                 {
                     //Если сервер отмечен галочкой
@@ -509,10 +510,8 @@ namespace CommApp
                         //Устанавливаем прогресс статусбара
                         pbExequteQuery.Value += 100/countSelServers;
                         lbMessage.Visible = true;
-                        lbMessage.Text = String.Format("Выполнен запрос на {0} сервере из {1}",servers, countSelServers);
-                        servers++;
-
-
+                        lbMessage.Text = String.Format("Выполнен запрос на {0} сервере из {1}", countServers, countSelServers);
+                        countServers++;
                     }
                 }
             }
@@ -530,7 +529,6 @@ namespace CommApp
                 {
                     NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
                     NpgsqlDataReader reader;
-                    //connection.Open();
                     reader = command.ExecuteReader();
                     if (reader.HasRows) // Если в результатах запроса есть строки
                     {
