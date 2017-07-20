@@ -62,6 +62,7 @@
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(199, 20);
             this.tbName.TabIndex = 1;
+            this.tbName.Text = "Тест1";
             // 
             // label2
             // 
@@ -78,6 +79,7 @@
             this.tbAdress.Name = "tbAdress";
             this.tbAdress.Size = new System.Drawing.Size(199, 20);
             this.tbAdress.TabIndex = 3;
+            this.tbAdress.Text = "10.96.0.134";
             // 
             // tbPort
             // 
@@ -119,6 +121,7 @@
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(199, 20);
             this.tbPassword.TabIndex = 9;
+            this.tbPassword.Text = "matrix";
             this.tbPassword.UseSystemPasswordChar = true;
             // 
             // label5
@@ -184,6 +187,7 @@
             this.tbTimeout.Name = "tbTimeout";
             this.tbTimeout.Size = new System.Drawing.Size(199, 20);
             this.tbTimeout.TabIndex = 16;
+            this.tbTimeout.Text = "5";
             // 
             // label7
             // 
