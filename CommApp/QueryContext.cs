@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
+using System.Data;
 
 namespace CommApp
 {
-    public class ReaderContext
+    public class QueryContext
     {
         //Свойства
-        public NpgsqlDataReader Reader { get; set; }
+        public DataTable Table { get; }
         public ConnectionData ConnectData { get;}
 
-        public ReaderContext(NpgsqlDataReader reader, ConnectionData connData)
+        public QueryContext(DataTable dt, ConnectionData conData)
         {
-            this.Reader = reader;
-            this.ConnectData = connData;
+            this.Table = dt;
+            this.ConnectData = conData;
         }
     }
 }

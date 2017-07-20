@@ -18,13 +18,13 @@ namespace CommApp
         private bool FlagColumns { get; set; }
 
         //Список Контентов запросов по серверам
-        List<ReaderContext> ListReaderContext { get; set; }
+        List<QueryContext> ListReaderContext { get; set; }
 
         public MainForm()
         {
             InitializeComponent();
             this.FlagColumns = true;
-            this.ListReaderContext = null;
+            this.ListReaderContext = new List<QueryContext>();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -136,8 +136,12 @@ namespace CommApp
             pbExequteQuery.Value = 0;
             pbExequteQuery.Visible = false;
             lbMessage.Visible = false;
+            //Очищаем таблицы результатов запросов с серверами и строками
             dgvResults.Columns.Clear();
             dgvResults.Rows.Clear();
+            //Таблица строк
+            dgvQueryRows.Columns.Clear();
+            dgvQueryRows.Rows.Clear();
             BindingSource bs = new BindingSource();
             bs = null;
             dgvResults.DataSource = bs;
@@ -455,8 +459,10 @@ namespace CommApp
 
                 //Считаем количество выделенных серверов
                 int countSelServers = 0;
+
                 //Счётчик опрошенных серверов
                 int countServers= 1;
+
                 foreach (DataGridViewRow row in dgvServers.Rows)
                 {
                     //Если сервер отмечен галочкой
@@ -467,6 +473,7 @@ namespace CommApp
                 }
 
                 FlagColumns = true;
+                //Очищаем таблицу результатов
                 dgvResults.Columns.Clear();
                 dgvResults.Rows.Clear();
                 
@@ -492,8 +499,7 @@ namespace CommApp
                         ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
 
                         //Выводим результат выполнения запроса в форму
-                        ReaderContext rc = ExecuteReaderToDataGridView(cd, sqlQuery);
-                        ListReaderContext.Add(rc);
+                        ExecuteReaderToDataGridView(cd, sqlQuery);
 
                         //Устанавливаем прогресс статусбара
                         pbExequteQuery.Value += 100/countSelServers;
@@ -506,9 +512,8 @@ namespace CommApp
 
         }
 
-        public ReaderContext ExecuteReaderToDataGridView(ConnectionData connData, string sqlQuery)
+        public void ExecuteReaderToDataGridView(ConnectionData connData, string sqlQuery)
         {
-            
             if (FlagColumns)
             {
                 /*Создаём название колонки для таблицы*/
@@ -527,28 +532,27 @@ namespace CommApp
 
                 FlagColumns = false;
             }
-            NpgsqlConnection connection = null;
-            NpgsqlDataReader reader = null;
-            ReaderContext ridearContext = new ReaderContext(reader, connData);
+            NpgsqlConnection connection = new NpgsqlConnection(connData.ConnectionString);
             try
             {
-                connection = new NpgsqlConnection(connData.ConnectionString);
+                NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
                 connection.Open();
-
                 if (connection.State == ConnectionState.Open)
                 {
-                    NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
-                    reader = command.ExecuteReader();
-
+                    NpgsqlDataReader reader = command.ExecuteReader();
                     if (reader.HasRows) // Если в результатах запроса есть строки
                     {
-                        ridearContext.Reader = reader;
+                        DataTable dt = new DataTable();
+                        dt.Load(reader);
+                        QueryContext queryContext = new QueryContext(dt, connData);
+                        //Добавляем контекст в список
+                        ListReaderContext.Add(queryContext);
                         //Формируем строку
-                        int countRows = 0;
-                        while (reader.Read())
-                        {
-                            countRows++;
-                        }
+                        //int countRows = 0;
+                        //while (reader.Read())
+                        //{
+                        //    countRows++;
+                        //}
                         //Закрываем соединение
                         connection.Close();
 
@@ -563,22 +567,18 @@ namespace CommApp
                         //Создаём информационные ячейки о сервере 
                         DataGridViewCell cellInfo2 = new DataGridViewTextBoxCell();
                         //cellInfo.
-                        cellInfo2.Value = countRows;
+                        cellInfo2.Value = dt.Rows.Count;
                         //Добавляем ячейку в строку
                         rowInfo.Cells.AddRange(cellInfo1, cellInfo2);
 
                         //Добавляем строку в таблицу
                         dgvResults.Rows.Add(rowInfo);
-                        return ridearContext;
                     }
-                    return ridearContext;
                 }
-                return ridearContext;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return ridearContext;
             }
             finally
             {
@@ -632,17 +632,28 @@ namespace CommApp
             string nameServer = dgvResults.CurrentRow.Cells[0].Value.ToString();
 
             //Перебираем контексты запросов и выбираем тот, где имя сервера совпадает
-            foreach (ReaderContext rc in ListReaderContext)
+            foreach (QueryContext qCont in ListReaderContext)
             {
-                if (rc.ConnectData.ServerName == nameServer)
+                if (qCont.ConnectData.ServerName == nameServer)
                 {
                     //Выводим строки в таблицу
                     BindingSource bs = new BindingSource();
-                    bs.DataSource = rc.Reader;
+                    bs.DataSource = qCont.Table;
                     dgvQueryRows.DataSource = bs;
                 }
             }
+        }
 
+        private void rtbQuery_TextChanged(object sender, EventArgs e)
+        {
+            if (rtbQuery.Text == "")
+            {
+                btnRun.Enabled = false;
+            }
+            else
+            {
+                btnRun.Enabled = true;
+            }
         }
     }
 }
