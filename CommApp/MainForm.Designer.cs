@@ -315,9 +315,12 @@
             // 
             // dgvQueryRows
             // 
+            this.dgvQueryRows.AllowUserToAddRows = false;
+            this.dgvQueryRows.AllowUserToDeleteRows = false;
             this.dgvQueryRows.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvQueryRows.Location = new System.Drawing.Point(22, 306);
             this.dgvQueryRows.Name = "dgvQueryRows";
+            this.dgvQueryRows.ReadOnly = true;
             this.dgvQueryRows.Size = new System.Drawing.Size(714, 303);
             this.dgvQueryRows.TabIndex = 1;
             // 

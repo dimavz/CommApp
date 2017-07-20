@@ -136,16 +136,18 @@ namespace CommApp
             pbExequteQuery.Value = 0;
             pbExequteQuery.Visible = false;
             lbMessage.Visible = false;
-            //Очищаем таблицы результатов запросов с серверами и строками
-            dgvResults.Columns.Clear();
-            dgvResults.Rows.Clear();
-            //Таблица строк
-            dgvQueryRows.Columns.Clear();
-            dgvQueryRows.Rows.Clear();
             BindingSource bs = new BindingSource();
             bs = null;
             dgvResults.DataSource = bs;
             rtbQuery.Text = "";
+
+            //Очищаем таблицы результатов запросов с серверами и строками
+            //Таблица серверов
+            dgvResults.Columns.Clear();
+            dgvResults.Rows.Clear();
+            //Таблица строк
+            dgvQueryRows.Columns.Clear();
+            //dgvQueryRows.Rows.Clear();
         }
 
 
@@ -625,11 +627,12 @@ namespace CommApp
 
         private void dgvResults_SelectionChanged(object sender, EventArgs e)
         {
-            //Получаем индекс выделенной ячейки
-            int indexRow = dgvResults.CurrentRow.Index;
 
-            //Получаем название сервера из строки
+            /*Получаем данные о сервере из таблицы Серверов*/
+            //Имя Сервера
             string nameServer = dgvResults.CurrentRow.Cells[0].Value.ToString();
+            //IP Адрес
+            //string ip = dgvResults.CurrentRow.Cells[0].Value.ToString();
 
             //Перебираем контексты запросов и выбираем тот, где имя сервера совпадает
             foreach (QueryContext qCont in ListReaderContext)
