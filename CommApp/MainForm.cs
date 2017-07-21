@@ -123,9 +123,11 @@ namespace CommApp
                             {
                                 flWrite = false;
                                 MessageBox.Show("Сервер с такими параметрами уже есть в Базе!");
+                                break;
                             }
                         }
                         sr.Close();
+
                         if (flWrite) // Если добавляемого сервера нет в БД
                         {
                             //Форм строки
