@@ -128,6 +128,7 @@ namespace CommApp
                 {
                     MessageBox.Show(ex.Message);
                 }
+                VerifyBatton();
             }
         }
 
@@ -249,8 +250,7 @@ namespace CommApp
                         dgvServers.Rows.Add(row);
                     }
                     sr.Close();
-
-
+                    VerifyBatton();
                 }
             }
         }
@@ -352,7 +352,7 @@ namespace CommApp
                     sw.WriteLine(str);
                 }
                 sw.Close();
-
+                VerifyBatton();
             }
            
 
@@ -656,6 +656,30 @@ namespace CommApp
             else
             {
                 btnRun.Enabled = true;
+            }
+        }
+
+        private void VerifyBatton()
+        {
+            if (dgvServers.Rows.Count>0)
+            {
+                btnEdit.Enabled = true;
+                btnDelit.Enabled = true;
+                btSelAll.Enabled = true;
+                btClearAll.Enabled = true;
+                btReload.Enabled = true;
+                btUp.Enabled = true;
+                btDown.Enabled = true;
+            }
+            else
+            {
+                btnEdit.Enabled = false;
+                btnDelit.Enabled = false;
+                btSelAll.Enabled = false;
+                btClearAll.Enabled = false;
+                btReload.Enabled = false;
+                btUp.Enabled = false;
+                btDown.Enabled = false;
             }
         }
     }

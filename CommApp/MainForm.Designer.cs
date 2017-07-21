@@ -49,7 +49,7 @@
             this.btnClear = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
             this.gbServers = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btDown = new System.Windows.Forms.Button();
             this.btUp = new System.Windows.Forms.Button();
             this.btReload = new System.Windows.Forms.Button();
             this.btClearAll = new System.Windows.Forms.Button();
@@ -235,7 +235,7 @@
             // 
             // gbServers
             // 
-            this.gbServers.Controls.Add(this.button1);
+            this.gbServers.Controls.Add(this.btDown);
             this.gbServers.Controls.Add(this.btUp);
             this.gbServers.Controls.Add(this.btReload);
             this.gbServers.Controls.Add(this.btClearAll);
@@ -251,14 +251,14 @@
             this.gbServers.TabStop = false;
             this.gbServers.Text = "Серверы";
             // 
-            // button1
+            // btDown
             // 
-            this.button1.Image = global::CommApp.Properties.Resources.arroyDown_16x16;
-            this.button1.Location = new System.Drawing.Point(7, 82);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(33, 23);
-            this.button1.TabIndex = 9;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btDown.Image = global::CommApp.Properties.Resources.arroyDown_16x16;
+            this.btDown.Location = new System.Drawing.Point(7, 82);
+            this.btDown.Name = "btDown";
+            this.btDown.Size = new System.Drawing.Size(33, 23);
+            this.btDown.TabIndex = 9;
+            this.btDown.UseVisualStyleBackColor = true;
             // 
             // btUp
             // 
@@ -389,7 +389,7 @@
         private System.Windows.Forms.Button btReload;
         private System.Windows.Forms.Button btClearAll;
         private System.Windows.Forms.Button btSelAll;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btDown;
         private System.Windows.Forms.Button btUp;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn SelectServer;
