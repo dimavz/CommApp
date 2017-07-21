@@ -322,53 +322,96 @@ namespace CommApp
 
             if (sf.ShowDialog() == DialogResult.OK)
             {
-                dgvServers.CurrentRow.Cells[2].Value = sf.NameServer;
-                dgvServers.CurrentRow.Cells[3].Value = sf.AdressIP;
-                dgvServers.CurrentRow.Cells[4].Value = sf.Port;
-                dgvServers.CurrentRow.Cells[5].Value = sf.DB_Name;
-                dgvServers.CurrentRow.Cells[6].Value = sf.User;
-                dgvServers.CurrentRow.Cells[7].Value = sf.Timeout;
-                dgvServers.CurrentRow.Cells[8].Value = sf.Pass;
-
-
                 //Создаём объект директории в файловой системе где хранится файл параметров серверов
                 DirectoryInfo di = new DirectoryInfo("files");
 
-                //Если директории нет, то создаём её
+                //Если директории нет, то выводим сообщение об ошибке
                 if (di.Exists == false)
                 {
-                    di.Create();
+                    //di.Create();
+                    MessageBox.Show("Возникла ошибка доступа к директории файла серверов!");
                 }
-
-                //Создаём файл в директории
-                string path = di.FullName + "/servers.txt";
-                FileInfo fi = new FileInfo(path);
-
-                //Записываем в файл
-                StreamWriter sw = fi.CreateText(); //Createtext создаёт новый файл и записывает в него техт
-                foreach (DataGridViewRow row in dgvServers.Rows)
+                else //Директория есть
                 {
-                    //Формируем строку для записи в файл
-                    string index = row.Index.ToString();
-                    string selServer = row.Cells[0].Value.ToString();
-                    string serverName = row.Cells[2].Value.ToString();
-                    string adresIP = row.Cells[3].Value.ToString();
-                    string port = row.Cells[4].Value.ToString();
-                    string database = row.Cells[5].Value.ToString();
-                    string user = row.Cells[6].Value.ToString();
-                    string timeout = row.Cells[7].Value.ToString();
-                    string passw = row.Cells[8].Value.ToString();
+                    //Получаем доступ к файлу в директории
+                    string path = di.FullName + "/servers.txt";
+                    FileInfo fi = new FileInfo(path);
 
-                    StringForWrite sfw = new StringForWrite(index,selServer,serverName,adresIP,port,user,passw,database,timeout);
-                    string str = sfw.SelServer;
-                    sw.WriteLine(str);
+                    if (fi.Exists == false)//Файла не существует
+                    {
+                        MessageBox.Show("Возникла ошибка доступа к файлу серверов!");
+                    }
+                    else //Файл существует
+                    {
+                        //Читаем файл
+                        StreamReader sr = new StreamReader(fi.FullName);
+                        string str;
 
-                    // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
-                    ConnectionData cd = new ConnectionData(serverName, adresIP, port, database, user, passw, timeout);
-                    VerifyConnection(cd,row);
-                    
+                        // Флаг записи в файл
+                        bool flWrite = true;
+
+                        while ((str = sr.ReadLine()) != null)
+                        {
+                            //Разбиваем считанную строку на элементы
+                            string[] columns = str.Split(';');
+
+                            string index = columns[0];
+                            string selected = columns[1];
+                            string serverName = columns[2];
+                            string adresIP = columns[3];
+                            string port = columns[4];
+                            string user = columns[5];
+                            string passw = columns[6];
+                            string database = columns[7];
+                            string timeout = columns[8];
+
+                            if (adresIP == sf.AdressIP && port == sf.Port && user == sf.User && database == sf.DB_Name)
+                            {
+                                flWrite = false;
+                                MessageBox.Show("Сервер с такими параметрами уже есть в Базе!");
+                                break;
+                            }
+                        }
+                        sr.Close();
+
+                        if (flWrite) // Если новые данные редактируемого сервера не совпадают с записью в БД, то добавляем его в таблицу и перезаписываем файл
+                        {
+
+                            dgvServers.CurrentRow.Cells[2].Value = sf.NameServer;
+                            dgvServers.CurrentRow.Cells[3].Value = sf.AdressIP;
+                            dgvServers.CurrentRow.Cells[4].Value = sf.Port;
+                            dgvServers.CurrentRow.Cells[5].Value = sf.DB_Name;
+                            dgvServers.CurrentRow.Cells[6].Value = sf.User;
+                            dgvServers.CurrentRow.Cells[7].Value = sf.Timeout;
+                            dgvServers.CurrentRow.Cells[8].Value = sf.Pass;
+
+                            //Записываем в файл
+                            StreamWriter sw = fi.CreateText(); //Createtext создаёт новый файл и записывает в него техт
+                            foreach (DataGridViewRow row in dgvServers.Rows)
+                            {
+                                //Формируем строку для записи в файл
+                                string index = row.Index.ToString();
+                                string selServer = row.Cells[0].Value.ToString();
+                                string serverName = row.Cells[2].Value.ToString();
+                                string adresIP = row.Cells[3].Value.ToString();
+                                string port = row.Cells[4].Value.ToString();
+                                string database = row.Cells[5].Value.ToString();
+                                string user = row.Cells[6].Value.ToString();
+                                string timeout = row.Cells[7].Value.ToString();
+                                string passw = row.Cells[8].Value.ToString();
+
+                                StringForWrite sfw = new StringForWrite(index, selServer, serverName, adresIP, port, user, passw, database, timeout);
+                                string str1 = sfw.SelServer;
+                                sw.WriteLine(str1);
+
+                                // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
+                                ConnectionData cd = new ConnectionData(serverName, adresIP, port, database, user, passw, timeout);
+                                VerifyConnection(cd, row);
+                            }
+                            sw.Close();
+                        }
+                    }
                 }
-                sw.Close();
             }
         }
 
