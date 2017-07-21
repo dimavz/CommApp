@@ -18,13 +18,13 @@ namespace CommApp
         private bool FlagColumns { get; set; }
 
         //Список Контентов запросов по серверам
-        List<QueryContext> ListReaderContext { get; set; }
+        List<QueryContext> ListQueryContext { get; set; }
 
         public MainForm()
         {
             InitializeComponent();
             this.FlagColumns = true;
-            this.ListReaderContext = new List<QueryContext>();
+            this.ListQueryContext = new List<QueryContext>();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -530,25 +530,47 @@ namespace CommApp
                 column2.HeaderText = "Количество строк";
                 column2.Width = 200;
 
-                dgvResults.Columns.AddRange(column1,column2);
+                DataGridViewTextBoxColumn column3 = new DataGridViewTextBoxColumn();
+                column3.Name = "adressIP";
+                column3.HeaderText = "Адрес IP";
+                column3.Visible = false;
+
+                DataGridViewTextBoxColumn column4 = new DataGridViewTextBoxColumn();
+                column4.Name = "port";
+                column4.HeaderText = "Порт";
+                column4.Visible = false;
+
+                DataGridViewTextBoxColumn column5 = new DataGridViewTextBoxColumn();
+                column5.Name = "database";
+                column5.HeaderText = "База данных";
+                column5.Visible = false;
+
+                DataGridViewTextBoxColumn column6 = new DataGridViewTextBoxColumn();
+                column6.Name = "user";
+                column6.HeaderText = "Пользователь";
+                column6.Visible = false;
+
+
+                dgvResults.Columns.AddRange(column1,column2, column3, column4, column5, column6);
 
                 FlagColumns = false;
             }
+            /* Создаём соединение с сервером*/
             NpgsqlConnection connection = new NpgsqlConnection(connData.ConnectionString);
             try
             {
                 NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection);
-                connection.Open();
+                connection.Open(); //Открываем соединение
                 if (connection.State == ConnectionState.Open)
                 {
-                    NpgsqlDataReader reader = command.ExecuteReader();
-                    if (reader.HasRows) // Если в результатах запроса есть строки
+                    NpgsqlDataReader reader = command.ExecuteReader();//Выполняем запрос
+                    if (reader.HasRows) // Если запрос вернул строки
                     {
                         DataTable dt = new DataTable();
                         dt.Load(reader);
                         QueryContext queryContext = new QueryContext(dt, connData);
                         //Добавляем контекст в список
-                        ListReaderContext.Add(queryContext);
+                        ListQueryContext.Add(queryContext);
                         //Формируем строку
                         //int countRows = 0;
                         //while (reader.Read())
@@ -561,18 +583,30 @@ namespace CommApp
                         //Создаём информационную строку
                         DataGridViewRow rowInfo = new DataGridViewRow();
                         rowInfo.DefaultCellStyle.BackColor = Color.Aqua;
-                        //Создаём информационные ячейки о сервере 
-                        DataGridViewCell cellInfo1 = new DataGridViewTextBoxCell();
-                        //cellInfo.
-                        cellInfo1.Value = connData.ServerName;
 
-                        //Создаём информационные ячейки о сервере 
+                        /*Создаём информационные ячейки о сервере */
+                        //Название сервера
+                        DataGridViewCell cellInfo1 = new DataGridViewTextBoxCell();
+                        cellInfo1.Value = connData.ServerName;
+                        //Количество строк в запросе
                         DataGridViewCell cellInfo2 = new DataGridViewTextBoxCell();
-                        //cellInfo.
-                        cellInfo2.Value = dt.Rows.Count;
+                        cellInfo2.Value = dt.Rows.Count;//Количество строк в таблице
                         //cellInfo2.Value = countRows;
+                        //Адрес IP
+                        DataGridViewCell cellInfo3 = new DataGridViewTextBoxCell();
+                        cellInfo3.Value = connData.AdressIP;
+                        //Порт
+                        DataGridViewCell cellInfo4 = new DataGridViewTextBoxCell();
+                        cellInfo4.Value = connData.Port;
+                        //База данных
+                        DataGridViewCell cellInfo5 = new DataGridViewTextBoxCell();
+                        cellInfo5.Value = connData.Database;
+                        //Пользователь
+                        DataGridViewCell cellInfo6 = new DataGridViewTextBoxCell();
+                        cellInfo6.Value = connData.User;
+
                         //Добавляем ячейку в строку
-                        rowInfo.Cells.AddRange(cellInfo1, cellInfo2);
+                        rowInfo.Cells.AddRange(cellInfo1, cellInfo2, cellInfo3,cellInfo4, cellInfo5,cellInfo6);
 
                         //Добавляем строку в таблицу
                         dgvResults.Rows.Add(rowInfo);
@@ -636,7 +670,7 @@ namespace CommApp
             //string ip = dgvResults.CurrentRow.Cells[0].Value.ToString();
 
             //Перебираем контексты запросов и выбираем тот, где имя сервера совпадает
-            foreach (QueryContext qCont in ListReaderContext)
+            foreach (QueryContext qCont in ListQueryContext)
             {
                 if (qCont.ConnectData.ServerName == nameServer)
                 {
