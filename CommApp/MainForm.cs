@@ -32,70 +32,8 @@ namespace CommApp
             ServerForm sf = new ServerForm();
             if (sf.ShowDialog() == DialogResult.OK)
             {
-                // Формируем строку для таблицы серверов DataGridView
-                DataGridViewRow row = new DataGridViewRow();
-
-                /*Создаём ячейки для строки*/
-                // Ячейка Выбрать
-                DataGridViewCell cell0 = new DataGridViewCheckBoxCell();
-                //Ячейка Состояние
-                DataGridViewCell cell1 = new DataGridViewImageCell();
-                //Ячейка Название
-                DataGridViewCell cell2 = new DataGridViewTextBoxCell();
-                //Ячейка Адрес IP
-                DataGridViewCell cell3 = new DataGridViewTextBoxCell();
-                //Ячейка База данных
-                DataGridViewCell cell4 = new DataGridViewTextBoxCell();
-                //Ячейка Порт
-                DataGridViewCell cell5 = new DataGridViewTextBoxCell();
-                //Ячейка Пользователь
-                DataGridViewCell cell6 = new DataGridViewTextBoxCell();
-                //Ячейка Таймаут
-                DataGridViewCell cell7 = new DataGridViewTextBoxCell();
-                //Ячейка Пароль
-                DataGridViewCell cell8 = new DataGridViewTextBoxCell();
-
-
-                // Добавляем в строку ячейки
-                row.Cells.AddRange(cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8);
-
-                /*Присваиваем ячейкам значения*/
-
-                // Выбрать
-                cell0.Value = true;
-
-                /*Состояние подключения*/
-                
-                // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
-                //Создаём объект подключения
-                ConnectionData cd = new ConnectionData(sf.NameServer, sf.AdressIP, sf.Port, sf.DB_Name, sf.User, sf.Pass,sf.Timeout);
-                VerifyConnection(cd, row);
-                
-                // Название
-                cell2.Value = sf.NameServer;
-                // Адрес IP
-                cell3.Value = sf.AdressIP;
-                // Порт
-                cell4.Value = sf.Port;
-                //База данных
-                cell5.Value = sf.DB_Name;
-                //Пользователь
-                cell6.Value = sf.User;
-                //  Таймаут
-                cell7.Value = sf.Timeout;
-                //  Пароль
-                cell8.Value = sf.Pass;
-
-                // Добавляем строку в DataGridView
-                dgvServers.Rows.Add(row);
-
                 try
                 {
-                    //Формируем строку для записи в файл
-                    StringForWrite sfw = new StringForWrite(row.Index.ToString(), cell0.Value.ToString(), sf.NameServer, sf.AdressIP, sf.Port, sf.User, sf.Pass, sf.DB_Name, sf.Timeout);
-
-                    string str = sfw.StrWrite;
-
                     //Создаём объект директории в файловой системе где хранится файл параметров серверов
                     DirectoryInfo di = new DirectoryInfo("files");
 
@@ -109,19 +47,130 @@ namespace CommApp
                     string path = di.FullName + "/servers.txt";
                     FileInfo fi = new FileInfo(path);
 
-                    //Если файл не существует, то создаём его
+                    //Если файл не существует, то выводим данные в таблицу и создаём файл 
                     if (fi.Exists == false)
                     {
+                        //Форм строки
+                        DataGridViewRow row = new DataGridViewRow();
+                        row = CreateRowForDataGridView();
+
+                        /*Присваиваем ячейкам значения*/
+
+                        // Выбрать
+                        row.Cells[0].Value = true;
+
+                        /*Состояние подключения*/
+
+                        // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
+                        //Создаём объект подключения
+                        ConnectionData cd = new ConnectionData(sf.NameServer, sf.AdressIP, sf.Port, sf.DB_Name, sf.User, sf.Pass, sf.Timeout);
+                        VerifyConnection(cd, row);
+
+                        // Название
+                        row.Cells[2].Value = sf.NameServer;
+                        // Адрес IP
+                        row.Cells[3].Value = sf.AdressIP;
+                        // Порт
+                        row.Cells[4].Value = sf.Port;
+                        //База данных
+                        row.Cells[5].Value = sf.DB_Name;
+                        //Пользователь
+                        row.Cells[6].Value = sf.User;
+                        //  Таймаут
+                        row.Cells[7].Value = sf.Timeout;
+                        //  Пароль
+                        row.Cells[8].Value = sf.Pass;
+
+                        // Добавляем строку в DataGridView
+                        dgvServers.Rows.Add(row);
+
+                        //Формируем строку для записи в файл
+                        StringForWrite sfw = new StringForWrite(row.Index.ToString(), row.Cells[0].Value.ToString(), sf.NameServer, sf.AdressIP, sf.Port, sf.User, sf.Pass, sf.DB_Name, sf.Timeout);
+
+                        string str = sfw.StrWrite;
+
                         //Записываем в файл
                         StreamWriter sw = fi.CreateText(); //Createtext создаёт новый файл и записывает в него техт
                         sw.WriteLine(str);
                         sw.Close();
                     }
-                    else
+                    else //Файл существует
                     {
-                        StreamWriter sw = fi.AppendText(); //AppendText добавляет данные в конец существующего файла
-                        sw.WriteLine(str);
-                        sw.Close();
+                        // То проверяем есть ли уже в нём запись о добавляемом сервере
+                        //Считываем файл
+                        StreamReader sr = new StreamReader(fi.FullName);
+                        string str;
+
+                        // Флаг записи в файл
+                        bool flWrite = true;
+                        
+                        while ((str = sr.ReadLine()) != null)
+                        {
+                            //Разбиваем считанную строку на элементы
+                            string[] columns = str.Split(';');
+
+                            string index = columns[0];
+                            string selected = columns[1];
+                            string serverName = columns[2];
+                            string adresIP = columns[3];
+                            string port = columns[4];
+                            string user = columns[5];
+                            string passw = columns[6];
+                            string database = columns[7];
+                            string timeout = columns[8];
+
+                            if (adresIP == sf.AdressIP && port == sf.Port && user == sf.User && database == sf.DB_Name)
+                            {
+                                flWrite = false;
+                                MessageBox.Show("Сервер с такими параметрами уже есть в Базе!");
+                            }
+                        }
+                        sr.Close();
+                        if (flWrite) // Если добавляемого сервера нет в БД
+                        {
+                            //Форм строки
+                            DataGridViewRow row = new DataGridViewRow();
+                            row = CreateRowForDataGridView();
+
+                            /*Присваиваем ячейкам значения*/
+
+                            // Выбрать
+                            row.Cells[0].Value = true;
+
+                            /*Состояние подключения*/
+
+                            // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
+                            //Создаём объект подключения
+                            ConnectionData cd = new ConnectionData(sf.NameServer, sf.AdressIP, sf.Port, sf.DB_Name, sf.User, sf.Pass, sf.Timeout);
+                            VerifyConnection(cd, row);
+
+                            // Название
+                            row.Cells[2].Value = sf.NameServer;
+                            // Адрес IP
+                            row.Cells[3].Value = sf.AdressIP;
+                            // Порт
+                            row.Cells[4].Value = sf.Port;
+                            //База данных
+                            row.Cells[5].Value = sf.DB_Name;
+                            //Пользователь
+                            row.Cells[6].Value = sf.User;
+                            //  Таймаут
+                            row.Cells[7].Value = sf.Timeout;
+                            //  Пароль
+                            row.Cells[8].Value = sf.Pass;
+
+                            // Добавляем строку в DataGridView
+                            dgvServers.Rows.Add(row);
+
+                            //Формируем строку для записи в файл
+                            StringForWrite sfw = new StringForWrite(row.Index.ToString(), row.Cells[0].Value.ToString(), sf.NameServer, sf.AdressIP, sf.Port, sf.User, sf.Pass, sf.DB_Name, sf.Timeout);
+
+                            string strWrite = sfw.StrWrite;
+                            //Запись в файл
+                            StreamWriter sw = fi.AppendText(); //AppendText добавляет данные в конец существующего файла
+                            sw.WriteLine(strWrite);
+                            sw.Close();
+                        }     
                     }
                 }
                 catch (Exception ex)
@@ -686,7 +735,12 @@ namespace CommApp
                         BindingSource bs = new BindingSource();
                         bs.DataSource = qCont.Table;
                         dgvQueryRows.DataSource = bs;
-                    }
+                    /*Устанавливаем ширину последней колонки Авто*/
+                    //Получаем количество колонок
+                    int countColumns = dgvQueryRows.ColumnCount;
+                    //dgvQueryRows.Columns[countColumns - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    //dgvQueryRows.Columns[countColumns - 1].Width = 100;
+                }
             }
         }
 
@@ -823,6 +877,38 @@ namespace CommApp
                 }
 
             }
+
+        }
+
+        private DataGridViewRow CreateRowForDataGridView()
+        {
+            // Формируем строку для таблицы серверов DataGridView
+            DataGridViewRow row = new DataGridViewRow();
+
+            /*Создаём ячейки для строки*/
+            // Ячейка Выбрать
+            DataGridViewCell cell0 = new DataGridViewCheckBoxCell();
+            //Ячейка Состояние
+            DataGridViewCell cell1 = new DataGridViewImageCell();
+            //Ячейка Название
+            DataGridViewCell cell2 = new DataGridViewTextBoxCell();
+            //Ячейка Адрес IP
+            DataGridViewCell cell3 = new DataGridViewTextBoxCell();
+            //Ячейка База данных
+            DataGridViewCell cell4 = new DataGridViewTextBoxCell();
+            //Ячейка Порт
+            DataGridViewCell cell5 = new DataGridViewTextBoxCell();
+            //Ячейка Пользователь
+            DataGridViewCell cell6 = new DataGridViewTextBoxCell();
+            //Ячейка Таймаут
+            DataGridViewCell cell7 = new DataGridViewTextBoxCell();
+            //Ячейка Пароль
+            DataGridViewCell cell8 = new DataGridViewTextBoxCell();
+
+            // Добавляем в строку ячейки
+            row.Cells.AddRange(cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8);
+
+            return row;
 
         }
     }
