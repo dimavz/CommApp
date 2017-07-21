@@ -527,7 +527,7 @@ namespace CommApp
 
                 DataGridViewTextBoxColumn column2 = new DataGridViewTextBoxColumn();
                 column2.Name = "countStrings";
-                column2.HeaderText = "Количество строк";
+                column2.HeaderText = "Найдено строк";
                 column2.Width = 200;
 
                 DataGridViewTextBoxColumn column3 = new DataGridViewTextBoxColumn();
@@ -667,18 +667,24 @@ namespace CommApp
             //Имя Сервера
             string nameServer = dgvResults.CurrentRow.Cells[0].Value.ToString();
             //IP Адрес
-            //string ip = dgvResults.CurrentRow.Cells[0].Value.ToString();
-
+            string adressIP = dgvResults.CurrentRow.Cells[2].Value.ToString();
+            //Порт
+            string port = dgvResults.CurrentRow.Cells[3].Value.ToString();
+            //База данных
+            string database = dgvResults.CurrentRow.Cells[4].Value.ToString();
+            //Пользователь
+            string user = dgvResults.CurrentRow.Cells[5].Value.ToString();
             //Перебираем контексты запросов и выбираем тот, где имя сервера совпадает
             foreach (QueryContext qCont in ListQueryContext)
             {
-                if (qCont.ConnectData.ServerName == nameServer)
-                {
-                    //Выводим строки в таблицу
-                    BindingSource bs = new BindingSource();
-                    bs.DataSource = qCont.Table;
-                    dgvQueryRows.DataSource = bs;
-                }
+                if (qCont.ConnectData.ServerName == nameServer && qCont.ConnectData.AdressIP == adressIP && qCont.ConnectData.Port == port
+                    && qCont.ConnectData.Database == database && qCont.ConnectData.User == user)
+                    {
+                        //Выводим строки в таблицу
+                        BindingSource bs = new BindingSource();
+                        bs.DataSource = qCont.Table;
+                        dgvQueryRows.DataSource = bs;
+                    }
             }
         }
 
@@ -687,10 +693,12 @@ namespace CommApp
             if (rtbQuery.Text == "")
             {
                 btnRun.Enabled = false;
+                btnClear.Enabled = false;
             }
             else
             {
                 btnRun.Enabled = true;
+                btnClear.Enabled = true;
             }
         }
 
