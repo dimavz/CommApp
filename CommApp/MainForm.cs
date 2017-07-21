@@ -518,7 +518,7 @@ namespace CommApp
         {
             if (FlagColumns)
             {
-                /*Создаём название колонки для таблицы*/
+                /*Создаём название колонок для таблицы*/
 
                 DataGridViewTextBoxColumn column1 = new DataGridViewTextBoxColumn();
                 column1.Name = "server";
@@ -570,6 +570,7 @@ namespace CommApp
                         DataGridViewCell cellInfo2 = new DataGridViewTextBoxCell();
                         //cellInfo.
                         cellInfo2.Value = dt.Rows.Count;
+                        //cellInfo2.Value = countRows;
                         //Добавляем ячейку в строку
                         rowInfo.Cells.AddRange(cellInfo1, cellInfo2);
 
