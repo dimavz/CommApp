@@ -86,6 +86,7 @@
             this.dgvServers.Name = "dgvServers";
             this.dgvServers.Size = new System.Drawing.Size(698, 150);
             this.dgvServers.TabIndex = 0;
+            this.dgvServers.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvServers_CellEnter);
             // 
             // SelectServer
             // 
@@ -259,6 +260,7 @@
             this.btDown.Size = new System.Drawing.Size(33, 23);
             this.btDown.TabIndex = 9;
             this.btDown.UseVisualStyleBackColor = true;
+            this.btDown.Click += new System.EventHandler(this.btDown_Click);
             // 
             // btUp
             // 
@@ -268,6 +270,7 @@
             this.btUp.Size = new System.Drawing.Size(33, 23);
             this.btUp.TabIndex = 8;
             this.btUp.UseVisualStyleBackColor = true;
+            this.btUp.Click += new System.EventHandler(this.btUp_Click);
             // 
             // btReload
             // 

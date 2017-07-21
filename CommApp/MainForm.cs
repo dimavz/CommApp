@@ -251,6 +251,8 @@ namespace CommApp
                     }
                     sr.Close();
                     VerifyBatton();
+                    //Присваиваем фокус первой ячейке таблицы
+                    btUp.Enabled = false;
                 }
             }
         }
@@ -724,6 +726,104 @@ namespace CommApp
                 btUp.Enabled = false;
                 btDown.Enabled = false;
             }
+        }
+
+        private void dgvServers_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            /*Видимость кнопок перемещения строк таблицы вверх-вниз*/
+            //Получаем количество строк в таблице
+            int countRows = dgvServers.Rows.Count;
+            if (countRows > 0)
+            {
+                //Получаем индекс текущей строки
+                int indexCurrentRow = dgvServers.CurrentRow.Index;
+                if (indexCurrentRow == 0)//Если строка первая
+                {
+                    btUp.Enabled = false;
+                    btDown.Enabled = true;
+                }
+                else
+                {
+                    btUp.Enabled = true;
+                    if (indexCurrentRow == countRows-1)//Если последняя строка
+                    {
+                        btDown.Enabled = false;
+                    }
+                    else
+                    {
+                        btDown.Enabled = true;
+                    }
+                    
+                }
+            }
+            //Выделяем текущую строку
+            dgvServers.CurrentRow.Selected = true;
+        }
+
+        private void btUp_Click(object sender, EventArgs e)
+        {
+            //Получаем индексы
+            int currRowInd = dgvServers.CurrentRow.Index;
+            int upRowInd = dgvServers.CurrentRow.Index - 1;
+            // Получаем строки
+            DataGridViewRow row1 = dgvServers.Rows[currRowInd];
+            DataGridViewRow row2 = dgvServers.Rows[upRowInd];
+            // Удаляем строки из таблицы
+            dgvServers.Rows.Remove(row1);
+            dgvServers.Rows.Remove(row2);
+            // Вставляем строки на новые позиции
+            dgvServers.Rows.Insert(upRowInd, row1);
+            dgvServers.Rows.Insert(currRowInd, row2);
+            //Снимаем выделения со всех строк
+            foreach(DataGridViewRow row in dgvServers.Rows)
+            {
+                if (row.Index == dgvServers.Rows[upRowInd].Index)
+                {
+                    row.Selected = true;
+                    DataGridViewCell cell = dgvServers.Rows[row.Index].Cells[0];
+                    dgvServers.CurrentCell = cell;
+                }
+                else
+                {
+                    row.Selected = false;
+                }
+                
+            }
+            //Выделяем перемещённую строку
+            //dgvServers.Rows[upRowInd].Selected = true;
+        }
+
+        private void btDown_Click(object sender, EventArgs e)
+        {
+            //Получаем индексы
+            int currRowInd = dgvServers.CurrentRow.Index;
+            int downRowInd = dgvServers.CurrentRow.Index + 1;
+            // Получаем строки
+            DataGridViewRow row1 = dgvServers.Rows[currRowInd];
+            DataGridViewRow row2 = dgvServers.Rows[downRowInd];
+            // Удаляем строки из таблицы
+            dgvServers.Rows.Remove(row1);
+            dgvServers.Rows.Remove(row2);
+            // Вставляем строки на новые позиции
+            dgvServers.Rows.Insert(currRowInd, row2);
+            dgvServers.Rows.Insert(downRowInd, row1);
+            //Выделяем перемещённую строку
+            //dgvServers.Rows[downRowInd].Selected = true;
+            foreach (DataGridViewRow row in dgvServers.Rows)
+            {
+                if (row.Index == dgvServers.Rows[downRowInd].Index)
+                {
+                    row.Selected = true;
+                    DataGridViewCell cell = dgvServers.Rows[row.Index].Cells[0];
+                    dgvServers.CurrentCell = cell;
+                }
+                else
+                {
+                    row.Selected = false;
+                }
+
+            }
+
         }
     }
 }
