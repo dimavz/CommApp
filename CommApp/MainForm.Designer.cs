@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dgvServers = new System.Windows.Forms.DataGridView();
             this.SelectServer = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.StatusImg = new System.Windows.Forms.DataGridViewImageColumn();
             this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.port = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,12 +39,15 @@
             this.timeoutServer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbQuery = new System.Windows.Forms.GroupBox();
-            this.sbClear = new DevExpress.XtraEditors.SimpleButton();
-            this.sbRun = new DevExpress.XtraEditors.SimpleButton();
             this.lbMessage = new System.Windows.Forms.Label();
             this.pbExequteQuery = new System.Windows.Forms.ProgressBar();
             this.rtbQuery = new System.Windows.Forms.RichTextBox();
             this.gbServers = new System.Windows.Forms.GroupBox();
+            this.gbResults = new System.Windows.Forms.GroupBox();
+            this.dgvQueryRows = new System.Windows.Forms.DataGridView();
+            this.dgvResults = new System.Windows.Forms.DataGridView();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.sbDown = new DevExpress.XtraEditors.SimpleButton();
             this.sbUp = new DevExpress.XtraEditors.SimpleButton();
             this.sbReload = new DevExpress.XtraEditors.SimpleButton();
@@ -54,11 +56,9 @@
             this.sbDel = new DevExpress.XtraEditors.SimpleButton();
             this.sbEdit = new DevExpress.XtraEditors.SimpleButton();
             this.btnAdd2 = new DevExpress.XtraEditors.SimpleButton();
-            this.gbResults = new System.Windows.Forms.GroupBox();
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            this.dgvQueryRows = new System.Windows.Forms.DataGridView();
-            this.dgvResults = new System.Windows.Forms.DataGridView();
-            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.StatusImg = new System.Windows.Forms.DataGridViewImageColumn();
+            this.sbClear = new DevExpress.XtraEditors.SimpleButton();
+            this.sbRun = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
             this.gbServers.SuspendLayout();
@@ -95,13 +95,6 @@
             this.SelectServer.Name = "SelectServer";
             this.SelectServer.TrueValue = "";
             this.SelectServer.Width = 55;
-            // 
-            // StatusImg
-            // 
-            this.StatusImg.HeaderText = "Состояние";
-            this.StatusImg.Image = global::CommApp.Properties.Resources.error_16х16;
-            this.StatusImg.Name = "StatusImg";
-            this.StatusImg.Width = 65;
             // 
             // Title
             // 
@@ -157,28 +150,6 @@
             this.gbQuery.TabStop = false;
             this.gbQuery.Text = "Запрос";
             // 
-            // sbClear
-            // 
-            this.sbClear.Image = global::CommApp.Properties.Resources.clear_32x32;
-            this.sbClear.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
-            this.sbClear.Location = new System.Drawing.Point(98, 302);
-            this.sbClear.Name = "sbClear";
-            this.sbClear.Size = new System.Drawing.Size(67, 55);
-            this.sbClear.TabIndex = 7;
-            this.sbClear.Text = "Очистить";
-            this.sbClear.Click += new System.EventHandler(this.sbClear_Click);
-            // 
-            // sbRun
-            // 
-            this.sbRun.Image = global::CommApp.Properties.Resources.next_32x32;
-            this.sbRun.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
-            this.sbRun.Location = new System.Drawing.Point(25, 302);
-            this.sbRun.Name = "sbRun";
-            this.sbRun.Size = new System.Drawing.Size(67, 55);
-            this.sbRun.TabIndex = 6;
-            this.sbRun.Text = "Выполнить";
-            this.sbRun.Click += new System.EventHandler(this.sbRun_Click);
-            // 
             // lbMessage
             // 
             this.lbMessage.AutoSize = true;
@@ -224,23 +195,73 @@
             this.gbServers.TabStop = false;
             this.gbServers.Text = "Список серверов";
             // 
+            // gbResults
+            // 
+            this.gbResults.Controls.Add(this.simpleButton1);
+            this.gbResults.Controls.Add(this.dgvQueryRows);
+            this.gbResults.Controls.Add(this.dgvResults);
+            this.gbResults.Location = new System.Drawing.Point(798, 12);
+            this.gbResults.Name = "gbResults";
+            this.gbResults.Size = new System.Drawing.Size(757, 642);
+            this.gbResults.TabIndex = 7;
+            this.gbResults.TabStop = false;
+            this.gbResults.Text = "Результаты выполнения запроса";
+            // 
+            // dgvQueryRows
+            // 
+            this.dgvQueryRows.AllowUserToAddRows = false;
+            this.dgvQueryRows.AllowUserToDeleteRows = false;
+            this.dgvQueryRows.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvQueryRows.Location = new System.Drawing.Point(22, 220);
+            this.dgvQueryRows.Name = "dgvQueryRows";
+            this.dgvQueryRows.ReadOnly = true;
+            this.dgvQueryRows.Size = new System.Drawing.Size(714, 356);
+            this.dgvQueryRows.TabIndex = 1;
+            // 
+            // dgvResults
+            // 
+            this.dgvResults.AllowUserToAddRows = false;
+            this.dgvResults.AllowUserToDeleteRows = false;
+            this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResults.Location = new System.Drawing.Point(22, 19);
+            this.dgvResults.Name = "dgvResults";
+            this.dgvResults.ReadOnly = true;
+            this.dgvResults.Size = new System.Drawing.Size(714, 179);
+            this.dgvResults.TabIndex = 0;
+            this.dgvResults.SelectionChanged += new System.EventHandler(this.dgvResults_SelectionChanged);
+            // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.HeaderText = "Состояние";
+            this.dataGridViewImageColumn1.Image = global::CommApp.Properties.Resources.error_16х16;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.Width = 65;
+            // 
+            // simpleButton1
+            // 
+            this.simpleButton1.Image = global::CommApp.Properties.Resources.gridcolumnheader_32x32;
+            this.simpleButton1.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.simpleButton1.Location = new System.Drawing.Point(22, 581);
+            this.simpleButton1.Name = "simpleButton1";
+            this.simpleButton1.Size = new System.Drawing.Size(100, 55);
+            this.simpleButton1.TabIndex = 2;
+            this.simpleButton1.Text = "Экспорт в Exel ...";
+            // 
             // sbDown
             // 
             this.sbDown.Image = global::CommApp.Properties.Resources.movedown_32x32;
-            this.sbDown.ImageLocation = DevExpress.XtraEditors.ImageLocation.BottomCenter;
             this.sbDown.Location = new System.Drawing.Point(6, 84);
             this.sbDown.Name = "sbDown";
-            this.sbDown.Size = new System.Drawing.Size(37, 43);
+            this.sbDown.Size = new System.Drawing.Size(38, 59);
             this.sbDown.TabIndex = 17;
             this.sbDown.Click += new System.EventHandler(this.simpleButton2_Click_1);
             // 
             // sbUp
             // 
             this.sbUp.Image = global::CommApp.Properties.Resources.moveup_32x32;
-            this.sbUp.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
-            this.sbUp.Location = new System.Drawing.Point(6, 35);
+            this.sbUp.Location = new System.Drawing.Point(6, 19);
             this.sbUp.Name = "sbUp";
-            this.sbUp.Size = new System.Drawing.Size(37, 43);
+            this.sbUp.Size = new System.Drawing.Size(37, 59);
             this.sbUp.TabIndex = 16;
             this.sbUp.Click += new System.EventHandler(this.simpleButton1_Click_1);
             // 
@@ -310,57 +331,34 @@
             this.btnAdd2.Text = "Добавить";
             this.btnAdd2.Click += new System.EventHandler(this.btnAdd2_Click);
             // 
-            // gbResults
+            // StatusImg
             // 
-            this.gbResults.Controls.Add(this.simpleButton1);
-            this.gbResults.Controls.Add(this.dgvQueryRows);
-            this.gbResults.Controls.Add(this.dgvResults);
-            this.gbResults.Location = new System.Drawing.Point(798, 12);
-            this.gbResults.Name = "gbResults";
-            this.gbResults.Size = new System.Drawing.Size(757, 642);
-            this.gbResults.TabIndex = 7;
-            this.gbResults.TabStop = false;
-            this.gbResults.Text = "Результаты выполнения запроса";
+            this.StatusImg.HeaderText = "Состояние";
+            this.StatusImg.Image = global::CommApp.Properties.Resources.error_16х16;
+            this.StatusImg.Name = "StatusImg";
+            this.StatusImg.Width = 65;
             // 
-            // simpleButton1
+            // sbClear
             // 
-            this.simpleButton1.Image = global::CommApp.Properties.Resources.gridcolumnheader_32x32;
-            this.simpleButton1.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
-            this.simpleButton1.Location = new System.Drawing.Point(22, 581);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(100, 55);
-            this.simpleButton1.TabIndex = 2;
-            this.simpleButton1.Text = "Экспорт в Exel ...";
+            this.sbClear.Image = global::CommApp.Properties.Resources.clear_32x32;
+            this.sbClear.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbClear.Location = new System.Drawing.Point(98, 302);
+            this.sbClear.Name = "sbClear";
+            this.sbClear.Size = new System.Drawing.Size(67, 55);
+            this.sbClear.TabIndex = 7;
+            this.sbClear.Text = "Очистить";
+            this.sbClear.Click += new System.EventHandler(this.sbClear_Click);
             // 
-            // dgvQueryRows
+            // sbRun
             // 
-            this.dgvQueryRows.AllowUserToAddRows = false;
-            this.dgvQueryRows.AllowUserToDeleteRows = false;
-            this.dgvQueryRows.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvQueryRows.Location = new System.Drawing.Point(22, 220);
-            this.dgvQueryRows.Name = "dgvQueryRows";
-            this.dgvQueryRows.ReadOnly = true;
-            this.dgvQueryRows.Size = new System.Drawing.Size(714, 356);
-            this.dgvQueryRows.TabIndex = 1;
-            // 
-            // dgvResults
-            // 
-            this.dgvResults.AllowUserToAddRows = false;
-            this.dgvResults.AllowUserToDeleteRows = false;
-            this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResults.Location = new System.Drawing.Point(22, 19);
-            this.dgvResults.Name = "dgvResults";
-            this.dgvResults.ReadOnly = true;
-            this.dgvResults.Size = new System.Drawing.Size(714, 179);
-            this.dgvResults.TabIndex = 0;
-            this.dgvResults.SelectionChanged += new System.EventHandler(this.dgvResults_SelectionChanged);
-            // 
-            // dataGridViewImageColumn1
-            // 
-            this.dataGridViewImageColumn1.HeaderText = "Состояние";
-            this.dataGridViewImageColumn1.Image = global::CommApp.Properties.Resources.error_16х16;
-            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-            this.dataGridViewImageColumn1.Width = 65;
+            this.sbRun.Image = global::CommApp.Properties.Resources.play_32x32;
+            this.sbRun.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbRun.Location = new System.Drawing.Point(25, 302);
+            this.sbRun.Name = "sbRun";
+            this.sbRun.Size = new System.Drawing.Size(67, 55);
+            this.sbRun.TabIndex = 6;
+            this.sbRun.Text = "Выполнить";
+            this.sbRun.Click += new System.EventHandler(this.sbRun_Click);
             // 
             // MainForm
             // 
