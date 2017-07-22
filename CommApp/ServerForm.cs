@@ -55,5 +55,69 @@ namespace CommApp
                 tbPassword.UseSystemPasswordChar = true;
             }
         }
+
+        private void btOk_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ActivateBattonOk()
+        {
+            if (string.IsNullOrEmpty(tbName.Text)
+                || string.IsNullOrEmpty(tbAdress.Text)
+                || string.IsNullOrEmpty(tbPort.Text)
+                || string.IsNullOrEmpty(tbDB.Text)
+                || string.IsNullOrEmpty(tbUser.Text)
+                || string.IsNullOrEmpty(tbPassword.Text)
+                || string.IsNullOrEmpty(tbTimeout .Text)
+                )
+            {
+                btOk.Enabled = false;
+            }
+            else
+            {
+                btOk.Enabled = true;
+            }
+        }
+
+        private void ServerForm_Load(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbName_TextChanged(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbAdress_TextChanged(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbPort_TextChanged(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbDB_TextChanged(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbUser_TextChanged(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbPassword_TextChanged(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbTimeout_TextChanged(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
     }
 }

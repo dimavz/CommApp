@@ -45,6 +45,8 @@
             this.cbViewPass = new System.Windows.Forms.CheckBox();
             this.tbTimeout = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.errProv = new System.Windows.Forms.ErrorProvider();
+            ((System.ComponentModel.ISupportInitialize)(this.errProv)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -62,7 +64,7 @@
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(199, 20);
             this.tbName.TabIndex = 1;
-            this.tbName.Text = "Тест1";
+            this.tbName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
             // label2
             // 
@@ -79,7 +81,8 @@
             this.tbAdress.Name = "tbAdress";
             this.tbAdress.Size = new System.Drawing.Size(199, 20);
             this.tbAdress.TabIndex = 3;
-            this.tbAdress.Text = "10.96.0.134";
+            this.tbAdress.Text = "192.168.1.1";
+            this.tbAdress.TextChanged += new System.EventHandler(this.tbAdress_TextChanged);
             // 
             // tbPort
             // 
@@ -88,6 +91,7 @@
             this.tbPort.Size = new System.Drawing.Size(199, 20);
             this.tbPort.TabIndex = 5;
             this.tbPort.Text = "5432";
+            this.tbPort.TextChanged += new System.EventHandler(this.tbPort_TextChanged);
             // 
             // label3
             // 
@@ -105,6 +109,7 @@
             this.tbUser.Size = new System.Drawing.Size(199, 20);
             this.tbUser.TabIndex = 7;
             this.tbUser.Text = "postgres";
+            this.tbUser.TextChanged += new System.EventHandler(this.tbUser_TextChanged);
             // 
             // label4
             // 
@@ -123,6 +128,7 @@
             this.tbPassword.TabIndex = 9;
             this.tbPassword.Text = "matrix";
             this.tbPassword.UseSystemPasswordChar = true;
+            this.tbPassword.TextChanged += new System.EventHandler(this.tbPassword_TextChanged);
             // 
             // label5
             // 
@@ -142,6 +148,7 @@
             this.btOk.TabIndex = 10;
             this.btOk.Text = "Ок";
             this.btOk.UseVisualStyleBackColor = true;
+            this.btOk.Click += new System.EventHandler(this.btOk_Click);
             // 
             // btCancel
             // 
@@ -160,6 +167,7 @@
             this.tbDB.Size = new System.Drawing.Size(199, 20);
             this.tbDB.TabIndex = 13;
             this.tbDB.Text = "postgres";
+            this.tbDB.TextChanged += new System.EventHandler(this.tbDB_TextChanged);
             // 
             // label6
             // 
@@ -188,6 +196,7 @@
             this.tbTimeout.Size = new System.Drawing.Size(199, 20);
             this.tbTimeout.TabIndex = 16;
             this.tbTimeout.Text = "5";
+            this.tbTimeout.TextChanged += new System.EventHandler(this.tbTimeout_TextChanged);
             // 
             // label7
             // 
@@ -197,6 +206,10 @@
             this.label7.Size = new System.Drawing.Size(97, 13);
             this.label7.TabIndex = 15;
             this.label7.Text = "Таймаут (Timeout)";
+            // 
+            // errProv
+            // 
+            this.errProv.ContainerControl = this;
             // 
             // ServerForm
             // 
@@ -223,6 +236,8 @@
             this.Name = "ServerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Сервер";
+            this.Load += new System.EventHandler(this.ServerForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errProv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -247,5 +262,6 @@
         private System.Windows.Forms.CheckBox cbViewPass;
         private System.Windows.Forms.TextBox tbTimeout;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ErrorProvider errProv;
     }
 }

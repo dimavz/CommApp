@@ -39,26 +39,26 @@
             this.User = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timeoutServer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnDelit = new System.Windows.Forms.Button();
             this.gbQuery = new System.Windows.Forms.GroupBox();
+            this.sbClear = new DevExpress.XtraEditors.SimpleButton();
+            this.sbRun = new DevExpress.XtraEditors.SimpleButton();
             this.lbMessage = new System.Windows.Forms.Label();
             this.pbExequteQuery = new System.Windows.Forms.ProgressBar();
             this.rtbQuery = new System.Windows.Forms.RichTextBox();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.btnRun = new System.Windows.Forms.Button();
             this.gbServers = new System.Windows.Forms.GroupBox();
-            this.btDown = new System.Windows.Forms.Button();
-            this.btUp = new System.Windows.Forms.Button();
-            this.btReload = new System.Windows.Forms.Button();
-            this.btClearAll = new System.Windows.Forms.Button();
-            this.btSelAll = new System.Windows.Forms.Button();
+            this.sbDown = new DevExpress.XtraEditors.SimpleButton();
+            this.sbUp = new DevExpress.XtraEditors.SimpleButton();
+            this.sbReload = new DevExpress.XtraEditors.SimpleButton();
+            this.sbUnchAll = new DevExpress.XtraEditors.SimpleButton();
+            this.sbSelAll = new DevExpress.XtraEditors.SimpleButton();
+            this.sbDel = new DevExpress.XtraEditors.SimpleButton();
+            this.sbEdit = new DevExpress.XtraEditors.SimpleButton();
+            this.btnAdd2 = new DevExpress.XtraEditors.SimpleButton();
             this.gbResults = new System.Windows.Forms.GroupBox();
+            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.dgvQueryRows = new System.Windows.Forms.DataGridView();
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.btExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
             this.gbServers.SuspendLayout();
@@ -143,50 +143,41 @@
             this.Password.Visible = false;
             this.Password.Width = 87;
             // 
-            // btnAdd
-            // 
-            this.btnAdd.Location = new System.Drawing.Point(46, 175);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 2;
-            this.btnAdd.Text = "Добавить";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Location = new System.Drawing.Point(127, 175);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(75, 23);
-            this.btnEdit.TabIndex = 3;
-            this.btnEdit.Text = "Изменить";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-            // 
-            // btnDelit
-            // 
-            this.btnDelit.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnDelit.Location = new System.Drawing.Point(208, 175);
-            this.btnDelit.Name = "btnDelit";
-            this.btnDelit.Size = new System.Drawing.Size(75, 23);
-            this.btnDelit.TabIndex = 4;
-            this.btnDelit.Text = "Удалить";
-            this.btnDelit.UseVisualStyleBackColor = true;
-            this.btnDelit.Click += new System.EventHandler(this.btnDelit_Click);
-            // 
             // gbQuery
             // 
+            this.gbQuery.Controls.Add(this.sbClear);
+            this.gbQuery.Controls.Add(this.sbRun);
             this.gbQuery.Controls.Add(this.lbMessage);
             this.gbQuery.Controls.Add(this.pbExequteQuery);
             this.gbQuery.Controls.Add(this.rtbQuery);
-            this.gbQuery.Controls.Add(this.btnClear);
-            this.gbQuery.Controls.Add(this.btnRun);
             this.gbQuery.Location = new System.Drawing.Point(12, 283);
             this.gbQuery.Name = "gbQuery";
             this.gbQuery.Size = new System.Drawing.Size(770, 371);
             this.gbQuery.TabIndex = 0;
             this.gbQuery.TabStop = false;
             this.gbQuery.Text = "Запрос";
+            // 
+            // sbClear
+            // 
+            this.sbClear.Image = global::CommApp.Properties.Resources.clear_32x32;
+            this.sbClear.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbClear.Location = new System.Drawing.Point(98, 302);
+            this.sbClear.Name = "sbClear";
+            this.sbClear.Size = new System.Drawing.Size(67, 55);
+            this.sbClear.TabIndex = 7;
+            this.sbClear.Text = "Очистить";
+            this.sbClear.Click += new System.EventHandler(this.sbClear_Click);
+            // 
+            // sbRun
+            // 
+            this.sbRun.Image = global::CommApp.Properties.Resources.next_32x32;
+            this.sbRun.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbRun.Location = new System.Drawing.Point(25, 302);
+            this.sbRun.Name = "sbRun";
+            this.sbRun.Size = new System.Drawing.Size(67, 55);
+            this.sbRun.TabIndex = 6;
+            this.sbRun.Text = "Выполнить";
+            this.sbRun.Click += new System.EventHandler(this.sbRun_Click);
             // 
             // lbMessage
             // 
@@ -208,107 +199,120 @@
             // 
             // rtbQuery
             // 
-            this.rtbQuery.Location = new System.Drawing.Point(25, 30);
+            this.rtbQuery.Location = new System.Drawing.Point(25, 19);
             this.rtbQuery.Name = "rtbQuery";
             this.rtbQuery.Size = new System.Drawing.Size(719, 275);
             this.rtbQuery.TabIndex = 3;
             this.rtbQuery.Text = resources.GetString("rtbQuery.Text");
             this.rtbQuery.TextChanged += new System.EventHandler(this.rtbQuery_TextChanged);
             // 
-            // btnClear
-            // 
-            this.btnClear.Location = new System.Drawing.Point(106, 311);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 2;
-            this.btnClear.Text = "Очистить";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
-            // btnRun
-            // 
-            this.btnRun.Location = new System.Drawing.Point(25, 311);
-            this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(75, 23);
-            this.btnRun.TabIndex = 1;
-            this.btnRun.Text = "Выполнить";
-            this.btnRun.UseVisualStyleBackColor = true;
-            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
-            // 
             // gbServers
             // 
-            this.gbServers.Controls.Add(this.btDown);
-            this.gbServers.Controls.Add(this.btUp);
-            this.gbServers.Controls.Add(this.btReload);
-            this.gbServers.Controls.Add(this.btClearAll);
-            this.gbServers.Controls.Add(this.btSelAll);
+            this.gbServers.Controls.Add(this.sbDown);
+            this.gbServers.Controls.Add(this.sbUp);
+            this.gbServers.Controls.Add(this.sbReload);
+            this.gbServers.Controls.Add(this.sbUnchAll);
+            this.gbServers.Controls.Add(this.sbSelAll);
+            this.gbServers.Controls.Add(this.sbDel);
+            this.gbServers.Controls.Add(this.sbEdit);
+            this.gbServers.Controls.Add(this.btnAdd2);
             this.gbServers.Controls.Add(this.dgvServers);
-            this.gbServers.Controls.Add(this.btnAdd);
-            this.gbServers.Controls.Add(this.btnDelit);
-            this.gbServers.Controls.Add(this.btnEdit);
             this.gbServers.Location = new System.Drawing.Point(12, 12);
             this.gbServers.Name = "gbServers";
             this.gbServers.Size = new System.Drawing.Size(770, 255);
             this.gbServers.TabIndex = 6;
             this.gbServers.TabStop = false;
-            this.gbServers.Text = "Серверы";
+            this.gbServers.Text = "Список серверов";
             // 
-            // btDown
+            // sbDown
             // 
-            this.btDown.Image = global::CommApp.Properties.Resources.arroyDown_16x16;
-            this.btDown.Location = new System.Drawing.Point(7, 82);
-            this.btDown.Name = "btDown";
-            this.btDown.Size = new System.Drawing.Size(33, 23);
-            this.btDown.TabIndex = 9;
-            this.btDown.UseVisualStyleBackColor = true;
-            this.btDown.Click += new System.EventHandler(this.btDown_Click);
+            this.sbDown.Image = global::CommApp.Properties.Resources.movedown_32x32;
+            this.sbDown.ImageLocation = DevExpress.XtraEditors.ImageLocation.BottomCenter;
+            this.sbDown.Location = new System.Drawing.Point(6, 84);
+            this.sbDown.Name = "sbDown";
+            this.sbDown.Size = new System.Drawing.Size(37, 43);
+            this.sbDown.TabIndex = 17;
+            this.sbDown.Click += new System.EventHandler(this.simpleButton2_Click_1);
             // 
-            // btUp
+            // sbUp
             // 
-            this.btUp.Image = global::CommApp.Properties.Resources.arroyUp_16x16;
-            this.btUp.Location = new System.Drawing.Point(7, 53);
-            this.btUp.Name = "btUp";
-            this.btUp.Size = new System.Drawing.Size(33, 23);
-            this.btUp.TabIndex = 8;
-            this.btUp.UseVisualStyleBackColor = true;
-            this.btUp.Click += new System.EventHandler(this.btUp_Click);
+            this.sbUp.Image = global::CommApp.Properties.Resources.moveup_32x32;
+            this.sbUp.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbUp.Location = new System.Drawing.Point(6, 35);
+            this.sbUp.Name = "sbUp";
+            this.sbUp.Size = new System.Drawing.Size(37, 43);
+            this.sbUp.TabIndex = 16;
+            this.sbUp.Click += new System.EventHandler(this.simpleButton1_Click_1);
             // 
-            // btReload
+            // sbReload
             // 
-            this.btReload.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btReload.Location = new System.Drawing.Point(461, 175);
-            this.btReload.Name = "btReload";
-            this.btReload.Size = new System.Drawing.Size(120, 23);
-            this.btReload.TabIndex = 7;
-            this.btReload.Text = "Обновить состояние";
-            this.btReload.UseVisualStyleBackColor = true;
-            this.btReload.Click += new System.EventHandler(this.btReload_Click);
+            this.sbReload.Image = global::CommApp.Properties.Resources.refresh_32x32;
+            this.sbReload.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbReload.Location = new System.Drawing.Point(455, 175);
+            this.sbReload.Name = "sbReload";
+            this.sbReload.Size = new System.Drawing.Size(77, 59);
+            this.sbReload.TabIndex = 15;
+            this.sbReload.Text = "Обновить";
+            this.sbReload.Click += new System.EventHandler(this.simpleButton5_Click);
             // 
-            // btClearAll
+            // sbUnchAll
             // 
-            this.btClearAll.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btClearAll.Location = new System.Drawing.Point(375, 175);
-            this.btClearAll.Name = "btClearAll";
-            this.btClearAll.Size = new System.Drawing.Size(80, 23);
-            this.btClearAll.TabIndex = 6;
-            this.btClearAll.Text = "Снять все";
-            this.btClearAll.UseVisualStyleBackColor = true;
-            this.btClearAll.Click += new System.EventHandler(this.btClearAll_Click);
+            this.sbUnchAll.Image = ((System.Drawing.Image)(resources.GetObject("sbUnchAll.Image")));
+            this.sbUnchAll.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbUnchAll.Location = new System.Drawing.Point(373, 175);
+            this.sbUnchAll.Name = "sbUnchAll";
+            this.sbUnchAll.Size = new System.Drawing.Size(75, 59);
+            this.sbUnchAll.TabIndex = 14;
+            this.sbUnchAll.Text = " Снять все";
+            this.sbUnchAll.Click += new System.EventHandler(this.simpleButton4_Click);
             // 
-            // btSelAll
+            // sbSelAll
             // 
-            this.btSelAll.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btSelAll.Location = new System.Drawing.Point(289, 175);
-            this.btSelAll.Name = "btSelAll";
-            this.btSelAll.Size = new System.Drawing.Size(80, 23);
-            this.btSelAll.TabIndex = 5;
-            this.btSelAll.Text = "Выбрать все";
-            this.btSelAll.UseVisualStyleBackColor = true;
-            this.btSelAll.Click += new System.EventHandler(this.btSelAll_Click);
+            this.sbSelAll.Image = ((System.Drawing.Image)(resources.GetObject("sbSelAll.Image")));
+            this.sbSelAll.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbSelAll.Location = new System.Drawing.Point(292, 175);
+            this.sbSelAll.Name = "sbSelAll";
+            this.sbSelAll.Size = new System.Drawing.Size(75, 59);
+            this.sbSelAll.TabIndex = 13;
+            this.sbSelAll.Text = "Выбрать все";
+            this.sbSelAll.Click += new System.EventHandler(this.simpleButton3_Click);
+            // 
+            // sbDel
+            // 
+            this.sbDel.Image = ((System.Drawing.Image)(resources.GetObject("sbDel.Image")));
+            this.sbDel.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbDel.Location = new System.Drawing.Point(210, 175);
+            this.sbDel.Name = "sbDel";
+            this.sbDel.Size = new System.Drawing.Size(75, 59);
+            this.sbDel.TabIndex = 12;
+            this.sbDel.Text = "Удалить";
+            this.sbDel.Click += new System.EventHandler(this.simpleButton2_Click);
+            // 
+            // sbEdit
+            // 
+            this.sbEdit.Image = ((System.Drawing.Image)(resources.GetObject("sbEdit.Image")));
+            this.sbEdit.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbEdit.Location = new System.Drawing.Point(128, 175);
+            this.sbEdit.Name = "sbEdit";
+            this.sbEdit.Size = new System.Drawing.Size(75, 59);
+            this.sbEdit.TabIndex = 11;
+            this.sbEdit.Text = "Изменить";
+            this.sbEdit.Click += new System.EventHandler(this.simpleButton1_Click);
+            // 
+            // btnAdd2
+            // 
+            this.btnAdd2.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd2.Image")));
+            this.btnAdd2.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.btnAdd2.Location = new System.Drawing.Point(46, 175);
+            this.btnAdd2.Name = "btnAdd2";
+            this.btnAdd2.Size = new System.Drawing.Size(75, 59);
+            this.btnAdd2.TabIndex = 10;
+            this.btnAdd2.Text = "Добавить";
+            this.btnAdd2.Click += new System.EventHandler(this.btnAdd2_Click);
             // 
             // gbResults
             // 
-            this.gbResults.Controls.Add(this.btExport);
+            this.gbResults.Controls.Add(this.simpleButton1);
             this.gbResults.Controls.Add(this.dgvQueryRows);
             this.gbResults.Controls.Add(this.dgvResults);
             this.gbResults.Location = new System.Drawing.Point(798, 12);
@@ -317,6 +321,16 @@
             this.gbResults.TabIndex = 7;
             this.gbResults.TabStop = false;
             this.gbResults.Text = "Результаты выполнения запроса";
+            // 
+            // simpleButton1
+            // 
+            this.simpleButton1.Image = global::CommApp.Properties.Resources.gridcolumnheader_32x32;
+            this.simpleButton1.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.simpleButton1.Location = new System.Drawing.Point(22, 581);
+            this.simpleButton1.Name = "simpleButton1";
+            this.simpleButton1.Size = new System.Drawing.Size(100, 55);
+            this.simpleButton1.TabIndex = 2;
+            this.simpleButton1.Text = "Экспорт в Exel ...";
             // 
             // dgvQueryRows
             // 
@@ -347,15 +361,6 @@
             this.dataGridViewImageColumn1.Image = global::CommApp.Properties.Resources.error_16х16;
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.Width = 65;
-            // 
-            // btExport
-            // 
-            this.btExport.Location = new System.Drawing.Point(22, 581);
-            this.btExport.Name = "btExport";
-            this.btExport.Size = new System.Drawing.Size(107, 23);
-            this.btExport.TabIndex = 2;
-            this.btExport.Text = "Экспорт в Exel ...";
-            this.btExport.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -390,21 +395,11 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvServers;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.Button btnDelit;
         private System.Windows.Forms.GroupBox gbQuery;
-        private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.GroupBox gbServers;
         private System.Windows.Forms.GroupBox gbResults;
         private System.Windows.Forms.DataGridView dgvResults;
         private System.Windows.Forms.RichTextBox rtbQuery;
-        private System.Windows.Forms.Button btReload;
-        private System.Windows.Forms.Button btClearAll;
-        private System.Windows.Forms.Button btSelAll;
-        private System.Windows.Forms.Button btDown;
-        private System.Windows.Forms.Button btUp;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn SelectServer;
         private System.Windows.Forms.DataGridViewImageColumn StatusImg;
@@ -418,7 +413,17 @@
         private System.Windows.Forms.ProgressBar pbExequteQuery;
         private System.Windows.Forms.Label lbMessage;
         private System.Windows.Forms.DataGridView dgvQueryRows;
-        private System.Windows.Forms.Button btExport;
+        private DevExpress.XtraEditors.SimpleButton btnAdd2;
+        private DevExpress.XtraEditors.SimpleButton sbEdit;
+        private DevExpress.XtraEditors.SimpleButton sbDel;
+        private DevExpress.XtraEditors.SimpleButton sbSelAll;
+        private DevExpress.XtraEditors.SimpleButton sbUnchAll;
+        private DevExpress.XtraEditors.SimpleButton sbReload;
+        private DevExpress.XtraEditors.SimpleButton sbUp;
+        private DevExpress.XtraEditors.SimpleButton sbDown;
+        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton sbRun;
+        private DevExpress.XtraEditors.SimpleButton sbClear;
     }
 }
 

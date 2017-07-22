@@ -118,28 +118,46 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="arroyDown_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\arroyDown_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="arroyDown_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\arroyDown_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="arroyUp_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\arroyUp_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="moveup_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\moveup_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="arroyUp_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arroyUp_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="error_16х16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\error_16х16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="success_24х24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\success_24х24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="error_24х24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\error_24х24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="movedown_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\movedown_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arroyUp_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arroyUp_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="refresh_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\refresh_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gridcolumnheader_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gridcolumnheader_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arroyDown_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arroyDown_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="next_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\next_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="success_16х16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\success_16х16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="success_24х24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\success_24х24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="error_16х16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\error_16х16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arroyDown_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arroyDown_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="error_24х24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\error_24х24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="clear_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clear_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
