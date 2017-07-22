@@ -58,6 +58,7 @@
             this.dgvQueryRows = new System.Windows.Forms.DataGridView();
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.btExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
             this.gbServers.SuspendLayout();
@@ -180,7 +181,7 @@
             this.gbQuery.Controls.Add(this.rtbQuery);
             this.gbQuery.Controls.Add(this.btnClear);
             this.gbQuery.Controls.Add(this.btnRun);
-            this.gbQuery.Location = new System.Drawing.Point(12, 250);
+            this.gbQuery.Location = new System.Drawing.Point(12, 283);
             this.gbQuery.Name = "gbQuery";
             this.gbQuery.Size = new System.Drawing.Size(770, 371);
             this.gbQuery.TabIndex = 0;
@@ -247,7 +248,7 @@
             this.gbServers.Controls.Add(this.btnEdit);
             this.gbServers.Location = new System.Drawing.Point(12, 12);
             this.gbServers.Name = "gbServers";
-            this.gbServers.Size = new System.Drawing.Size(770, 218);
+            this.gbServers.Size = new System.Drawing.Size(770, 255);
             this.gbServers.TabIndex = 6;
             this.gbServers.TabStop = false;
             this.gbServers.Text = "Серверы";
@@ -307,6 +308,7 @@
             // 
             // gbResults
             // 
+            this.gbResults.Controls.Add(this.btExport);
             this.gbResults.Controls.Add(this.dgvQueryRows);
             this.gbResults.Controls.Add(this.dgvResults);
             this.gbResults.Location = new System.Drawing.Point(798, 12);
@@ -321,10 +323,10 @@
             this.dgvQueryRows.AllowUserToAddRows = false;
             this.dgvQueryRows.AllowUserToDeleteRows = false;
             this.dgvQueryRows.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvQueryRows.Location = new System.Drawing.Point(22, 306);
+            this.dgvQueryRows.Location = new System.Drawing.Point(22, 220);
             this.dgvQueryRows.Name = "dgvQueryRows";
             this.dgvQueryRows.ReadOnly = true;
-            this.dgvQueryRows.Size = new System.Drawing.Size(714, 303);
+            this.dgvQueryRows.Size = new System.Drawing.Size(714, 356);
             this.dgvQueryRows.TabIndex = 1;
             // 
             // dgvResults
@@ -335,7 +337,7 @@
             this.dgvResults.Location = new System.Drawing.Point(22, 19);
             this.dgvResults.Name = "dgvResults";
             this.dgvResults.ReadOnly = true;
-            this.dgvResults.Size = new System.Drawing.Size(714, 255);
+            this.dgvResults.Size = new System.Drawing.Size(714, 179);
             this.dgvResults.TabIndex = 0;
             this.dgvResults.SelectionChanged += new System.EventHandler(this.dgvResults_SelectionChanged);
             // 
@@ -345,6 +347,15 @@
             this.dataGridViewImageColumn1.Image = global::CommApp.Properties.Resources.error_16х16;
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.Width = 65;
+            // 
+            // btExport
+            // 
+            this.btExport.Location = new System.Drawing.Point(22, 581);
+            this.btExport.Name = "btExport";
+            this.btExport.Size = new System.Drawing.Size(107, 23);
+            this.btExport.TabIndex = 2;
+            this.btExport.Text = "Экспорт в Exel ...";
+            this.btExport.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -407,6 +418,7 @@
         private System.Windows.Forms.ProgressBar pbExequteQuery;
         private System.Windows.Forms.Label lbMessage;
         private System.Windows.Forms.DataGridView dgvQueryRows;
+        private System.Windows.Forms.Button btExport;
     }
 }
 
