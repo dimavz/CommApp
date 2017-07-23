@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace CommApp
 {
@@ -92,12 +93,38 @@ namespace CommApp
 
         private void tbAdress_TextChanged(object sender, EventArgs e)
         {
-            ActivateBattonOk();
+            var regex = new Regex(@"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$");
+            if (regex.IsMatch(tbAdress.Text))
+            {
+                errProv.Clear();
+                btOk.Enabled = true;
+                ActivateBattonOk();
+            }
+            else
+            {
+                tbAdress.Focus();
+                errProv.SetError(tbAdress, "Строка содержит другие символы кроме цифр и точек или IP адрес не полностью заполнен");
+                ActivateBattonOk();
+                btOk.Enabled = false;
+            }
         }
 
         private void tbPort_TextChanged(object sender, EventArgs e)
         {
-            ActivateBattonOk();
+            var regex = new Regex(@"^[0-9]+$");
+            if (regex.IsMatch(tbPort.Text))
+            {
+                errProv.Clear();
+                btOk.Enabled = true;
+                ActivateBattonOk();
+            }
+            else
+            {
+                tbPort.Focus();
+                errProv.SetError(tbPort, "Строка должна содержать только цифры");
+                ActivateBattonOk();
+                btOk.Enabled = false;
+            }
         }
 
         private void tbDB_TextChanged(object sender, EventArgs e)
@@ -117,7 +144,20 @@ namespace CommApp
 
         private void tbTimeout_TextChanged(object sender, EventArgs e)
         {
-            ActivateBattonOk();
+            var regex = new Regex(@"^[0-9]+$");
+            if (regex.IsMatch(tbTimeout.Text))
+            {
+                errProv.Clear();
+                btOk.Enabled = true;
+                ActivateBattonOk();
+            }
+            else
+            {
+                tbTimeout.Focus();
+                errProv.SetError(tbTimeout, "Строка должна содержать только цифры");
+                ActivateBattonOk();
+                btOk.Enabled = false;
+            }
         }
     }
 }

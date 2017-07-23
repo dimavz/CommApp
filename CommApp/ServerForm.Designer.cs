@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -45,7 +46,7 @@
             this.cbViewPass = new System.Windows.Forms.CheckBox();
             this.tbTimeout = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.errProv = new System.Windows.Forms.ErrorProvider();
+            this.errProv = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.errProv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -210,12 +211,13 @@
             // errProv
             // 
             this.errProv.ContainerControl = this;
+            this.errProv.RightToLeft = true;
             // 
             // ServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(232, 385);
+            this.ClientSize = new System.Drawing.Size(243, 385);
             this.Controls.Add(this.tbTimeout);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cbViewPass);
