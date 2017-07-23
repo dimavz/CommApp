@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;// Подключаем для записи и чтения файлов
 using Npgsql;
+using System.Threading;
 
 namespace CommApp
 {
@@ -682,10 +683,13 @@ namespace CommApp
 
         private void simpleButton5_Click(object sender, EventArgs e)
         {
+            pbcConnSrv.Position = 0;
+            pbcConnSrv.Visible = true;
             // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
 
             foreach (DataGridViewRow row in dgvServers.Rows)
             {
+                //Thread.Sleep(5);
                 string servName = row.Cells[2].Value.ToString(); //Название сервера
                 string adressIP = row.Cells[3].Value.ToString(); //Адрес IP
                 string port = row.Cells[4].Value.ToString(); //Порт
@@ -696,8 +700,21 @@ namespace CommApp
 
                 ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
                 VerifyConnection(cd, row);
-
+                pbcConnSrv.Position += (100 / dgvServers.Rows.Count);
+                pbcConnSrv.Update();
+                if (pbcConnSrv.Position >=98)
+                {
+                    pbcConnSrv.Position = 100;
+                    pbcConnSrv.Update();
+                }
             }
+
+            //for (int i=0; i<=100; i++)
+            //{
+            //    Thread.Sleep(5);
+            //    pbcConnSrv.Position = i;
+            //    pbcConnSrv.Update();
+            //}
         }
 
         private void simpleButton1_Click_1(object sender, EventArgs e)
@@ -776,12 +793,13 @@ namespace CommApp
             else
             {
                 //Показываем и Устанавливаем статусбар в нулевое значение
-                pbExequteQuery.Visible = true;
-                pbExequteQuery.Value = 0;
+                pbcQuerySrv.Visible = true;
+                pbcQuerySrv.Position = 0;
 
                 //Отображает сообщение
                 lbMessage.Visible = false;
                 lbMessage.Text = "";
+                lbMessage.Update();
 
                 //Считаем количество выделенных серверов
                 int countSelServers = 0;
@@ -828,7 +846,8 @@ namespace CommApp
                         ExecuteReaderToDataGridView(cd, sqlQuery);
 
                         //Устанавливаем прогресс статусбара
-                        pbExequteQuery.Value += 100 / countSelServers;
+                        pbcQuerySrv.Position +=100/ countSelServers;
+                        pbcQuerySrv.Update();
                         lbMessage.Visible = true;
                         lbMessage.Text = String.Format("Выполнен запрос на {0} сервере из {1}", countServers, countSelServers);
                         countServers++;
@@ -839,8 +858,8 @@ namespace CommApp
 
         private void sbClear_Click(object sender, EventArgs e)
         {
-            pbExequteQuery.Value = 0;
-            pbExequteQuery.Visible = false;
+            pbcQuerySrv.Position = 0;
+            pbcQuerySrv.Visible = false;
             lbMessage.Visible = false;
             BindingSource bs = new BindingSource();
             bs = null;

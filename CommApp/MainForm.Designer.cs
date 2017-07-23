@@ -30,26 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dgvServers = new System.Windows.Forms.DataGridView();
-            this.gbQuery = new System.Windows.Forms.GroupBox();
-            this.lbMessage = new System.Windows.Forms.Label();
-            this.pbExequteQuery = new System.Windows.Forms.ProgressBar();
-            this.rtbQuery = new System.Windows.Forms.RichTextBox();
-            this.gbServers = new System.Windows.Forms.GroupBox();
-            this.gbResults = new System.Windows.Forms.GroupBox();
-            this.dgvQueryRows = new System.Windows.Forms.DataGridView();
-            this.dgvResults = new System.Windows.Forms.DataGridView();
-            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            this.sbDown = new DevExpress.XtraEditors.SimpleButton();
-            this.sbUp = new DevExpress.XtraEditors.SimpleButton();
-            this.sbReload = new DevExpress.XtraEditors.SimpleButton();
-            this.sbUnchAll = new DevExpress.XtraEditors.SimpleButton();
-            this.sbSelAll = new DevExpress.XtraEditors.SimpleButton();
-            this.sbDel = new DevExpress.XtraEditors.SimpleButton();
-            this.sbEdit = new DevExpress.XtraEditors.SimpleButton();
-            this.btnAdd2 = new DevExpress.XtraEditors.SimpleButton();
-            this.sbClear = new DevExpress.XtraEditors.SimpleButton();
-            this.sbRun = new DevExpress.XtraEditors.SimpleButton();
             this.SelectServer = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.StatusImg = new System.Windows.Forms.DataGridViewImageColumn();
             this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,12 +39,35 @@
             this.User = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timeoutServer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gbQuery = new System.Windows.Forms.GroupBox();
+            this.sbClear = new DevExpress.XtraEditors.SimpleButton();
+            this.sbRun = new DevExpress.XtraEditors.SimpleButton();
+            this.lbMessage = new System.Windows.Forms.Label();
+            this.rtbQuery = new System.Windows.Forms.RichTextBox();
+            this.gbServers = new System.Windows.Forms.GroupBox();
+            this.sbDown = new DevExpress.XtraEditors.SimpleButton();
+            this.sbUp = new DevExpress.XtraEditors.SimpleButton();
+            this.sbReload = new DevExpress.XtraEditors.SimpleButton();
+            this.sbUnchAll = new DevExpress.XtraEditors.SimpleButton();
+            this.sbSelAll = new DevExpress.XtraEditors.SimpleButton();
+            this.sbDel = new DevExpress.XtraEditors.SimpleButton();
+            this.sbEdit = new DevExpress.XtraEditors.SimpleButton();
+            this.btnAdd2 = new DevExpress.XtraEditors.SimpleButton();
+            this.gbResults = new System.Windows.Forms.GroupBox();
+            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            this.dgvQueryRows = new System.Windows.Forms.DataGridView();
+            this.dgvResults = new System.Windows.Forms.DataGridView();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.pbcConnSrv = new DevExpress.XtraEditors.ProgressBarControl();
+            this.pbcQuerySrv = new DevExpress.XtraEditors.ProgressBarControl();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
             this.gbServers.SuspendLayout();
             this.gbResults.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvQueryRows)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbcConnSrv.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbcQuerySrv.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvServers
@@ -89,12 +92,66 @@
             this.dgvServers.TabIndex = 0;
             this.dgvServers.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvServers_CellEnter);
             // 
+            // SelectServer
+            // 
+            this.SelectServer.HeaderText = "Выбрать";
+            this.SelectServer.Name = "SelectServer";
+            this.SelectServer.TrueValue = "";
+            this.SelectServer.Width = 55;
+            // 
+            // StatusImg
+            // 
+            this.StatusImg.HeaderText = "Подключение";
+            this.StatusImg.Image = global::CommApp.Properties.Resources.error_16х16;
+            this.StatusImg.Name = "StatusImg";
+            this.StatusImg.Width = 65;
+            // 
+            // Title
+            // 
+            this.Title.HeaderText = "Название";
+            this.Title.Name = "Title";
+            // 
+            // Adress
+            // 
+            this.Adress.HeaderText = "IP Адрес";
+            this.Adress.Name = "Adress";
+            // 
+            // port
+            // 
+            this.port.HeaderText = "Порт";
+            this.port.Name = "port";
+            this.port.Width = 55;
+            // 
+            // NameDB
+            // 
+            this.NameDB.HeaderText = "База Данных";
+            this.NameDB.Name = "NameDB";
+            // 
+            // User
+            // 
+            this.User.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.User.HeaderText = "Пользователь";
+            this.User.Name = "User";
+            // 
+            // timeoutServer
+            // 
+            this.timeoutServer.HeaderText = "Таймаут";
+            this.timeoutServer.Name = "timeoutServer";
+            // 
+            // Password
+            // 
+            this.Password.HeaderText = "Пароль";
+            this.Password.Name = "Password";
+            this.Password.ToolTipText = "Пароль";
+            this.Password.Visible = false;
+            this.Password.Width = 87;
+            // 
             // gbQuery
             // 
+            this.gbQuery.Controls.Add(this.pbcQuerySrv);
             this.gbQuery.Controls.Add(this.sbClear);
             this.gbQuery.Controls.Add(this.sbRun);
             this.gbQuery.Controls.Add(this.lbMessage);
-            this.gbQuery.Controls.Add(this.pbExequteQuery);
             this.gbQuery.Controls.Add(this.rtbQuery);
             this.gbQuery.Location = new System.Drawing.Point(12, 283);
             this.gbQuery.Name = "gbQuery";
@@ -103,23 +160,37 @@
             this.gbQuery.TabStop = false;
             this.gbQuery.Text = "Запрос";
             // 
+            // sbClear
+            // 
+            this.sbClear.Image = global::CommApp.Properties.Resources.clear_32x32;
+            this.sbClear.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbClear.Location = new System.Drawing.Point(98, 302);
+            this.sbClear.Name = "sbClear";
+            this.sbClear.Size = new System.Drawing.Size(67, 55);
+            this.sbClear.TabIndex = 7;
+            this.sbClear.Text = "Очистить";
+            this.sbClear.Click += new System.EventHandler(this.sbClear_Click);
+            // 
+            // sbRun
+            // 
+            this.sbRun.Image = global::CommApp.Properties.Resources.play_32x32;
+            this.sbRun.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbRun.Location = new System.Drawing.Point(25, 302);
+            this.sbRun.Name = "sbRun";
+            this.sbRun.Size = new System.Drawing.Size(67, 55);
+            this.sbRun.TabIndex = 6;
+            this.sbRun.Text = "Выполнить";
+            this.sbRun.Click += new System.EventHandler(this.sbRun_Click);
+            // 
             // lbMessage
             // 
             this.lbMessage.AutoSize = true;
-            this.lbMessage.Location = new System.Drawing.Point(253, 340);
+            this.lbMessage.Location = new System.Drawing.Point(219, 340);
             this.lbMessage.Name = "lbMessage";
             this.lbMessage.Size = new System.Drawing.Size(100, 13);
             this.lbMessage.TabIndex = 5;
             this.lbMessage.Text = "Выполнен запрос ";
             this.lbMessage.Visible = false;
-            // 
-            // pbExequteQuery
-            // 
-            this.pbExequteQuery.Location = new System.Drawing.Point(253, 310);
-            this.pbExequteQuery.Name = "pbExequteQuery";
-            this.pbExequteQuery.Size = new System.Drawing.Size(292, 23);
-            this.pbExequteQuery.TabIndex = 4;
-            this.pbExequteQuery.Visible = false;
             // 
             // rtbQuery
             // 
@@ -132,6 +203,7 @@
             // 
             // gbServers
             // 
+            this.gbServers.Controls.Add(this.pbcConnSrv);
             this.gbServers.Controls.Add(this.sbDown);
             this.gbServers.Controls.Add(this.sbUp);
             this.gbServers.Controls.Add(this.sbReload);
@@ -147,58 +219,6 @@
             this.gbServers.TabIndex = 6;
             this.gbServers.TabStop = false;
             this.gbServers.Text = "Список серверов";
-            // 
-            // gbResults
-            // 
-            this.gbResults.Controls.Add(this.simpleButton1);
-            this.gbResults.Controls.Add(this.dgvQueryRows);
-            this.gbResults.Controls.Add(this.dgvResults);
-            this.gbResults.Location = new System.Drawing.Point(798, 12);
-            this.gbResults.Name = "gbResults";
-            this.gbResults.Size = new System.Drawing.Size(757, 642);
-            this.gbResults.TabIndex = 7;
-            this.gbResults.TabStop = false;
-            this.gbResults.Text = "Результаты выполнения запроса";
-            // 
-            // dgvQueryRows
-            // 
-            this.dgvQueryRows.AllowUserToAddRows = false;
-            this.dgvQueryRows.AllowUserToDeleteRows = false;
-            this.dgvQueryRows.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvQueryRows.Location = new System.Drawing.Point(22, 220);
-            this.dgvQueryRows.Name = "dgvQueryRows";
-            this.dgvQueryRows.ReadOnly = true;
-            this.dgvQueryRows.Size = new System.Drawing.Size(714, 356);
-            this.dgvQueryRows.TabIndex = 1;
-            // 
-            // dgvResults
-            // 
-            this.dgvResults.AllowUserToAddRows = false;
-            this.dgvResults.AllowUserToDeleteRows = false;
-            this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResults.Location = new System.Drawing.Point(22, 19);
-            this.dgvResults.Name = "dgvResults";
-            this.dgvResults.ReadOnly = true;
-            this.dgvResults.Size = new System.Drawing.Size(714, 179);
-            this.dgvResults.TabIndex = 0;
-            this.dgvResults.SelectionChanged += new System.EventHandler(this.dgvResults_SelectionChanged);
-            // 
-            // dataGridViewImageColumn1
-            // 
-            this.dataGridViewImageColumn1.HeaderText = "Состояние";
-            this.dataGridViewImageColumn1.Image = global::CommApp.Properties.Resources.error_16х16;
-            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-            this.dataGridViewImageColumn1.Width = 65;
-            // 
-            // simpleButton1
-            // 
-            this.simpleButton1.Image = global::CommApp.Properties.Resources.gridcolumnheader_32x32;
-            this.simpleButton1.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
-            this.simpleButton1.Location = new System.Drawing.Point(22, 581);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(100, 55);
-            this.simpleButton1.TabIndex = 2;
-            this.simpleButton1.Text = "Экспорт в Exel ...";
             // 
             // sbDown
             // 
@@ -226,7 +246,7 @@
             this.sbReload.Name = "sbReload";
             this.sbReload.Size = new System.Drawing.Size(77, 59);
             this.sbReload.TabIndex = 15;
-            this.sbReload.Text = "Обновить";
+            this.sbReload.Text = "Обновить все";
             this.sbReload.Click += new System.EventHandler(this.simpleButton5_Click);
             // 
             // sbUnchAll
@@ -284,81 +304,75 @@
             this.btnAdd2.Text = "Добавить";
             this.btnAdd2.Click += new System.EventHandler(this.btnAdd2_Click);
             // 
-            // sbClear
+            // gbResults
             // 
-            this.sbClear.Image = global::CommApp.Properties.Resources.clear_32x32;
-            this.sbClear.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
-            this.sbClear.Location = new System.Drawing.Point(98, 302);
-            this.sbClear.Name = "sbClear";
-            this.sbClear.Size = new System.Drawing.Size(67, 55);
-            this.sbClear.TabIndex = 7;
-            this.sbClear.Text = "Очистить";
-            this.sbClear.Click += new System.EventHandler(this.sbClear_Click);
+            this.gbResults.Controls.Add(this.simpleButton1);
+            this.gbResults.Controls.Add(this.dgvQueryRows);
+            this.gbResults.Controls.Add(this.dgvResults);
+            this.gbResults.Location = new System.Drawing.Point(798, 12);
+            this.gbResults.Name = "gbResults";
+            this.gbResults.Size = new System.Drawing.Size(757, 642);
+            this.gbResults.TabIndex = 7;
+            this.gbResults.TabStop = false;
+            this.gbResults.Text = "Результаты выполнения запроса";
             // 
-            // sbRun
+            // simpleButton1
             // 
-            this.sbRun.Image = global::CommApp.Properties.Resources.play_32x32;
-            this.sbRun.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
-            this.sbRun.Location = new System.Drawing.Point(25, 302);
-            this.sbRun.Name = "sbRun";
-            this.sbRun.Size = new System.Drawing.Size(67, 55);
-            this.sbRun.TabIndex = 6;
-            this.sbRun.Text = "Выполнить";
-            this.sbRun.Click += new System.EventHandler(this.sbRun_Click);
+            this.simpleButton1.Image = global::CommApp.Properties.Resources.gridcolumnheader_32x32;
+            this.simpleButton1.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.simpleButton1.Location = new System.Drawing.Point(22, 581);
+            this.simpleButton1.Name = "simpleButton1";
+            this.simpleButton1.Size = new System.Drawing.Size(100, 55);
+            this.simpleButton1.TabIndex = 2;
+            this.simpleButton1.Text = "Экспорт в Exel ...";
             // 
-            // SelectServer
+            // dgvQueryRows
             // 
-            this.SelectServer.HeaderText = "Выбрать";
-            this.SelectServer.Name = "SelectServer";
-            this.SelectServer.TrueValue = "";
-            this.SelectServer.Width = 55;
+            this.dgvQueryRows.AllowUserToAddRows = false;
+            this.dgvQueryRows.AllowUserToDeleteRows = false;
+            this.dgvQueryRows.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvQueryRows.Location = new System.Drawing.Point(22, 220);
+            this.dgvQueryRows.Name = "dgvQueryRows";
+            this.dgvQueryRows.ReadOnly = true;
+            this.dgvQueryRows.Size = new System.Drawing.Size(714, 356);
+            this.dgvQueryRows.TabIndex = 1;
             // 
-            // StatusImg
+            // dgvResults
             // 
-            this.StatusImg.HeaderText = "Подключение";
-            this.StatusImg.Image = global::CommApp.Properties.Resources.error_16х16;
-            this.StatusImg.Name = "StatusImg";
-            this.StatusImg.Width = 65;
+            this.dgvResults.AllowUserToAddRows = false;
+            this.dgvResults.AllowUserToDeleteRows = false;
+            this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResults.Location = new System.Drawing.Point(22, 19);
+            this.dgvResults.Name = "dgvResults";
+            this.dgvResults.ReadOnly = true;
+            this.dgvResults.Size = new System.Drawing.Size(714, 179);
+            this.dgvResults.TabIndex = 0;
+            this.dgvResults.SelectionChanged += new System.EventHandler(this.dgvResults_SelectionChanged);
             // 
-            // Title
+            // dataGridViewImageColumn1
             // 
-            this.Title.HeaderText = "Название";
-            this.Title.Name = "Title";
+            this.dataGridViewImageColumn1.HeaderText = "Состояние";
+            this.dataGridViewImageColumn1.Image = global::CommApp.Properties.Resources.error_16х16;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.Width = 65;
             // 
-            // Adress
+            // pbcConnSrv
             // 
-            this.Adress.HeaderText = "IP Адрес";
-            this.Adress.Name = "Adress";
+            this.pbcConnSrv.Location = new System.Drawing.Point(567, 194);
+            this.pbcConnSrv.Name = "pbcConnSrv";
+            this.pbcConnSrv.Properties.ShowTitle = true;
+            this.pbcConnSrv.Size = new System.Drawing.Size(100, 18);
+            this.pbcConnSrv.TabIndex = 18;
+            this.pbcConnSrv.Visible = false;
             // 
-            // port
+            // pbcQuerySrv
             // 
-            this.port.HeaderText = "Порт";
-            this.port.Name = "port";
-            this.port.Width = 55;
-            // 
-            // NameDB
-            // 
-            this.NameDB.HeaderText = "База Данных";
-            this.NameDB.Name = "NameDB";
-            // 
-            // User
-            // 
-            this.User.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.User.HeaderText = "Пользователь";
-            this.User.Name = "User";
-            // 
-            // timeoutServer
-            // 
-            this.timeoutServer.HeaderText = "Таймаут";
-            this.timeoutServer.Name = "timeoutServer";
-            // 
-            // Password
-            // 
-            this.Password.HeaderText = "Пароль";
-            this.Password.Name = "Password";
-            this.Password.ToolTipText = "Пароль";
-            this.Password.Visible = false;
-            this.Password.Width = 87;
+            this.pbcQuerySrv.Location = new System.Drawing.Point(222, 319);
+            this.pbcQuerySrv.Name = "pbcQuerySrv";
+            this.pbcQuerySrv.Properties.ShowTitle = true;
+            this.pbcQuerySrv.Size = new System.Drawing.Size(292, 18);
+            this.pbcQuerySrv.TabIndex = 8;
+            this.pbcQuerySrv.Visible = false;
             // 
             // MainForm
             // 
@@ -381,6 +395,8 @@
             this.gbResults.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvQueryRows)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbcConnSrv.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbcQuerySrv.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -399,7 +415,6 @@
         private System.Windows.Forms.DataGridView dgvResults;
         private System.Windows.Forms.RichTextBox rtbQuery;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
-        private System.Windows.Forms.ProgressBar pbExequteQuery;
         private System.Windows.Forms.Label lbMessage;
         private System.Windows.Forms.DataGridView dgvQueryRows;
         private DevExpress.XtraEditors.SimpleButton btnAdd2;
@@ -422,6 +437,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn User;
         private System.Windows.Forms.DataGridViewTextBoxColumn timeoutServer;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
+        private DevExpress.XtraEditors.ProgressBarControl pbcConnSrv;
+        private DevExpress.XtraEditors.ProgressBarControl pbcQuerySrv;
     }
 }
 
