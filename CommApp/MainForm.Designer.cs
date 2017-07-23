@@ -40,11 +40,13 @@
             this.timeoutServer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbQuery = new System.Windows.Forms.GroupBox();
+            this.pbcQuerySrv = new DevExpress.XtraEditors.ProgressBarControl();
             this.sbClear = new DevExpress.XtraEditors.SimpleButton();
             this.sbRun = new DevExpress.XtraEditors.SimpleButton();
             this.lbMessage = new System.Windows.Forms.Label();
             this.rtbQuery = new System.Windows.Forms.RichTextBox();
             this.gbServers = new System.Windows.Forms.GroupBox();
+            this.pbcConnSrv = new DevExpress.XtraEditors.ProgressBarControl();
             this.sbDown = new DevExpress.XtraEditors.SimpleButton();
             this.sbUp = new DevExpress.XtraEditors.SimpleButton();
             this.sbReload = new DevExpress.XtraEditors.SimpleButton();
@@ -54,20 +56,18 @@
             this.sbEdit = new DevExpress.XtraEditors.SimpleButton();
             this.btnAdd2 = new DevExpress.XtraEditors.SimpleButton();
             this.gbResults = new System.Windows.Forms.GroupBox();
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            this.sbExportExel = new DevExpress.XtraEditors.SimpleButton();
             this.dgvQueryRows = new System.Windows.Forms.DataGridView();
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.pbcConnSrv = new DevExpress.XtraEditors.ProgressBarControl();
-            this.pbcQuerySrv = new DevExpress.XtraEditors.ProgressBarControl();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).BeginInit();
             this.gbQuery.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbcQuerySrv.Properties)).BeginInit();
             this.gbServers.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbcConnSrv.Properties)).BeginInit();
             this.gbResults.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvQueryRows)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbcConnSrv.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbcQuerySrv.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvServers
@@ -160,6 +160,15 @@
             this.gbQuery.TabStop = false;
             this.gbQuery.Text = "Запрос";
             // 
+            // pbcQuerySrv
+            // 
+            this.pbcQuerySrv.Location = new System.Drawing.Point(222, 319);
+            this.pbcQuerySrv.Name = "pbcQuerySrv";
+            this.pbcQuerySrv.Properties.ShowTitle = true;
+            this.pbcQuerySrv.Size = new System.Drawing.Size(292, 18);
+            this.pbcQuerySrv.TabIndex = 8;
+            this.pbcQuerySrv.Visible = false;
+            // 
             // sbClear
             // 
             this.sbClear.Image = global::CommApp.Properties.Resources.clear_32x32;
@@ -219,6 +228,15 @@
             this.gbServers.TabIndex = 6;
             this.gbServers.TabStop = false;
             this.gbServers.Text = "Список серверов";
+            // 
+            // pbcConnSrv
+            // 
+            this.pbcConnSrv.Location = new System.Drawing.Point(567, 194);
+            this.pbcConnSrv.Name = "pbcConnSrv";
+            this.pbcConnSrv.Properties.ShowTitle = true;
+            this.pbcConnSrv.Size = new System.Drawing.Size(100, 18);
+            this.pbcConnSrv.TabIndex = 18;
+            this.pbcConnSrv.Visible = false;
             // 
             // sbDown
             // 
@@ -306,7 +324,7 @@
             // 
             // gbResults
             // 
-            this.gbResults.Controls.Add(this.simpleButton1);
+            this.gbResults.Controls.Add(this.sbExportExel);
             this.gbResults.Controls.Add(this.dgvQueryRows);
             this.gbResults.Controls.Add(this.dgvResults);
             this.gbResults.Location = new System.Drawing.Point(798, 12);
@@ -316,15 +334,16 @@
             this.gbResults.TabStop = false;
             this.gbResults.Text = "Результаты выполнения запроса";
             // 
-            // simpleButton1
+            // sbExportExel
             // 
-            this.simpleButton1.Image = global::CommApp.Properties.Resources.gridcolumnheader_32x32;
-            this.simpleButton1.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
-            this.simpleButton1.Location = new System.Drawing.Point(22, 581);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(100, 55);
-            this.simpleButton1.TabIndex = 2;
-            this.simpleButton1.Text = "Экспорт в Exel ...";
+            this.sbExportExel.Enabled = false;
+            this.sbExportExel.Image = global::CommApp.Properties.Resources.gridcolumnheader_32x32;
+            this.sbExportExel.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
+            this.sbExportExel.Location = new System.Drawing.Point(22, 581);
+            this.sbExportExel.Name = "sbExportExel";
+            this.sbExportExel.Size = new System.Drawing.Size(100, 55);
+            this.sbExportExel.TabIndex = 2;
+            this.sbExportExel.Text = "Экспорт в Exel ...";
             // 
             // dgvQueryRows
             // 
@@ -356,24 +375,6 @@
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.Width = 65;
             // 
-            // pbcConnSrv
-            // 
-            this.pbcConnSrv.Location = new System.Drawing.Point(567, 194);
-            this.pbcConnSrv.Name = "pbcConnSrv";
-            this.pbcConnSrv.Properties.ShowTitle = true;
-            this.pbcConnSrv.Size = new System.Drawing.Size(100, 18);
-            this.pbcConnSrv.TabIndex = 18;
-            this.pbcConnSrv.Visible = false;
-            // 
-            // pbcQuerySrv
-            // 
-            this.pbcQuerySrv.Location = new System.Drawing.Point(222, 319);
-            this.pbcQuerySrv.Name = "pbcQuerySrv";
-            this.pbcQuerySrv.Properties.ShowTitle = true;
-            this.pbcQuerySrv.Size = new System.Drawing.Size(292, 18);
-            this.pbcQuerySrv.TabIndex = 8;
-            this.pbcQuerySrv.Visible = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -391,12 +392,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvServers)).EndInit();
             this.gbQuery.ResumeLayout(false);
             this.gbQuery.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbcQuerySrv.Properties)).EndInit();
             this.gbServers.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbcConnSrv.Properties)).EndInit();
             this.gbResults.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvQueryRows)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbcConnSrv.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbcQuerySrv.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -425,7 +426,7 @@
         private DevExpress.XtraEditors.SimpleButton sbReload;
         private DevExpress.XtraEditors.SimpleButton sbUp;
         private DevExpress.XtraEditors.SimpleButton sbDown;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton sbExportExel;
         private DevExpress.XtraEditors.SimpleButton sbRun;
         private DevExpress.XtraEditors.SimpleButton sbClear;
         private System.Windows.Forms.DataGridViewCheckBoxColumn SelectServer;

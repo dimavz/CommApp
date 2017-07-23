@@ -358,6 +358,14 @@ namespace CommApp
                     //dgvQueryRows.Columns[countColumns - 1].Width = 100;
                 }
             }
+            if (dgvQueryRows.Rows.Count>0)
+            {
+                sbExportExel.Enabled = true;
+            }
+            else
+            {
+                sbExportExel.Enabled = false;
+            }
         }
 
         private void rtbQuery_TextChanged(object sender, EventArgs e)
@@ -861,6 +869,8 @@ namespace CommApp
             pbcQuerySrv.Position = 0;
             pbcQuerySrv.Visible = false;
             lbMessage.Visible = false;
+            sbExportExel.Enabled = false;
+            sbExportExel.Update();
             BindingSource bs = new BindingSource();
             bs = null;
             dgvResults.DataSource = bs;
