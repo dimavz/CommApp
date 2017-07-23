@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;// Подключаем для записи и чтения файлов
 using Npgsql;
+using System.Threading;
 
 namespace CommApp
 {
@@ -26,168 +27,6 @@ namespace CommApp
             this.FlagColumns = true;
             this.ListQueryContext = new List<QueryContext>();
         }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            ServerForm sf = new ServerForm();
-            if (sf.ShowDialog() == DialogResult.OK)
-            {
-                if (dgvServers.Rows.Count == 0) //Таблица пуста
-                {
-                    // Формируем строку для таблицы серверов DataGridView
-                    DataGridViewRow row = new DataGridViewRow();
-
-                    // Создаём ячейки для строки
-                    // Ячейка Выбрать
-                    DataGridViewCell cell0 = new DataGridViewCheckBoxCell();
-                    //Ячейка Состояние
-                    DataGridViewCell cell1 = new DataGridViewImageCell();
-                    //Ячейка Название Сервера
-                    DataGridViewCell cell2 = new DataGridViewTextBoxCell();
-                    //Ячейка Адрес IP
-                    DataGridViewCell cell3 = new DataGridViewTextBoxCell();
-                    //Ячейка Порт 
-                    DataGridViewCell cell4 = new DataGridViewTextBoxCell();
-                    //Ячейка База Данных
-                    DataGridViewCell cell5 = new DataGridViewTextBoxCell();
-                    //Ячейка Пользователь
-                    DataGridViewCell cell6 = new DataGridViewTextBoxCell();
-                    //Ячейка Таймаут
-                    DataGridViewCell cell7 = new DataGridViewTextBoxCell();
-                    //Ячейка Пароль
-                    DataGridViewCell cell8 = new DataGridViewTextBoxCell();
-
-
-                    // Добавляем в строку ячейки
-                    row.Cells.AddRange(cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8);
-
-                    /* Присваиваем ячейкам значения */
-
-                    // Выбрать
-                    cell0.Value = true;
-                    /* Проверяем СОСТОЯНИЕ подключения */
-
-                    //Создаём объект для подключения
-                    ConnectionData cd = new ConnectionData(sf.NameServer, sf.AdressIP, sf.Port, sf.DB_Name, sf.User, sf.Pass,sf.Timeout);
-
-                    VerifyConnection(cd, row);
-
-                    // Название
-                    cell2.Value = sf.NameServer;
-                    // Адрес IP
-                    cell3.Value = sf.AdressIP;
-                    // Порт
-                    cell4.Value = sf.Port;
-                    //База Данных
-                    cell5.Value = sf.DB_Name;
-                    //Пользователь
-                    cell6.Value = sf.User;
-                    //  Таймаут
-                    cell7.Value = sf.Timeout;
-                    //  Пароль
-                    cell8.Value = sf.Pass;
-
-                    // Добавляем строку в DataGridView
-                    dgvServers.Rows.Add(row);
-                }
-                else
-                {
-                    bool flAdd = true;
-                    foreach (DataGridViewRow row in dgvServers.Rows)
-                    {
-                        if (row.Cells[3].Value.ToString() == sf.AdressIP 
-                            && row.Cells[4].Value.ToString() == sf.Port 
-                            && row.Cells[5].Value.ToString() == sf.DB_Name 
-                            && row.Cells[6].Value.ToString() == sf.User)
-                        {
-                            flAdd = false;
-                            MessageBox.Show("Сервер с такими параметрами уже есть в Базе!");
-                            break;
-                        }
-                    }
-                    if (flAdd)
-                    {
-                        // Формируем строку для таблицы серверов DataGridView
-                        DataGridViewRow row = new DataGridViewRow();
-
-                        // Создаём ячейки для строки
-                        // Ячейка Выбрать
-                        DataGridViewCell cell0 = new DataGridViewCheckBoxCell();
-                        //Ячейка Состояние
-                        DataGridViewCell cell1 = new DataGridViewImageCell();
-                        //Ячейка Название Сервера
-                        DataGridViewCell cell2 = new DataGridViewTextBoxCell();
-                        //Ячейка Адрес IP
-                        DataGridViewCell cell3 = new DataGridViewTextBoxCell();
-                        //Ячейка Порт 
-                        DataGridViewCell cell4 = new DataGridViewTextBoxCell();
-                        //Ячейка База Данных
-                        DataGridViewCell cell5 = new DataGridViewTextBoxCell();
-                        //Ячейка Пользователь
-                        DataGridViewCell cell6 = new DataGridViewTextBoxCell();
-                        //Ячейка Таймаут
-                        DataGridViewCell cell7 = new DataGridViewTextBoxCell();
-                        //Ячейка Пароль
-                        DataGridViewCell cell8 = new DataGridViewTextBoxCell();
-
-
-                        // Добавляем в строку ячейки
-                        row.Cells.AddRange(cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8);
-
-                        /* Присваиваем ячейкам значения */
-
-                        // Выбрать
-                        cell0.Value = true;
-                        /* Проверяем СОСТОЯНИЕ подключения */
-
-                        //Создаём объект для подключения
-                        ConnectionData cd = new ConnectionData(sf.NameServer, sf.AdressIP, sf.Port, sf.DB_Name, sf.User, sf.Pass, sf.Timeout);
-
-                        VerifyConnection(cd, row);
-
-                        // Название
-                        cell2.Value = sf.NameServer;
-                        // Адрес IP
-                        cell3.Value = sf.AdressIP;
-                        // Порт
-                        cell4.Value = sf.Port;
-                        //База Данных
-                        cell5.Value = sf.DB_Name;
-                        //Пользователь
-                        cell6.Value = sf.User;
-                        //  Таймаут
-                        cell7.Value = sf.Timeout;
-                        //  Пароль
-                        cell8.Value = sf.Pass;
-
-                        // Добавляем строку в DataGridView
-                        dgvServers.Rows.Add(row);
-                    }
-                }
-                VerifyBatton();
-            }
-        }   
-
-
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            pbExequteQuery.Value = 0;
-            pbExequteQuery.Visible = false;
-            lbMessage.Visible = false;
-            BindingSource bs = new BindingSource();
-            bs = null;
-            dgvResults.DataSource = bs;
-            rtbQuery.Text = "";
-
-            //Очищаем таблицы результатов запросов с серверами и строками
-            //Таблица серверов
-            dgvResults.Columns.Clear();
-            dgvResults.Rows.Clear();
-            //Таблица строк
-            dgvQueryRows.Columns.Clear();
-            //dgvQueryRows.Rows.Clear();
-        }
-
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -289,71 +128,8 @@ namespace CommApp
                     sr.Close();
                     VerifyBatton();
                     //Присваиваем фокус первой ячейке таблицы
-                    btUp.Enabled = false;
+                    sbUp.Enabled = false;
                 }
-            }
-        }
-
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-            //Загружаем форму для редактирования
-            ServerForm sf = new ServerForm();
-            sf.NameServer = dgvServers.CurrentRow.Cells[2].Value.ToString();
-            sf.AdressIP = dgvServers.CurrentRow.Cells[3].Value.ToString();
-            sf.Port = dgvServers.CurrentRow.Cells[4].Value.ToString();
-            sf.DB_Name = dgvServers.CurrentRow.Cells[5].Value.ToString();
-            sf.User = dgvServers.CurrentRow.Cells[6].Value.ToString();
-            sf.Timeout = dgvServers.CurrentRow.Cells[7].Value.ToString();
-            sf.Pass = dgvServers.CurrentRow.Cells[8].Value.ToString();
-
-            if (sf.ShowDialog() == DialogResult.OK)
-            {
-                bool flAdd = true;
-                foreach (DataGridViewRow row in dgvServers.Rows)
-                {
-                    if(row.Index == dgvServers.CurrentRow.Index)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        if (row.Cells[3].Value.ToString() == sf.AdressIP
-                            && row.Cells[4].Value.ToString() == sf.Port
-                            && row.Cells[5].Value.ToString() == sf.DB_Name
-                            && row.Cells[6].Value.ToString() == sf.User)
-                        {
-                            flAdd = false;
-                            MessageBox.Show("Сервер с такими параметрами уже есть в Базе!");
-                            break;
-                        }
-                    }
-                }
-                if (flAdd)
-                {
-                    dgvServers.CurrentRow.Cells[2].Value = sf.NameServer;
-                    dgvServers.CurrentRow.Cells[3].Value = sf.AdressIP;
-                    dgvServers.CurrentRow.Cells[4].Value = sf.Port;
-                    dgvServers.CurrentRow.Cells[5].Value = sf.DB_Name;
-                    dgvServers.CurrentRow.Cells[6].Value = sf.User;
-                    dgvServers.CurrentRow.Cells[7].Value = sf.Timeout;
-                    dgvServers.CurrentRow.Cells[8].Value = sf.Pass;
-
-                    /* Проверяем СОСТОЯНИЕ подключения */
-                    //Создаём объект для подключения
-                    ConnectionData cd = new ConnectionData(sf.NameServer, sf.AdressIP, sf.Port, sf.DB_Name, sf.User, sf.Pass, sf.Timeout);
-                    VerifyConnection(cd, dgvServers.CurrentRow);
-                }
-            }
-        }
-
-
-        private void btnDelit_Click(object sender, EventArgs e)
-        {
-            WarningForm wf = new WarningForm();
-            if (wf.ShowDialog() == DialogResult.OK)
-            {
-                dgvServers.Rows.Remove(dgvServers.CurrentRow);
-                VerifyBatton();
             }
         }
 
@@ -402,119 +178,6 @@ namespace CommApp
                 sw.WriteLine(str);
             }
             sw.Close();
-
-        }
-
-        private void btSelAll_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow row in dgvServers.Rows)
-            {
-                row.Cells[0].Value = true;
-            }
-        }
-
-        private void btClearAll_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow row in dgvServers.Rows)
-            {
-                row.Cells[0].Value = false;
-            }
-        }
-
-        private void btReload_Click(object sender, EventArgs e)
-        {
-            // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
-
-            foreach (DataGridViewRow row in dgvServers.Rows)
-            {
-                string servName = row.Cells[2].Value.ToString(); //Название сервера
-                string adressIP = row.Cells[3].Value.ToString(); //Адрес IP
-                string port = row.Cells[4].Value.ToString(); //Порт
-                string database = row.Cells[5].Value.ToString(); //База данных
-                string user = row.Cells[6].Value.ToString(); //Пользователь
-                string timeout = row.Cells[7].Value.ToString(); //Таймаут
-                string passw = row.Cells[8].Value.ToString(); //Пароль
-
-                ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
-                VerifyConnection(cd, row);
-                
-            }
-            
-        }
-
-        private void btnRun_Click(object sender, EventArgs e)
-        {
-            if (rtbQuery.Text == "")
-            {
-                MessageBox.Show("Вы не ввели запрос!");
-               
-            }
-            else if (dgvServers.Rows.Count < 1)
-            {
-                MessageBox.Show("Вы не добавили ни одного сервера!");
-            }
-            else
-            {
-                //Показываем и Устанавливаем статусбар в нулевое значение
-                pbExequteQuery.Visible = true;
-                pbExequteQuery.Value = 0;
-
-                //Отображает сообщение
-                lbMessage.Visible = false;
-                lbMessage.Text = "";
-
-                //Считаем количество выделенных серверов
-                int countSelServers = 0;
-
-                //Счётчик опрошенных серверов
-                int countServers= 1;
-
-                foreach (DataGridViewRow row in dgvServers.Rows)
-                {
-                    //Если сервер отмечен галочкой
-                    if (row.Cells[0].Value.ToString() == "True")
-                    {
-                        countSelServers++;
-                    }
-                }
-
-                FlagColumns = true;
-                //Очищаем таблицу результатов
-                dgvResults.Columns.Clear();
-                dgvResults.Rows.Clear();
-                
-                foreach (DataGridViewRow row in dgvServers.Rows)
-                {
-
-                    //Получаем запрос из формы
-                    string sqlQuery = rtbQuery.Text;
-
-                    
-                    //Если сервер отмечен галочкой
-                    if (row.Cells[0].Value.ToString() == "True")
-                    {
-                        string servName = row.Cells[2].Value.ToString(); //Название сервера
-                        string adressIP = row.Cells[3].Value.ToString(); //Адрес IP
-                        string port = row.Cells[4].Value.ToString(); //Порт
-                        string database = row.Cells[5].Value.ToString(); //База данных
-                        string user = row.Cells[6].Value.ToString(); //Пользователь
-                        string timeout = row.Cells[7].Value.ToString(); //Таймаут
-                        string passw = row.Cells[8].Value.ToString(); //Пароль
-
-                        //Создаём объект соединения
-                        ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
-
-                        //Выводим результат выполнения запроса в форму
-                        ExecuteReaderToDataGridView(cd, sqlQuery);
-
-                        //Устанавливаем прогресс статусбара
-                        pbExequteQuery.Value += 100/countSelServers;
-                        lbMessage.Visible = true;
-                        lbMessage.Text = String.Format("Выполнен запрос на {0} сервере из {1}", countServers, countSelServers);
-                        countServers++;
-                    }
-                }
-            }
 
         }
 
@@ -701,13 +364,13 @@ namespace CommApp
         {
             if (rtbQuery.Text == "")
             {
-                btnRun.Enabled = false;
-                btnClear.Enabled = false;
+                sbRun.Enabled = false;
+                sbClear.Enabled = false;
             }
             else
             {
-                btnRun.Enabled = true;
-                btnClear.Enabled = true;
+                sbRun.Enabled = true;
+                sbClear.Enabled = true;
             }
         }
 
@@ -715,23 +378,23 @@ namespace CommApp
         {
             if (dgvServers.Rows.Count>0)
             {
-                btnEdit.Enabled = true;
-                btnDelit.Enabled = true;
-                btSelAll.Enabled = true;
-                btClearAll.Enabled = true;
-                btReload.Enabled = true;
-                btUp.Enabled = true;
-                btDown.Enabled = true;
+                sbEdit.Enabled = true;
+                sbDel.Enabled = true;
+                sbSelAll.Enabled = true;
+                sbUnchAll.Enabled = true;
+                sbReload.Enabled = true;
+                sbUp.Enabled = true;
+                sbDown.Enabled = true;
             }
             else
             {
-                btnEdit.Enabled = false;
-                btnDelit.Enabled = false;
-                btSelAll.Enabled = false;
-                btClearAll.Enabled = false;
-                btReload.Enabled = false;
-                btUp.Enabled = false;
-                btDown.Enabled = false;
+                sbEdit.Enabled = false;
+                sbDel.Enabled = false;
+                sbSelAll.Enabled = false;
+                sbUnchAll.Enabled = false;
+                sbReload.Enabled = false;
+                sbUp.Enabled = false;
+                sbDown.Enabled = false;
             }
         }
 
@@ -746,91 +409,25 @@ namespace CommApp
                 int indexCurrentRow = dgvServers.CurrentRow.Index;
                 if (indexCurrentRow == 0)//Если строка первая
                 {
-                    btUp.Enabled = false;
-                    btDown.Enabled = true;
+                    sbUp.Enabled = false;
+                    sbDown.Enabled = true;
                 }
                 else
                 {
-                    btUp.Enabled = true;
+                    sbUp.Enabled = true;
                     if (indexCurrentRow == countRows-1)//Если последняя строка
                     {
-                        btDown.Enabled = false;
+                        sbDown.Enabled = false;
                     }
                     else
                     {
-                        btDown.Enabled = true;
+                        sbDown.Enabled = true;
                     }
                     
                 }
             }
             //Выделяем текущую строку
             dgvServers.CurrentRow.Selected = true;
-        }
-
-        private void btUp_Click(object sender, EventArgs e)
-        {
-            //Получаем индексы
-            int currRowInd = dgvServers.CurrentRow.Index;
-            int upRowInd = dgvServers.CurrentRow.Index - 1;
-            // Получаем строки
-            DataGridViewRow row1 = dgvServers.Rows[currRowInd];
-            DataGridViewRow row2 = dgvServers.Rows[upRowInd];
-            // Удаляем строки из таблицы
-            dgvServers.Rows.Remove(row1);
-            dgvServers.Rows.Remove(row2);
-            // Вставляем строки на новые позиции
-            dgvServers.Rows.Insert(upRowInd, row1);
-            dgvServers.Rows.Insert(currRowInd, row2);
-            //Снимаем выделения со всех строк
-            foreach(DataGridViewRow row in dgvServers.Rows)
-            {
-                if (row.Index == dgvServers.Rows[upRowInd].Index)
-                {
-                    row.Selected = true;
-                    DataGridViewCell cell = dgvServers.Rows[row.Index].Cells[0];
-                    dgvServers.CurrentCell = cell;
-                }
-                else
-                {
-                    row.Selected = false;
-                }
-                
-            }
-            //Выделяем перемещённую строку
-            //dgvServers.Rows[upRowInd].Selected = true;
-        }
-
-        private void btDown_Click(object sender, EventArgs e)
-        {
-            //Получаем индексы
-            int currRowInd = dgvServers.CurrentRow.Index;
-            int downRowInd = dgvServers.CurrentRow.Index + 1;
-            // Получаем строки
-            DataGridViewRow row1 = dgvServers.Rows[currRowInd];
-            DataGridViewRow row2 = dgvServers.Rows[downRowInd];
-            // Удаляем строки из таблицы
-            dgvServers.Rows.Remove(row1);
-            dgvServers.Rows.Remove(row2);
-            // Вставляем строки на новые позиции
-            dgvServers.Rows.Insert(currRowInd, row2);
-            dgvServers.Rows.Insert(downRowInd, row1);
-            //Выделяем перемещённую строку
-            //dgvServers.Rows[downRowInd].Selected = true;
-            foreach (DataGridViewRow row in dgvServers.Rows)
-            {
-                if (row.Index == dgvServers.Rows[downRowInd].Index)
-                {
-                    row.Selected = true;
-                    DataGridViewCell cell = dgvServers.Rows[row.Index].Cells[0];
-                    dgvServers.CurrentCell = cell;
-                }
-                else
-                {
-                    row.Selected = false;
-                }
-
-            }
-
         }
 
         private DataGridViewRow CreateRowForDataGridView()
@@ -863,6 +460,419 @@ namespace CommApp
 
             return row;
 
+        }
+
+        private void btnAdd2_Click(object sender, EventArgs e)
+        {
+            ServerForm sf = new ServerForm();
+            if (sf.ShowDialog() == DialogResult.OK)
+            {
+                if (dgvServers.Rows.Count == 0) //Таблица пуста
+                {
+                    // Формируем строку для таблицы серверов DataGridView
+                    DataGridViewRow row = new DataGridViewRow();
+
+                    // Создаём ячейки для строки
+                    // Ячейка Выбрать
+                    DataGridViewCell cell0 = new DataGridViewCheckBoxCell();
+                    //Ячейка Состояние
+                    DataGridViewCell cell1 = new DataGridViewImageCell();
+                    //Ячейка Название Сервера
+                    DataGridViewCell cell2 = new DataGridViewTextBoxCell();
+                    //Ячейка Адрес IP
+                    DataGridViewCell cell3 = new DataGridViewTextBoxCell();
+                    //Ячейка Порт 
+                    DataGridViewCell cell4 = new DataGridViewTextBoxCell();
+                    //Ячейка База Данных
+                    DataGridViewCell cell5 = new DataGridViewTextBoxCell();
+                    //Ячейка Пользователь
+                    DataGridViewCell cell6 = new DataGridViewTextBoxCell();
+                    //Ячейка Таймаут
+                    DataGridViewCell cell7 = new DataGridViewTextBoxCell();
+                    //Ячейка Пароль
+                    DataGridViewCell cell8 = new DataGridViewTextBoxCell();
+
+
+                    // Добавляем в строку ячейки
+                    row.Cells.AddRange(cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8);
+
+                    /* Присваиваем ячейкам значения */
+
+                    // Выбрать
+                    cell0.Value = true;
+                    /* Проверяем СОСТОЯНИЕ подключения */
+
+                    //Создаём объект для подключения
+                    ConnectionData cd = new ConnectionData(sf.NameServer, sf.AdressIP, sf.Port, sf.DB_Name, sf.User, sf.Pass, sf.Timeout);
+
+                    VerifyConnection(cd, row);
+
+                    // Название
+                    cell2.Value = sf.NameServer;
+                    // Адрес IP
+                    cell3.Value = sf.AdressIP;
+                    // Порт
+                    cell4.Value = sf.Port;
+                    //База Данных
+                    cell5.Value = sf.DB_Name;
+                    //Пользователь
+                    cell6.Value = sf.User;
+                    //  Таймаут
+                    cell7.Value = sf.Timeout;
+                    //  Пароль
+                    cell8.Value = sf.Pass;
+
+                    // Добавляем строку в DataGridView
+                    dgvServers.Rows.Add(row);
+                }
+                else
+                {
+                    bool flAdd = true;
+                    foreach (DataGridViewRow row in dgvServers.Rows)
+                    {
+                        if (row.Cells[3].Value.ToString() == sf.AdressIP
+                            && row.Cells[4].Value.ToString() == sf.Port
+                            && row.Cells[5].Value.ToString() == sf.DB_Name
+                            && row.Cells[6].Value.ToString() == sf.User)
+                        {
+                            flAdd = false;
+                            MessageBox.Show("Сервер с такими параметрами уже есть в Базе!");
+                            break;
+                        }
+                    }
+                    if (flAdd)
+                    {
+                        // Формируем строку для таблицы серверов DataGridView
+                        DataGridViewRow row = new DataGridViewRow();
+
+                        // Создаём ячейки для строки
+                        // Ячейка Выбрать
+                        DataGridViewCell cell0 = new DataGridViewCheckBoxCell();
+                        //Ячейка Состояние
+                        DataGridViewCell cell1 = new DataGridViewImageCell();
+                        //Ячейка Название Сервера
+                        DataGridViewCell cell2 = new DataGridViewTextBoxCell();
+                        //Ячейка Адрес IP
+                        DataGridViewCell cell3 = new DataGridViewTextBoxCell();
+                        //Ячейка Порт 
+                        DataGridViewCell cell4 = new DataGridViewTextBoxCell();
+                        //Ячейка База Данных
+                        DataGridViewCell cell5 = new DataGridViewTextBoxCell();
+                        //Ячейка Пользователь
+                        DataGridViewCell cell6 = new DataGridViewTextBoxCell();
+                        //Ячейка Таймаут
+                        DataGridViewCell cell7 = new DataGridViewTextBoxCell();
+                        //Ячейка Пароль
+                        DataGridViewCell cell8 = new DataGridViewTextBoxCell();
+
+
+                        // Добавляем в строку ячейки
+                        row.Cells.AddRange(cell0, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8);
+
+                        /* Присваиваем ячейкам значения */
+
+                        // Выбрать
+                        cell0.Value = true;
+                        /* Проверяем СОСТОЯНИЕ подключения */
+
+                        //Создаём объект для подключения
+                        ConnectionData cd = new ConnectionData(sf.NameServer, sf.AdressIP, sf.Port, sf.DB_Name, sf.User, sf.Pass, sf.Timeout);
+
+                        VerifyConnection(cd, row);
+
+                        // Название
+                        cell2.Value = sf.NameServer;
+                        // Адрес IP
+                        cell3.Value = sf.AdressIP;
+                        // Порт
+                        cell4.Value = sf.Port;
+                        //База Данных
+                        cell5.Value = sf.DB_Name;
+                        //Пользователь
+                        cell6.Value = sf.User;
+                        //  Таймаут
+                        cell7.Value = sf.Timeout;
+                        //  Пароль
+                        cell8.Value = sf.Pass;
+
+                        // Добавляем строку в DataGridView
+                        dgvServers.Rows.Add(row);
+                    }
+                }
+                VerifyBatton();
+            }
+        }
+
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+            //Загружаем форму для редактирования
+            ServerForm sf = new ServerForm();
+            sf.NameServer = dgvServers.CurrentRow.Cells[2].Value.ToString();
+            sf.AdressIP = dgvServers.CurrentRow.Cells[3].Value.ToString();
+            sf.Port = dgvServers.CurrentRow.Cells[4].Value.ToString();
+            sf.DB_Name = dgvServers.CurrentRow.Cells[5].Value.ToString();
+            sf.User = dgvServers.CurrentRow.Cells[6].Value.ToString();
+            sf.Timeout = dgvServers.CurrentRow.Cells[7].Value.ToString();
+            sf.Pass = dgvServers.CurrentRow.Cells[8].Value.ToString();
+
+            if (sf.ShowDialog() == DialogResult.OK)
+            {
+                bool flAdd = true;
+                foreach (DataGridViewRow row in dgvServers.Rows)
+                {
+                    if (row.Index == dgvServers.CurrentRow.Index)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if (row.Cells[3].Value.ToString() == sf.AdressIP
+                            && row.Cells[4].Value.ToString() == sf.Port
+                            && row.Cells[5].Value.ToString() == sf.DB_Name
+                            && row.Cells[6].Value.ToString() == sf.User)
+                        {
+                            flAdd = false;
+                            MessageBox.Show("Сервер с такими параметрами уже есть в Базе!");
+                            break;
+                        }
+                    }
+                }
+                if (flAdd)
+                {
+                    dgvServers.CurrentRow.Cells[2].Value = sf.NameServer;
+                    dgvServers.CurrentRow.Cells[3].Value = sf.AdressIP;
+                    dgvServers.CurrentRow.Cells[4].Value = sf.Port;
+                    dgvServers.CurrentRow.Cells[5].Value = sf.DB_Name;
+                    dgvServers.CurrentRow.Cells[6].Value = sf.User;
+                    dgvServers.CurrentRow.Cells[7].Value = sf.Timeout;
+                    dgvServers.CurrentRow.Cells[8].Value = sf.Pass;
+
+                    /* Проверяем СОСТОЯНИЕ подключения */
+                    //Создаём объект для подключения
+                    ConnectionData cd = new ConnectionData(sf.NameServer, sf.AdressIP, sf.Port, sf.DB_Name, sf.User, sf.Pass, sf.Timeout);
+                    VerifyConnection(cd, dgvServers.CurrentRow);
+                }
+            }
+        }
+
+        private void simpleButton2_Click(object sender, EventArgs e)
+        {
+            WarningForm wf = new WarningForm();
+            if (wf.ShowDialog() == DialogResult.OK)
+            {
+                dgvServers.Rows.Remove(dgvServers.CurrentRow);
+                VerifyBatton();
+            }
+        }
+
+        private void simpleButton3_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvServers.Rows)
+            {
+                row.Cells[0].Value = true;
+            }
+        }
+
+        private void simpleButton4_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvServers.Rows)
+            {
+                row.Cells[0].Value = false;
+            }
+        }
+
+        private void simpleButton5_Click(object sender, EventArgs e)
+        {
+            pbcConnSrv.Position = 0;
+            pbcConnSrv.Visible = true;
+            // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
+
+            foreach (DataGridViewRow row in dgvServers.Rows)
+            {
+                //Thread.Sleep(5);
+                string servName = row.Cells[2].Value.ToString(); //Название сервера
+                string adressIP = row.Cells[3].Value.ToString(); //Адрес IP
+                string port = row.Cells[4].Value.ToString(); //Порт
+                string database = row.Cells[5].Value.ToString(); //База данных
+                string user = row.Cells[6].Value.ToString(); //Пользователь
+                string timeout = row.Cells[7].Value.ToString(); //Таймаут
+                string passw = row.Cells[8].Value.ToString(); //Пароль
+
+                ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
+                VerifyConnection(cd, row);
+                pbcConnSrv.Position += (100 / dgvServers.Rows.Count);
+                pbcConnSrv.Update();
+                if (pbcConnSrv.Position >=98)
+                {
+                    pbcConnSrv.Position = 100;
+                    pbcConnSrv.Update();
+                }
+            }
+
+            //for (int i=0; i<=100; i++)
+            //{
+            //    Thread.Sleep(5);
+            //    pbcConnSrv.Position = i;
+            //    pbcConnSrv.Update();
+            //}
+        }
+
+        private void simpleButton1_Click_1(object sender, EventArgs e)
+        {
+            //Получаем индексы
+            int currRowInd = dgvServers.CurrentRow.Index;
+            int upRowInd = dgvServers.CurrentRow.Index - 1;
+            // Получаем строки
+            DataGridViewRow row1 = dgvServers.Rows[currRowInd];
+            DataGridViewRow row2 = dgvServers.Rows[upRowInd];
+            // Удаляем строки из таблицы
+            dgvServers.Rows.Remove(row1);
+            dgvServers.Rows.Remove(row2);
+            // Вставляем строки на новые позиции
+            dgvServers.Rows.Insert(upRowInd, row1);
+            dgvServers.Rows.Insert(currRowInd, row2);
+            //Снимаем выделения со всех строк
+            foreach (DataGridViewRow row in dgvServers.Rows)
+            {
+                if (row.Index == dgvServers.Rows[upRowInd].Index)
+                {
+                    row.Selected = true;
+                    DataGridViewCell cell = dgvServers.Rows[row.Index].Cells[0];
+                    dgvServers.CurrentCell = cell;
+                }
+                else
+                {
+                    row.Selected = false;
+                }
+            }
+        }
+
+        private void simpleButton2_Click_1(object sender, EventArgs e)
+        {
+            //Получаем индексы
+            int currRowInd = dgvServers.CurrentRow.Index;
+            int downRowInd = dgvServers.CurrentRow.Index + 1;
+            // Получаем строки
+            DataGridViewRow row1 = dgvServers.Rows[currRowInd];
+            DataGridViewRow row2 = dgvServers.Rows[downRowInd];
+            // Удаляем строки из таблицы
+            dgvServers.Rows.Remove(row1);
+            dgvServers.Rows.Remove(row2);
+            // Вставляем строки на новые позиции
+            dgvServers.Rows.Insert(currRowInd, row2);
+            dgvServers.Rows.Insert(downRowInd, row1);
+            //Выделяем перемещённую строку
+            //dgvServers.Rows[downRowInd].Selected = true;
+            foreach (DataGridViewRow row in dgvServers.Rows)
+            {
+                if (row.Index == dgvServers.Rows[downRowInd].Index)
+                {
+                    row.Selected = true;
+                    DataGridViewCell cell = dgvServers.Rows[row.Index].Cells[0];
+                    dgvServers.CurrentCell = cell;
+                }
+                else
+                {
+                    row.Selected = false;
+                }
+
+            }
+        }
+
+        private void sbRun_Click(object sender, EventArgs e)
+        {
+            if (rtbQuery.Text == "")
+            {
+                MessageBox.Show("Вы не ввели запрос!");
+
+            }
+            else if (dgvServers.Rows.Count < 1)
+            {
+                MessageBox.Show("Вы не добавили ни одного сервера!");
+            }
+            else
+            {
+                //Показываем и Устанавливаем статусбар в нулевое значение
+                pbcQuerySrv.Visible = true;
+                pbcQuerySrv.Position = 0;
+
+                //Отображает сообщение
+                lbMessage.Visible = false;
+                lbMessage.Text = "";
+                lbMessage.Update();
+
+                //Считаем количество выделенных серверов
+                int countSelServers = 0;
+
+                //Счётчик опрошенных серверов
+                int countServers = 1;
+
+                foreach (DataGridViewRow row in dgvServers.Rows)
+                {
+                    //Если сервер отмечен галочкой
+                    if (row.Cells[0].Value.ToString() == "True")
+                    {
+                        countSelServers++;
+                    }
+                }
+
+                FlagColumns = true;
+                //Очищаем таблицу результатов
+                dgvResults.Columns.Clear();
+                dgvResults.Rows.Clear();
+
+                foreach (DataGridViewRow row in dgvServers.Rows)
+                {
+
+                    //Получаем запрос из формы
+                    string sqlQuery = rtbQuery.Text;
+
+
+                    //Если сервер отмечен галочкой
+                    if (row.Cells[0].Value.ToString() == "True")
+                    {
+                        string servName = row.Cells[2].Value.ToString(); //Название сервера
+                        string adressIP = row.Cells[3].Value.ToString(); //Адрес IP
+                        string port = row.Cells[4].Value.ToString(); //Порт
+                        string database = row.Cells[5].Value.ToString(); //База данных
+                        string user = row.Cells[6].Value.ToString(); //Пользователь
+                        string timeout = row.Cells[7].Value.ToString(); //Таймаут
+                        string passw = row.Cells[8].Value.ToString(); //Пароль
+
+                        //Создаём объект соединения
+                        ConnectionData cd = new ConnectionData(servName, adressIP, port, database, user, passw, timeout);
+
+                        //Выводим результат выполнения запроса в форму
+                        ExecuteReaderToDataGridView(cd, sqlQuery);
+
+                        //Устанавливаем прогресс статусбара
+                        pbcQuerySrv.Position +=100/ countSelServers;
+                        pbcQuerySrv.Update();
+                        lbMessage.Visible = true;
+                        lbMessage.Text = String.Format("Выполнен запрос на {0} сервере из {1}", countServers, countSelServers);
+                        countServers++;
+                    }
+                }
+            }
+        }
+
+        private void sbClear_Click(object sender, EventArgs e)
+        {
+            pbcQuerySrv.Position = 0;
+            pbcQuerySrv.Visible = false;
+            lbMessage.Visible = false;
+            BindingSource bs = new BindingSource();
+            bs = null;
+            dgvResults.DataSource = bs;
+            rtbQuery.Text = "";
+
+            //Очищаем таблицы результатов запросов с серверами и строками
+            //Таблица серверов
+            dgvResults.Columns.Clear();
+            dgvResults.Rows.Clear();
+            //Таблица строк
+            dgvQueryRows.Columns.Clear();
+            //dgvQueryRows.Rows.Clear();
         }
     }
 }

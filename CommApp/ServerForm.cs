@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace CommApp
 {
@@ -53,6 +54,109 @@ namespace CommApp
             else
             {
                 tbPassword.UseSystemPasswordChar = true;
+            }
+        }
+
+        private void btOk_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ActivateBattonOk()
+        {
+            if (string.IsNullOrEmpty(tbName.Text)
+                || string.IsNullOrEmpty(tbAdress.Text)
+                || string.IsNullOrEmpty(tbPort.Text)
+                || string.IsNullOrEmpty(tbDB.Text)
+                || string.IsNullOrEmpty(tbUser.Text)
+                || string.IsNullOrEmpty(tbPassword.Text)
+                || string.IsNullOrEmpty(tbTimeout .Text)
+                )
+            {
+                btOk.Enabled = false;
+            }
+            else
+            {
+                btOk.Enabled = true;
+            }
+        }
+
+        private void ServerForm_Load(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbName_TextChanged(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbAdress_TextChanged(object sender, EventArgs e)
+        {
+            var regex = new Regex(@"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$");
+            if (regex.IsMatch(tbAdress.Text))
+            {
+                errProv.Clear();
+                btOk.Enabled = true;
+                ActivateBattonOk();
+            }
+            else
+            {
+                tbAdress.Focus();
+                errProv.SetError(tbAdress, "Строка содержит другие символы кроме цифр и точек или IP адрес не полностью заполнен");
+                ActivateBattonOk();
+                btOk.Enabled = false;
+            }
+        }
+
+        private void tbPort_TextChanged(object sender, EventArgs e)
+        {
+            var regex = new Regex(@"^[0-9]+$");
+            if (regex.IsMatch(tbPort.Text))
+            {
+                errProv.Clear();
+                btOk.Enabled = true;
+                ActivateBattonOk();
+            }
+            else
+            {
+                tbPort.Focus();
+                errProv.SetError(tbPort, "Строка должна содержать только цифры");
+                ActivateBattonOk();
+                btOk.Enabled = false;
+            }
+        }
+
+        private void tbDB_TextChanged(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbUser_TextChanged(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbPassword_TextChanged(object sender, EventArgs e)
+        {
+            ActivateBattonOk();
+        }
+
+        private void tbTimeout_TextChanged(object sender, EventArgs e)
+        {
+            var regex = new Regex(@"^[0-9]+$");
+            if (regex.IsMatch(tbTimeout.Text))
+            {
+                errProv.Clear();
+                btOk.Enabled = true;
+                ActivateBattonOk();
+            }
+            else
+            {
+                tbTimeout.Focus();
+                errProv.SetError(tbTimeout, "Строка должна содержать только цифры");
+                ActivateBattonOk();
+                btOk.Enabled = false;
             }
         }
     }
