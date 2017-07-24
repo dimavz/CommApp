@@ -127,7 +127,6 @@
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(199, 20);
             this.tbPassword.TabIndex = 9;
-            this.tbPassword.Text = "matrix";
             this.tbPassword.UseSystemPasswordChar = true;
             this.tbPassword.TextChanged += new System.EventHandler(this.tbPassword_TextChanged);
             // 
@@ -196,7 +195,7 @@
             this.tbTimeout.Name = "tbTimeout";
             this.tbTimeout.Size = new System.Drawing.Size(199, 20);
             this.tbTimeout.TabIndex = 16;
-            this.tbTimeout.Text = "5";
+            this.tbTimeout.Text = "1";
             this.tbTimeout.TextChanged += new System.EventHandler(this.tbTimeout_TextChanged);
             // 
             // label7

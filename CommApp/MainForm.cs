@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.IO;// Подключаем для записи и чтения файлов
 using Npgsql;
 using System.Threading;
+//using Microsoft.Office.Interop;
+//using System.Runtime.InteropServices;
 
 namespace CommApp
 {
@@ -358,6 +360,14 @@ namespace CommApp
                     //dgvQueryRows.Columns[countColumns - 1].Width = 100;
                 }
             }
+            if (dgvQueryRows.Rows.Count>0)
+            {
+                sbExportExel.Enabled = true;
+            }
+            else
+            {
+                sbExportExel.Enabled = false;
+            }
         }
 
         private void rtbQuery_TextChanged(object sender, EventArgs e)
@@ -685,6 +695,12 @@ namespace CommApp
         {
             pbcConnSrv.Position = 0;
             pbcConnSrv.Visible = true;
+            pbcConnSrv.Update();
+
+            //circularProgBar.Visible = true;
+            //circularProgBar.Value = 0;
+            //circularProgBar.Update();
+
             // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
 
             foreach (DataGridViewRow row in dgvServers.Rows)
@@ -702,11 +718,21 @@ namespace CommApp
                 VerifyConnection(cd, row);
                 pbcConnSrv.Position += (100 / dgvServers.Rows.Count);
                 pbcConnSrv.Update();
-                if (pbcConnSrv.Position >=98)
+
+                //circularProgBar.Value += (100 / dgvServers.Rows.Count);
+                //circularProgBar.Update();
+
+                if (pbcConnSrv.Position >= 98)
                 {
                     pbcConnSrv.Position = 100;
                     pbcConnSrv.Update();
                 }
+
+                //if (circularProgBar.Value >= 98)
+                //{
+                //    circularProgBar.Value = 100;
+                //    circularProgBar.Update();
+                //}
             }
 
             //for (int i=0; i<=100; i++)
@@ -795,6 +821,7 @@ namespace CommApp
                 //Показываем и Устанавливаем статусбар в нулевое значение
                 pbcQuerySrv.Visible = true;
                 pbcQuerySrv.Position = 0;
+                pbcQuerySrv.Update();
 
                 //Отображает сообщение
                 lbMessage.Visible = false;
@@ -848,6 +875,11 @@ namespace CommApp
                         //Устанавливаем прогресс статусбара
                         pbcQuerySrv.Position +=100/ countSelServers;
                         pbcQuerySrv.Update();
+                        if (pbcQuerySrv.Position>98)
+                        {
+                            pbcQuerySrv.Position = 100;
+                            pbcQuerySrv.Update();
+                        }
                         lbMessage.Visible = true;
                         lbMessage.Text = String.Format("Выполнен запрос на {0} сервере из {1}", countServers, countSelServers);
                         countServers++;
@@ -873,6 +905,36 @@ namespace CommApp
             //Таблица строк
             dgvQueryRows.Columns.Clear();
             //dgvQueryRows.Rows.Clear();
+            sbExportExel.Enabled = false;
+            sbExportExel.Update();
+        }
+
+        private void sbExportExel_Click(object sender, EventArgs e)
+        {
+            //Приложение
+            Microsoft.Office.Interop.Excel.Application ExcelApp = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel.Workbook ExcelWorkBook;
+            Microsoft.Office.Interop.Excel.Worksheet ExcelWorkSheet;
+            //Книга.
+            ExcelWorkBook = ExcelApp.Workbooks.Add(System.Reflection.Missing.Value);
+            //Таблица.
+            ExcelWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ExcelWorkBook.Worksheets.get_Item(1);
+
+            for (int i = 0; i < dgvQueryRows.ColumnCount; i++)
+            {
+               ExcelApp.Cells[1, i + 1] = dgvQueryRows.Columns[i].HeaderText;
+            }
+
+            for (int i = 0; i < dgvQueryRows.Rows.Count; i++)
+            {
+                for (int j = 0; j < dgvQueryRows.ColumnCount; j++)
+                {
+                   ExcelApp.Cells[i + 2, j + 1] = dgvQueryRows.Rows[i].Cells[j].Value; 
+                }
+            }
+            //Вызываем нашу созданную эксельку.
+            ExcelApp.Visible = true;
+            ExcelApp.UserControl = true;
         }
     }
 }
