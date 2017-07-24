@@ -173,6 +173,16 @@ namespace CommApp.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap open2_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("open2_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap play_32x32 {
             get {
                 object obj = ResourceManager.GetObject("play_32x32", resourceCulture);
@@ -186,6 +196,16 @@ namespace CommApp.Properties {
         internal static System.Drawing.Bitmap refresh_32x32 {
             get {
                 object obj = ResourceManager.GetObject("refresh_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap saveto_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("saveto_32x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
