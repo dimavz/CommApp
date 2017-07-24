@@ -346,6 +346,7 @@
             this.sbExportExel.Size = new System.Drawing.Size(100, 55);
             this.sbExportExel.TabIndex = 2;
             this.sbExportExel.Text = "Экспорт в Exel ...";
+            this.sbExportExel.Click += new System.EventHandler(this.sbExportExel_Click);
             // 
             // dgvQueryRows
             // 

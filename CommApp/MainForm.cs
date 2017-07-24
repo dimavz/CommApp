@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.IO;// Подключаем для записи и чтения файлов
 using Npgsql;
 using System.Threading;
+//using Microsoft.Office.Interop;
+//using System.Runtime.InteropServices;
 
 namespace CommApp
 {
@@ -873,6 +875,11 @@ namespace CommApp
                         //Устанавливаем прогресс статусбара
                         pbcQuerySrv.Position +=100/ countSelServers;
                         pbcQuerySrv.Update();
+                        if (pbcQuerySrv.Position>98)
+                        {
+                            pbcQuerySrv.Position = 100;
+                            pbcQuerySrv.Update();
+                        }
                         lbMessage.Visible = true;
                         lbMessage.Text = String.Format("Выполнен запрос на {0} сервере из {1}", countServers, countSelServers);
                         countServers++;
@@ -886,8 +893,6 @@ namespace CommApp
             pbcQuerySrv.Position = 0;
             pbcQuerySrv.Visible = false;
             lbMessage.Visible = false;
-            sbExportExel.Enabled = false;
-            sbExportExel.Update();
             BindingSource bs = new BindingSource();
             bs = null;
             dgvResults.DataSource = bs;
@@ -900,6 +905,36 @@ namespace CommApp
             //Таблица строк
             dgvQueryRows.Columns.Clear();
             //dgvQueryRows.Rows.Clear();
+            sbExportExel.Enabled = false;
+            sbExportExel.Update();
+        }
+
+        private void sbExportExel_Click(object sender, EventArgs e)
+        {
+            //Приложение
+            Microsoft.Office.Interop.Excel.Application ExcelApp = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel.Workbook ExcelWorkBook;
+            Microsoft.Office.Interop.Excel.Worksheet ExcelWorkSheet;
+            //Книга.
+            ExcelWorkBook = ExcelApp.Workbooks.Add(System.Reflection.Missing.Value);
+            //Таблица.
+            ExcelWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ExcelWorkBook.Worksheets.get_Item(1);
+
+            for (int i = 0; i < dgvQueryRows.ColumnCount; i++)
+            {
+               ExcelApp.Cells[1, i + 1] = dgvQueryRows.Columns[i].HeaderText;
+            }
+
+            for (int i = 0; i < dgvQueryRows.Rows.Count; i++)
+            {
+                for (int j = 0; j < dgvQueryRows.ColumnCount; j++)
+                {
+                   ExcelApp.Cells[i + 2, j + 1] = dgvQueryRows.Rows[i].Cells[j].Value; 
+                }
+            }
+            //Вызываем нашу созданную эксельку.
+            ExcelApp.Visible = true;
+            ExcelApp.UserControl = true;
         }
     }
 }
