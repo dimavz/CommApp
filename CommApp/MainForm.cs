@@ -693,6 +693,12 @@ namespace CommApp
         {
             pbcConnSrv.Position = 0;
             pbcConnSrv.Visible = true;
+            pbcConnSrv.Update();
+
+            //circularProgBar.Visible = true;
+            //circularProgBar.Value = 0;
+            //circularProgBar.Update();
+
             // Выполняем проверку доступности сервера для подключения и выводим иконку статуса доступности
 
             foreach (DataGridViewRow row in dgvServers.Rows)
@@ -710,11 +716,21 @@ namespace CommApp
                 VerifyConnection(cd, row);
                 pbcConnSrv.Position += (100 / dgvServers.Rows.Count);
                 pbcConnSrv.Update();
-                if (pbcConnSrv.Position >=98)
+
+                //circularProgBar.Value += (100 / dgvServers.Rows.Count);
+                //circularProgBar.Update();
+
+                if (pbcConnSrv.Position >= 98)
                 {
                     pbcConnSrv.Position = 100;
                     pbcConnSrv.Update();
                 }
+
+                //if (circularProgBar.Value >= 98)
+                //{
+                //    circularProgBar.Value = 100;
+                //    circularProgBar.Update();
+                //}
             }
 
             //for (int i=0; i<=100; i++)
@@ -803,6 +819,7 @@ namespace CommApp
                 //Показываем и Устанавливаем статусбар в нулевое значение
                 pbcQuerySrv.Visible = true;
                 pbcQuerySrv.Position = 0;
+                pbcQuerySrv.Update();
 
                 //Отображает сообщение
                 lbMessage.Visible = false;

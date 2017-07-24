@@ -231,10 +231,12 @@
             // 
             // pbcConnSrv
             // 
-            this.pbcConnSrv.Location = new System.Drawing.Point(567, 194);
+            this.pbcConnSrv.Location = new System.Drawing.Point(538, 175);
             this.pbcConnSrv.Name = "pbcConnSrv";
+            this.pbcConnSrv.Properties.ProgressKind = DevExpress.XtraEditors.Controls.ProgressKind.Vertical;
             this.pbcConnSrv.Properties.ShowTitle = true;
-            this.pbcConnSrv.Size = new System.Drawing.Size(100, 18);
+            this.pbcConnSrv.Properties.TextOrientation = DevExpress.Utils.Drawing.TextOrientation.Horizontal;
+            this.pbcConnSrv.Size = new System.Drawing.Size(33, 59);
             this.pbcConnSrv.TabIndex = 18;
             this.pbcConnSrv.Visible = false;
             // 
