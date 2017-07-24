@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,7 +45,7 @@
             this.cbViewPass = new System.Windows.Forms.CheckBox();
             this.tbTimeout = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.errProv = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errProv = new System.Windows.Forms.ErrorProvider();
             ((System.ComponentModel.ISupportInitialize)(this.errProv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -142,7 +141,7 @@
             // btOk
             // 
             this.btOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btOk.Location = new System.Drawing.Point(34, 328);
+            this.btOk.Location = new System.Drawing.Point(41, 328);
             this.btOk.Name = "btOk";
             this.btOk.Size = new System.Drawing.Size(75, 23);
             this.btOk.TabIndex = 10;
@@ -153,7 +152,7 @@
             // btCancel
             // 
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(115, 328);
+            this.btCancel.Location = new System.Drawing.Point(122, 328);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 11;
@@ -216,7 +215,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(243, 385);
+            this.ClientSize = new System.Drawing.Size(233, 361);
+            this.ControlBox = false;
             this.Controls.Add(this.tbTimeout);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cbViewPass);
